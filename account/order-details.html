@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Order Details | HAFHASS EVENTS & DELIGHTS</title>
+
+  <meta
+    name="description"
+    content="View your order details, payment information and order progress."
+  >
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <!-- STYLESHEETS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/account.css">
+
+</head>
+
+<body class="account-page">
+
+  <!-- ==================================================
+       ACCOUNT HEADER
+  =================================================== -->
+
+  <header class="account-header">
+
+    <a href="dashboard.html" class="account-brand">
+
+      <span class="account-brand-name" data-store="business_name">
+        HAFHASS
+      </span>
+
+      <span class="account-brand-subtitle" data-store="business_subtitle">
+        EVENTS & DELIGHTS
+      </span>
+
+    </a>
+
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+      <button
+        type="button"
+        class="account-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch to dark theme"
+        aria-pressed="false"
+      >
+        <i class="fa-regular fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open account menu"
+        aria-expanded="false"
+        aria-controls="accountSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==================================================
+       ACCOUNT LAYOUT
+  =================================================== -->
+
+  <div class="account-layout">
+
+
+       <!-- ================================================
+         SIDEBAR
+         ================================================ -->
+
+    <aside
+      class="account-sidebar"
+      id="accountSidebar"
+    >
+
+
+      <!-- CUSTOMER INFORMATION -->
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar" id="accountAvatar">
+
+  <span id="avatarInitials">C</span>
+
+</div>
+
+
+        <div class="account-user-details">
+
+          <p class="account-user-label">
+            Welcome back
+          </p>
+
+          <h2 id="sidebarUserName">
+            Customer
+          </h2>
+
+          <p id="sidebarUserEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="account-navigation">
+
+
+        <p class="account-nav-heading">
+          ACCOUNT
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </span>
+
+          Dashboard
+
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-receipt" aria-hidden="true"></i>
+          </span>
+
+          My Orders
+
+        </a>
+        
+        
+        <a
+          href="order-details.html"
+          class="account-nav-link active"
+          aria-current="page"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-receipt" aria-hidden="true"></i>
+          </span>
+
+          My Orders History
+
+        </a>
+
+
+        <a
+          href="favourites.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+          </span>
+
+          My Favourites
+
+        </a>
+
+
+        <a
+          href="addresses.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </span>
+
+          Saved Addresses
+
+        </a>
+
+
+        <a
+          href="profile.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-user" aria-hidden="true"></i>
+          </span>
+
+          My Profile
+
+        </a>
+
+
+
+        <p class="account-nav-heading">
+          SHOPPING
+        </p>
+
+
+        <a
+          href="../shop.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+          </span>
+
+          Browse Shop
+
+        </a>
+
+
+        <a href="cart.html" class="account-nav-link">
+  <span class="account-nav-icon">
+    <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+  </span>
+
+  My Shopping Bag
+
+  <span
+    id="accountCartCount"
+    class="account-cart-count"
+    aria-label="0 items in cart"
+  >0</span>
+</a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR BOTTOM -->
+
+      <div class="account-sidebar-bottom">
+
+        <a
+          href="../index.html"
+          class="account-back-home"
+        >
+
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+          Back to Homepage
+
+        </a>
+
+
+        <button
+          type="button"
+          class="account-logout-button"
+          id="logoutButton"
+        >
+
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+
+          Sign Out
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+    =================================================== -->
+
+    <main class="account-main">
+
+      <section class="order-details-page">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="order-details-heading">
+
+          <div>
+
+            <a href="orders.html" class="order-back-link">
+
+              <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+              Back to My Orders
+
+            </a>
+
+            <h1 class="account-page-title">
+              Order Details
+            </h1>
+
+            <p class="account-page-description">
+              View your order information and track its progress.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ==================================================
+             LOADING STATE
+        =================================================== -->
+
+        <div
+          class="order-details-loading"
+          id="orderDetailsLoading"
+        >
+
+          <div class="account-spinner"></div>
+
+          <p>
+            Loading your order details...
+          </p>
+
+        </div>
+
+
+        <!-- ==================================================
+             ERROR STATE
+        =================================================== -->
+
+        <div
+          class="order-details-error"
+          id="orderDetailsError"
+          hidden
+        >
+
+          <div class="order-details-error-icon">
+            <i class="fa-solid fa-exclamation" aria-hidden="true"></i>
+          </div>
+
+          <h2>
+            Unable to Load Order
+          </h2>
+
+          <p id="orderDetailsErrorMessage">
+            We couldn't retrieve your order details.
+          </p>
+
+          <div class="order-details-error-actions">
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="retryOrderDetailsButton"
+            >
+              Try Again
+            </button>
+
+            <a
+              href="orders.html"
+              class="btn btn-outline"
+            >
+              Back to Orders
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- ==================================================
+             ORDER CONTENT
+        =================================================== -->
+
+        <div
+          class="order-details-content"
+          id="orderDetailsContent"
+          hidden
+        >
+
+
+          <!-- ORDER SUMMARY -->
+
+          <div class="order-details-summary">
+
+            <div class="order-summary-main">
+
+              <div>
+
+                <span class="order-details-label">
+                  ORDER REFERENCE
+                </span>
+
+                <h2 id="orderReference">
+                  —
+                </h2>
+
+              </div>
+
+              <span
+                class="order-status"
+                id="orderStatus"
+              >
+                Loading...
+              </span>
+
+            </div>
+
+
+            <div class="order-summary-meta">
+
+              <div>
+
+                <span class="order-details-label">
+                  ORDER DATE
+                </span>
+
+                <p id="orderDate">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  PAYMENT STATUS
+                </span>
+
+                <p id="paymentStatus">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  TOTAL AMOUNT
+                </span>
+
+                <p id="orderTotal">
+                  —
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ORDER PROGRESS -->
+
+          <section class="order-details-card">
+
+            <div class="order-section-heading">
+
+              <h2>
+                Order Progress
+              </h2>
+
+              <p>
+                Follow the progress of your order.
+              </p>
+
+            </div>
+
+
+            <div
+              class="order-progress"
+              id="orderProgress"
+            >
+
+              <div class="order-progress-step" data-status="pending">
+
+                <div class="order-progress-icon">
+                  1
+                </div>
+
+                <div class="order-progress-info">
+
+                  <h3>
+                    Order Placed
+                  </h3>
+
+                  <p>
+                    Your order has been received.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-progress-step" data-status="payment_confirmed">
+
+                <div class="order-progress-icon">
+                  2
+                </div>
+
+                <div class="order-progress-info">
+
+                  <h3>
+                    Payment Confirmed
+                  </h3>
+
+                  <p>
+                    Your payment has been confirmed.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-progress-step" data-status="processing">
+
+                <div class="order-progress-icon">
+                  3
+                </div>
+
+                <div class="order-progress-info">
+
+                  <h3>
+                    Processing
+                  </h3>
+
+                  <p>
+                    Your order is being prepared.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-progress-step" data-status="ready_for_pickup">
+
+                <div class="order-progress-icon">
+                  4
+                </div>
+
+                <div class="order-progress-info">
+
+                  <h3>
+                    Ready
+                  </h3>
+
+                  <p>
+                    Your order is ready for collection or dispatch.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-progress-step" data-status="completed">
+
+                <div class="order-progress-icon">
+                  5
+                </div>
+
+                <div class="order-progress-info">
+
+                  <h3>
+                    Completed
+                  </h3>
+
+                  <p>
+                    Your order has been completed.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- ORDERED PRODUCTS -->
+
+          <section class="order-details-card">
+
+            <div class="order-section-heading">
+
+              <h2>
+                Ordered Items
+              </h2>
+
+              <p>
+                Products included in this order.
+              </p>
+
+            </div>
+
+
+            <div
+              class="order-items-list"
+              id="orderItemsList"
+            >
+
+              <!-- ORDER ITEMS WILL BE INSERTED HERE -->
+
+            </div>
+
+
+            <div class="order-items-total">
+
+              <div>
+                Subtotal
+                <span id="orderSubtotal">₦0.00</span>
+              </div>
+
+              <div>
+                Delivery Fee
+                <span id="orderDeliveryFee">₦0.00</span>
+              </div>
+
+              <div class="order-grand-total">
+                Total
+                <strong id="orderFinalTotal">₦0.00</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- PAYMENT INFORMATION -->
+
+          <section class="order-details-card">
+
+            <div class="order-section-heading">
+
+              <h2>
+                Payment Information
+              </h2>
+
+            </div>
+
+
+            <div class="order-information-grid">
+
+              <div>
+
+                <span class="order-details-label">
+                  PAYMENT METHOD
+                </span>
+
+                <p id="orderPaymentMethod">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  PAYMENT STATUS
+                </span>
+
+                <p id="orderPaymentStatus">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  TRANSACTION REFERENCE
+                </span>
+
+                <p id="orderTransactionReference">
+                  —
+                </p>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- DELIVERY INFORMATION -->
+
+          <section class="order-details-card">
+
+            <div class="order-section-heading">
+
+              <h2>
+                Delivery Information
+              </h2>
+
+            </div>
+
+
+            <div class="order-information-grid">
+
+              <div>
+
+                <span class="order-details-label">
+                  CUSTOMER NAME
+                </span>
+
+                <p id="deliveryCustomerName">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  PHONE NUMBER
+                </span>
+
+                <p id="deliveryPhone">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  DELIVERY METHOD
+                </span>
+
+                <p id="deliveryMethod">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  DELIVERY ADDRESS
+                </span>
+
+                <p id="deliveryAddress">
+                  —
+                </p>
+
+              </div>
+
+              <div>
+
+                <span class="order-details-label">
+                  CUSTOMER NOTES
+                </span>
+
+                <p id="orderCustomerNotes">
+                  No additional notes.
+                </p>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- ACTION BUTTONS -->
+
+          <div class="order-details-actions">
+
+            <a
+              href="../shop.html"
+              class="btn btn-primary"
+            >
+              Continue Shopping
+            </a>
+
+            <a
+              href="orders.html"
+              class="btn btn-outline"
+            >
+              Back to My Orders
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- ==================================================
+       FOOTER
+  =================================================== -->
+
+  <footer class="account-footer">
+
+    <p>
+      © <span id="accountYear"></span>
+
+      <span data-store="business_name">HAFHASS</span>
+
+      <span data-store="business_subtitle">EVENTS & DELIGHTS</span>.
+
+      All rights reserved.
+    </p>
+
+    <p data-store="tagline">
+      Where Taste Meets Creativity.
+    </p>
+
+  </footer>
+
+
+  <!-- ==================================================
+       SCRIPTS
+  =================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/guards.js"></script>
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/account-layout.js"></script>
+  <script src="../js/account-order-details.js"></script>
+
+</body>
+
+</html>

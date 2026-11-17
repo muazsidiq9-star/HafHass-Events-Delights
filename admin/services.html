@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Manage HAFHASS Events & Delights services."
+  >
+
+  <meta name="theme-color" content="#FFF9F3">
+
+  <title>Services Management | HAFHASS Admin</title>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+  <!-- GLOBAL AND ADMIN STYLES -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <!-- PAGE STYLES -->
+  <link rel="stylesheet" href="../css/admin-services.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+  <span
+    class="admin-brand-name"
+    data-store="business_name"
+  >
+    HAFHASS
+  </span>
+
+  <span
+    class="admin-brand-subtitle"
+    data-store="business_subtitle"
+  >
+    EVENTS & DELIGHTS
+  </span>
+
+  <span class="admin-brand-badge">
+    ADMIN
+  </span>
+
+</a>
+
+
+    <div class="admin-header-actions">
+
+      <span
+        id="adminHeaderName"
+        class="admin-header-user"
+      ></span>
+
+
+      <button
+        type="button"
+        id="themeToggle"
+        class="admin-theme-toggle"
+        aria-label="Toggle theme"
+      >
+        <i class="fas fa-moon theme-icon"></i>
+      </button>
+
+
+      <button
+        type="button"
+        id="adminMenuToggle"
+        class="admin-mobile-menu"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- ===================================================
+         SIDEBAR
+    ==================================================== -->
+
+    <aside
+      id="adminSidebar"
+      class="admin-sidebar"
+    >
+
+      <!-- PROFILE -->
+
+      <div class="admin-sidebar-profile">
+
+        <div
+          id="adminAvatar"
+          class="admin-avatar"
+        >
+          <i class="fas fa-user"></i>
+        </div>
+
+
+        <div class="admin-profile-details">
+
+          <h3 id="adminSidebarName">
+            Admin
+          </h3>
+
+          <p id="adminSidebarEmail"></p>
+
+          <span id="adminRole" class="admin-role-badge">
+            Admin
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+
+        <span class="admin-nav-heading">
+          Main Menu
+        </span>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-chart-line admin-nav-icon"></i>
+          <span>Dashboard</span>
+        </a>
+
+
+
+        <span class="admin-nav-heading">
+          STORE MANAGEMENT
+        </span>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-box admin-nav-icon"></i>
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-layer-group admin-nav-icon"></i>
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="services.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <i class="fas fa-concierge-bell admin-nav-icon"></i>
+          <span>Services</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-shopping-bag admin-nav-icon"></i>
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-users admin-nav-icon"></i>
+          <span>Customers</span>
+        </a>
+
+
+
+        <span class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </span>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-credit-card admin-nav-icon"></i>
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-truck admin-nav-icon"></i>
+          <span>Delivery Zones</span>
+        </a>
+        
+        
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <i class="fas fa-cog admin-nav-icon"></i>
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      id="adminSidebarOverlay"
+      class="admin-sidebar-overlay"
+    ></div>
+
+
+
+    <!-- ===================================================
+         MAIN CONTENT
+    ==================================================== -->
+
+    <main class="admin-main">
+
+
+      <!-- PAGE HEADING -->
+
+      <section class="admin-page-heading">
+
+        <div>
+
+          <span class="admin-eyebrow">
+            Store Management
+          </span>
+
+          <h1>Services</h1>
+
+          <p>
+            Manage the services HAFHASS offers to customers
+            and the customised requests they can make.
+          </p>
+
+        </div>
+
+
+        <div
+          id="adminCurrentDate"
+          class="admin-date"
+        ></div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           SERVICE STATISTICS
+      ================================================== -->
+
+      <section class="admin-services-stats">
+
+
+        <article class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+            <i class="fas fa-concierge-bell"></i>
+          </div>
+
+          <div>
+            <span>Total Services</span>
+
+            <strong id="totalServices">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+
+
+        <article class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+
+          <div>
+            <span>Active Services</span>
+
+            <strong id="activeServices">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+
+
+        <article class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+            <i class="fas fa-pause-circle"></i>
+          </div>
+
+          <div>
+            <span>Inactive Services</span>
+
+            <strong id="inactiveServices">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+
+
+        <article class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+            <i class="fas fa-star"></i>
+          </div>
+
+          <div>
+            <span>Featured Services</span>
+
+            <strong id="featuredServices">
+              0
+            </strong>
+          </div>
+
+        </article>
+
+      </section>
+
+
+
+      <!-- =================================================
+           SERVICES MANAGEMENT
+      ================================================== -->
+
+      <section class="admin-services-section">
+
+
+        <!-- SECTION HEADING -->
+
+        <div class="admin-section-heading">
+
+          <div>
+
+            <h2>All Services</h2>
+
+            <p>
+              Create and manage your service offerings.
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            id="addServiceButton"
+            class="admin-services-add-button"
+          >
+            <i class="fas fa-plus"></i>
+            <span>Add New Service</span>
+          </button>
+
+        </div>
+
+
+
+        <!-- SEARCH AND FILTERS -->
+
+        <div class="admin-services-toolbar">
+
+
+          <div class="admin-services-search">
+
+            <i class="fas fa-search"></i>
+
+            <input
+              type="search"
+              id="serviceSearch"
+              placeholder="Search services..."
+              autocomplete="off"
+            >
+
+          </div>
+
+
+
+          <select
+            id="serviceStatusFilter"
+            aria-label="Filter by service status"
+          >
+
+            <option value="all">
+              All Statuses
+            </option>
+
+            <option value="active">
+              Active
+            </option>
+
+            <option value="inactive">
+              Inactive
+            </option>
+
+          </select>
+
+
+
+          <select
+            id="servicePricingFilter"
+            aria-label="Filter by pricing type"
+          >
+
+            <option value="all">
+              All Pricing Types
+            </option>
+
+            <option value="fixed">
+              Fixed Price
+            </option>
+
+            <option value="starting_from">
+              Starting From
+            </option>
+
+            <option value="quote">
+              Request a Quote
+            </option>
+
+          </select>
+
+
+
+          <select
+            id="serviceFeaturedFilter"
+            aria-label="Filter by featured status"
+          >
+
+            <option value="all">
+              All Services
+            </option>
+
+            <option value="featured">
+              Featured Only
+            </option>
+
+            <option value="not_featured">
+              Not Featured
+            </option>
+
+          </select>
+
+
+        </div>
+
+
+
+        <!-- RESULT INFORMATION -->
+
+        <div class="admin-services-result-bar">
+
+          <p id="serviceResultCount">
+            Showing 0 services
+          </p>
+
+
+          <button
+            type="button"
+            id="clearServiceFilters"
+          >
+            Clear Filters
+          </button>
+
+        </div>
+
+
+
+        <!-- LOADING STATE -->
+
+        <div
+          id="servicesLoading"
+          class="admin-services-state"
+        >
+
+          <i class="fas fa-spinner fa-spin"></i>
+
+          <p>
+            Loading services...
+          </p>
+
+        </div>
+
+
+
+        <!-- ERROR STATE -->
+
+        <div
+          id="servicesError"
+          class="admin-services-state"
+          hidden
+        >
+
+          <i class="fas fa-exclamation-circle"></i>
+
+          <h3>Unable to Load Services</h3>
+
+          <p id="servicesErrorMessage">
+            Something went wrong while loading services.
+          </p>
+
+          <button
+            type="button"
+            id="retryServicesButton"
+          >
+            <i class="fas fa-redo"></i>
+            Try Again
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+          id="servicesEmpty"
+          class="admin-services-state"
+          hidden
+        >
+
+          <i class="fas fa-concierge-bell"></i>
+
+          <h3>No Services Yet</h3>
+
+          <p>
+            Start by adding the services HAFHASS offers.
+          </p>
+
+          <button
+            type="button"
+            id="emptyAddServiceButton"
+          >
+            <i class="fas fa-plus"></i>
+            Add Your First Service
+          </button>
+
+        </div>
+
+
+
+        <!-- NO RESULTS STATE -->
+
+        <div
+          id="servicesNoResults"
+          class="admin-services-state"
+          hidden
+        >
+
+          <i class="fas fa-search"></i>
+
+          <h3>No Matching Services</h3>
+
+          <p>
+            Try changing your search or filters.
+          </p>
+
+        </div>
+
+
+
+        <!-- SERVICES TABLE -->
+
+        <div
+          id="servicesTableContainer"
+          class="admin-services-table-container"
+          hidden
+        >
+
+          <table class="admin-services-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Service</th>
+
+                <th>Pricing</th>
+
+                <th>Featured</th>
+
+                <th>Status</th>
+
+                <th>Display Order</th>
+
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="servicesTableBody">
+
+              <!-- Services will be rendered here -->
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADD / EDIT SERVICE MODAL
+  ====================================================== -->
+
+  <div
+    id="serviceModalOverlay"
+    class="admin-services-modal-overlay"
+    hidden
+  >
+
+
+    <div
+      class="admin-services-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="serviceModalTitle"
+    >
+
+
+      <!-- MODAL HEADER -->
+
+      <div class="admin-services-modal-header">
+
+        <div>
+
+          <span class="admin-eyebrow">
+            Service Management
+          </span>
+
+          <h2 id="serviceModalTitle">
+            Add New Service
+          </h2>
+
+          <p>
+            Provide the details of the service.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="closeServiceModal"
+          class="admin-services-modal-close"
+          aria-label="Close modal"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+
+      </div>
+
+
+
+      <!-- MODAL FORM -->
+
+      <form
+        id="serviceForm"
+        autocomplete="off"
+      >
+
+        <input
+          type="hidden"
+          id="serviceId"
+        >
+
+
+        <!-- BASIC INFORMATION -->
+
+        <section class="admin-services-form-section">
+
+          <h3>
+            <i class="fas fa-info-circle"></i>
+            Basic Information
+          </h3>
+
+
+          <div class="admin-services-form-grid">
+
+
+            <div class="admin-services-form-group full-width">
+
+              <label for="serviceName">
+                Service Name <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                id="serviceName"
+                name="name"
+                placeholder="e.g. Cakes & Cupcakes"
+                maxlength="150"
+                required
+              >
+
+            </div>
+
+
+
+            <div class="admin-services-form-group full-width">
+
+              <label for="serviceSlug">
+                URL Slug <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                id="serviceSlug"
+                name="slug"
+                placeholder="e.g. cakes-and-cupcakes"
+                maxlength="180"
+                required
+              >
+
+              <small>
+                Used to identify the service on the website.
+              </small>
+
+            </div>
+
+
+
+            <div class="admin-services-form-group full-width">
+
+              <label for="serviceDescription">
+                Description <span>*</span>
+              </label>
+
+              <textarea
+                id="serviceDescription"
+                name="description"
+                rows="5"
+                placeholder="Describe what this service offers..."
+                required
+              ></textarea>
+
+            </div>
+
+
+          </div>
+
+        </section>
+
+
+
+        <!-- SERVICE IMAGE -->
+
+        <section class="admin-services-form-section">
+
+          <h3>
+            <i class="fas fa-image"></i>
+            Service Image
+          </h3>
+
+
+          <div class="admin-services-image-field">
+
+
+            <div
+              id="serviceImagePreview"
+              class="admin-services-image-preview"
+            >
+
+              <i class="fas fa-image"></i>
+
+              <span>
+                No image selected
+              </span>
+
+            </div>
+
+
+
+            <div class="admin-services-image-controls">
+
+              <label for="serviceImageFile">
+                Choose Service Image
+              </label>
+
+              <input
+                type="file"
+                id="serviceImageFile"
+                accept="image/jpeg,image/png,image/webp"
+              >
+
+              <small>
+                JPG, PNG or WebP images.
+              </small>
+
+
+              <label for="serviceImageUrl">
+                Or Use an Image URL
+              </label>
+
+              <input
+                type="url"
+                id="serviceImageUrl"
+                name="image_url"
+                placeholder="https://example.com/image.jpg"
+              >
+
+            </div>
+
+
+          </div>
+
+        </section>
+
+
+
+        <!-- PRICING -->
+
+        <section class="admin-services-form-section">
+
+          <h3>
+            <i class="fas fa-tag"></i>
+            Pricing Information
+          </h3>
+
+
+          <div class="admin-services-form-grid">
+
+
+            <div class="admin-services-form-group">
+
+              <label for="servicePricingType">
+                Pricing Type <span>*</span>
+              </label>
+
+              <select
+                id="servicePricingType"
+                name="pricing_type"
+                required
+              >
+
+                <option value="quote">
+                  Request a Quote
+                </option>
+
+                <option value="fixed">
+                  Fixed Price
+                </option>
+
+                <option value="starting_from">
+                  Starting From
+                </option>
+
+              </select>
+
+            </div>
+
+
+
+            <div class="admin-services-form-group">
+
+              <label for="servicePrice">
+                Price
+              </label>
+
+              <input
+                type="number"
+                id="servicePrice"
+                name="price"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+              >
+
+              <small>
+                Leave at zero for quotation-based services.
+              </small>
+
+            </div>
+
+
+
+            <div class="admin-services-form-group">
+
+              <label for="serviceCurrency">
+                Currency
+              </label>
+
+              <select
+                id="serviceCurrency"
+                name="currency"
+              >
+
+                <option value="NGN">
+                  NGN - Nigerian Naira
+                </option>
+
+                <option value="USD">
+                  USD - US Dollar
+                </option>
+
+              </select>
+
+            </div>
+
+
+          </div>
+
+        </section>
+
+
+
+        <!-- DISPLAY SETTINGS -->
+
+        <section class="admin-services-form-section">
+
+          <h3>
+            <i class="fas fa-sliders-h"></i>
+            Display Settings
+          </h3>
+
+
+          <div class="admin-services-form-grid">
+
+
+            <div class="admin-services-form-group">
+
+              <label for="serviceDisplayOrder">
+                Display Order
+              </label>
+
+              <input
+                type="number"
+                id="serviceDisplayOrder"
+                name="display_order"
+                min="0"
+                step="1"
+                value="0"
+              >
+
+              <small>
+                Lower numbers appear first.
+              </small>
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="admin-services-checkboxes">
+
+
+            <label class="admin-services-checkbox">
+
+              <input
+                type="checkbox"
+                id="serviceIsActive"
+                name="is_active"
+                checked
+              >
+
+              <span>
+                <strong>Active Service</strong>
+
+                <small>
+                  Allow customers to view this service.
+                </small>
+              </span>
+
+            </label>
+
+
+
+            <label class="admin-services-checkbox">
+
+              <input
+                type="checkbox"
+                id="serviceIsFeatured"
+                name="is_featured"
+              >
+
+              <span>
+                <strong>Featured Service</strong>
+
+                <small>
+                  Highlight this service on the website.
+                </small>
+              </span>
+
+            </label>
+
+
+          </div>
+
+        </section>
+
+
+
+        <!-- FORM MESSAGE -->
+
+        <div
+          id="serviceFormMessage"
+          class="admin-services-form-message"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+
+
+
+        <!-- FORM ACTIONS -->
+
+        <div class="admin-services-modal-actions">
+
+
+          <button
+            type="button"
+            id="cancelServiceForm"
+            class="admin-services-cancel-button"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="submit"
+            id="saveServiceButton"
+            class="admin-services-save-button"
+          >
+
+            <i class="fas fa-save"></i>
+
+            <span>Save Service</span>
+
+          </button>
+
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase-config.js"></script>
+<!-- SHARED STORE SETTINGS -->
+<script src="../js/store-settings.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/admin-layout.js"></script>
+
+  <script src="../js/admin-services.js"></script>
+
+
+</body>
+
+</html>

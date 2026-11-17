@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- BASIC PAGE INFORMATION -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="HAFHASS EVENTS & DELIGHTS Administration Dashboard."
+  >
+
+  <title>Admin Dashboard | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+      <!-- BUSINESS LOGO -->
+
+      <img
+        src=""
+        alt="Business Logo"
+        data-store-image="logo_url"
+        hidden
+        style="width: 42px; height: 42px; object-fit: contain;"
+      >
+
+
+      <!-- BUSINESS NAME -->
+
+      <a href="dashboard.html" class="admin-brand">
+
+  <span
+    class="admin-brand-name"
+    data-store="business_name"
+  >
+    HAFHASS
+  </span>
+
+  <span
+    class="admin-brand-subtitle"
+    data-store="business_subtitle"
+  >
+    EVENTS & DELIGHTS
+  </span>
+
+  <span class="admin-brand-badge">
+    ADMIN
+  </span>
+
+</a>
+
+
+    <div class="admin-header-actions">
+
+      <span class="admin-header-user" id="adminHeaderName">
+        Administrator
+      </span>
+
+
+      <button
+        type="button"
+        class="admin-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-solid fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-mobile-menu"
+        id="adminMenuToggle"
+        aria-label="Open admin menu"
+        aria-expanded="false"
+        aria-controls="adminSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+
+      <!-- ADMIN PROFILE -->
+
+      <div class="admin-sidebar-profile">
+
+        <div class="admin-avatar" id="adminAvatar">
+          A
+        </div>
+
+        <div class="admin-profile-details">
+
+          <h3 id="adminSidebarName">
+            Administrator
+          </h3>
+
+          <p id="adminSidebarEmail">
+            Loading...
+          </p>
+
+          <span class="admin-role-badge" id="adminRole">
+            ADMIN
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="admin-main">
+
+
+      <!-- PAGE HEADING -->
+
+      <section class="admin-page-heading">
+
+        <div>
+
+          <p class="admin-eyebrow">
+            HAFHASS MANAGEMENT
+          </p>
+
+          <h1>
+            Dashboard
+          </h1>
+
+          <p>
+            Welcome to your store administration panel.
+          </p>
+
+        </div>
+
+
+        <div class="admin-date" id="adminCurrentDate">
+        </div>
+
+      </section>
+
+
+
+      <!-- OVERVIEW STATISTICS -->
+
+      <section class="admin-overview-section">
+
+        <div class="admin-section-heading">
+
+          <div>
+            <h2>Store Overview</h2>
+
+            <p>
+              A quick overview of your store's activity.
+            </p>
+          </div>
+
+        </div>
+
+
+
+        <div class="admin-stat-grid">
+
+
+          <!-- TOTAL ORDERS -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Total Orders</p>
+
+              <h3 id="statTotalOrders">—</h3>
+
+              <span>All recorded orders</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- PENDING ORDERS -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Pending Orders</p>
+
+              <h3 id="statPendingOrders">—</h3>
+
+              <span>Awaiting action</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- TOTAL PRODUCTS -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Total Products</p>
+
+              <h3 id="statTotalProducts">—</h3>
+
+              <span>Products in catalogue</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- TOTAL CUSTOMERS -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-user-group" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Total Customers</p>
+
+              <h3 id="statTotalCustomers">—</h3>
+
+              <span>Registered customers</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- TOTAL REVENUE -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-sack-dollar" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Total Revenue</p>
+
+              <h3 id="statTotalRevenue">—</h3>
+
+              <span>Successful payments received</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- PENDING PAYMENTS -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-money-bill-transfer" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Pending Payments</p>
+
+              <h3 id="statPendingPayments">—</h3>
+
+              <span>Awaiting confirmation</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- SERVICE REQUESTS -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Service Requests</p>
+
+              <h3 id="statServiceRequests">—</h3>
+
+              <span>All customer requests</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- INVENTORY ALERTS -->
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-icon">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Inventory Alerts</p>
+
+              <h3 id="statInventoryAlerts">—</h3>
+
+              <span>Low or out-of-stock products</span>
+            </div>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- RECENT ORDERS -->
+
+      <section class="admin-recent-section">
+
+
+        <div class="admin-section-heading">
+
+          <div>
+
+            <h2>Recent Orders</h2>
+
+            <p>
+              Keep track of the latest customer orders.
+            </p>
+
+          </div>
+
+
+          <a
+            href="orders.html"
+            class="admin-view-all"
+          >
+            View All
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
+
+        </div>
+
+
+
+        <div class="admin-table-container">
+
+          <table class="admin-table">
+
+            <thead>
+
+              <tr>
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+
+            </thead>
+
+
+            <tbody id="adminRecentOrders">
+
+              <tr>
+
+                <td colspan="5" class="admin-table-empty">
+                  No order data available yet.
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+      </section>
+
+
+
+      <!-- QUICK ACTIONS -->
+
+      <section class="admin-quick-actions-section">
+
+        <div class="admin-section-heading">
+
+          <div>
+
+            <h2>Quick Actions</h2>
+
+            <p>
+              Frequently used store management tools.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="admin-quick-actions-grid">
+
+
+          <a
+            href="products.html"
+            class="admin-quick-action"
+          >
+
+            <span>
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </span>
+
+            <div>
+              <h3>Add Product</h3>
+              <p>Add a new product to your catalogue.</p>
+            </div>
+
+          </a>
+
+
+
+          <a
+            href="categories.html"
+            class="admin-quick-action"
+          >
+
+            <span>
+              <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+            </span>
+
+            <div>
+              <h3>Manage Categories</h3>
+              <p>Organise your store categories.</p>
+            </div>
+
+          </a>
+
+
+
+          <a
+            href="delivery-zones.html"
+            class="admin-quick-action" 
+          >
+
+            <span>
+              <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+            </span>
+
+            <div>
+              <h3>Delivery Zones</h3>
+              <p>Configure delivery locations and fees.</p>
+            </div>
+
+          </a>
+
+
+        </div>
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+
+  <!-- SHARED STORE SETTINGS -->
+
+  <script src="../js/store-settings.js"></script>
+    
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/admin-layout.js"></script>
+
+  <script src="../js/admin-dashboard.js"></script>
+
+
+</body>
+
+</html>

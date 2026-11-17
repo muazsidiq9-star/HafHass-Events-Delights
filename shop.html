@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- ==========================================
+       BASIC PAGE INFORMATION
+  =========================================== -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Explore cakes, pastries, treats, gifts and creative delights at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <meta name="theme-color" content="#FFF9F3">
+
+  <link rel="icon" href="data:,">
+
+  <title>Shop | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- ==========================================
+       GOOGLE FONTS
+  =========================================== -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- ==========================================
+       FONT AWESOME
+  =========================================== -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+
+  <!-- ==========================================
+       STYLESHEETS
+  =========================================== -->
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="css/shop.css">
+
+</head>
+
+
+<body class="shop-page">
+
+
+  <!-- ==========================================
+       ANNOUNCEMENT BAR
+  =========================================== -->
+
+  <div
+    class="announcement"
+    data-store-announcement
+    hidden
+  ></div>
+
+
+
+  <!-- ==========================================
+       WEBSITE HEADER
+  =========================================== -->
+
+  <header class="site-header">
+
+    <div class="header-container">
+
+
+      <!-- BRAND -->
+
+      <a
+        href="index.html"
+        class="brand"
+        aria-label="HAFHASS home"
+      >
+
+        <img
+          src=""
+          alt="HAFHASS logo"
+          class="brand-logo-image"
+          data-store-image="logo_url"
+          hidden
+        >
+
+        <span class="brand-mark">H</span>
+
+        <span class="brand-text">
+
+          <strong data-store="business_name">
+            HAFHASS
+          </strong>
+
+          <small data-store="business_subtitle">
+            EVENTS &amp; DELIGHTS
+          </small>
+
+        </span>
+
+      </a>
+
+
+
+      <!-- MOBILE MENU BUTTON -->
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="mainNav"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+
+
+      <!-- MAIN NAVIGATION -->
+
+      <nav
+        class="main-nav"
+        id="mainNav"
+        aria-label="Main navigation"
+      >
+
+        <a href="index.html#home">
+          Home
+        </a>
+
+        <a
+          href="shop.html"
+          class="active"
+          aria-current="page"
+        >
+          Shop
+        </a>
+
+        <a href="services.html">
+          Services
+        </a>
+
+        <a href="gallery.html">
+          Gallery
+        </a>
+
+        <a href="index.html#about">
+          Our Story
+        </a>
+
+        <a href="founder.html">
+          Founder
+        </a>
+
+        <a href="index.html#testimonials">
+          Testimonials
+        </a>
+
+        <a href="index.html#faqs">
+          FAQs
+        </a>
+
+        <a href="index.html#contact">
+          Contact
+        </a>
+
+
+        <!-- AUTHENTICATION LINK -->
+
+        <a
+          href="login.html"
+          class="nav-auth-link"
+          id="authNavLink"
+          data-auth-link
+          data-auth-state="signed-out"
+        >
+          Sign In
+        </a>
+
+      </nav>
+
+
+
+      <!-- HEADER ACTIONS -->
+
+      <div class="header-actions">
+
+
+        <!-- SHOPPING BAG -->
+
+        <a
+          href="#featured"
+          class="cart-link"
+          aria-label="Shopping bag"
+        >
+
+          <span class="cart-icon">
+
+            <i
+              class="fa-solid fa-bag-shopping"
+              aria-hidden="true"
+            ></i>
+
+          </span>
+
+          <span
+            class="cart-count"
+            id="cartCount"
+          >
+            0
+          </span>
+
+        </a>
+
+
+
+        <!-- THEME TOGGLE -->
+
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="Switch to dark theme"
+          title="Switch theme"
+        >
+
+          <span class="theme-icon">
+
+            <i
+              class="fa-solid fa-moon"
+              aria-hidden="true"
+            ></i>
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==========================================
+       MAIN SHOP CONTENT
+  =========================================== -->
+
+  <main class="shop-main">
+
+
+    <!-- ========================================
+         SHOP HERO
+    ========================================= -->
+
+    <section class="hero shop-page-hero" id="shopHome">
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-container">
+
+        <div class="hero-content hero-content-lowered">
+
+          <span class="eyebrow">
+            EXPLORE OUR COLLECTION
+          </span>
+
+          <h1>
+            Shop Our <span>Delights.</span>
+          </h1>
+
+          <p>
+            Discover beautifully crafted treats, thoughtful
+            gifts and creative delights made to make your
+            special moments unforgettable.
+          </p>
+
+          <a
+            href="#shopProducts"
+            class="button button-primary"
+          >
+            Explore Collection
+          </a>
+
+        </div>
+
+
+        <div class="hero-note">
+
+          <span>
+            Beautifully Made. Thoughtfully Delivered.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         SHOP CATEGORY SECTION
+    ========================================= -->
+
+    <section class="shop-categories-section">
+
+      <div class="section-container">
+
+
+        <!-- SECTION HEADING -->
+
+        <div class="shop-section-heading">
+
+          <span class="eyebrow">
+            FIND YOUR FAVOURITE
+          </span>
+
+          <h2>
+            Shop by Category
+          </h2>
+
+          <p>
+            Explore our collection by choosing a category.
+          </p>
+
+        </div>
+
+
+
+        <!-- CATEGORY LOADING -->
+
+        <div
+          class="shop-category-loading"
+          id="categoryLoading"
+        >
+
+          <p>
+            Loading categories...
+          </p>
+
+        </div>
+
+
+
+        <!-- CATEGORY LIST -->
+
+        <div
+          class="shop-category-list"
+          id="categoryList"
+          hidden
+        >
+
+          <!-- Categories generated by JavaScript -->
+
+        </div>
+
+
+
+        <!-- CATEGORY EMPTY STATE -->
+
+        <div
+          class="shop-category-empty"
+          id="categoryEmpty"
+          hidden
+        >
+
+          <p>
+            Categories will appear here soon.
+          </p>
+
+        </div>
+
+
+
+        <!-- CATEGORY ERROR -->
+
+        <div
+          class="shop-category-error"
+          id="categoryError"
+          hidden
+        >
+
+          <p id="categoryErrorMessage">
+            Unable to load categories.
+          </p>
+
+          <button
+            type="button"
+            class="button button-outline"
+            id="retryCategoriesButton"
+          >
+            Try Again
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         SHOP PRODUCTS SECTION
+    ========================================= -->
+
+    <section
+      class="shop-products-section section-padding"
+      id="shopProducts"
+    >
+
+      <div class="section-container">
+
+
+        <!-- SECTION HEADING -->
+
+        <div class="shop-section-heading">
+
+          <span class="eyebrow">
+            OUR COLLECTION
+          </span>
+
+          <h2>
+            Explore Our Products
+          </h2>
+
+          <p>
+            Find something special for every occasion.
+          </p>
+
+        </div>
+
+
+
+        <!-- ======================================
+             SEARCH AND FILTER TOOLBAR
+        ======================================= -->
+
+        <div class="shop-toolbar">
+
+
+          <!-- SEARCH -->
+
+          <div class="shop-search">
+
+            <label
+              for="productSearch"
+              class="visually-hidden"
+            >
+              Search products
+            </label>
+
+            <input
+              type="search"
+              id="productSearch"
+              placeholder="Search for products..."
+              autocomplete="off"
+            >
+
+            <button
+              type="button"
+              id="clearSearchButton"
+              aria-label="Clear search"
+              hidden
+            >
+
+              <i
+                class="fa-solid fa-xmark"
+                aria-hidden="true"
+              ></i>
+
+            </button>
+
+          </div>
+
+
+
+          <!-- FILTERS -->
+
+          <div class="shop-filters">
+
+
+            <!-- CATEGORY FILTER -->
+
+            <div class="shop-filter-group">
+
+              <label for="categoryFilter">
+                Category
+              </label>
+
+              <select id="categoryFilter">
+
+                <option value="">
+                  All Categories
+                </option>
+
+              </select>
+
+            </div>
+
+
+
+            <!-- AVAILABILITY FILTER -->
+
+            <div class="shop-filter-group">
+
+              <label for="availabilityFilter">
+                Availability
+              </label>
+
+              <select id="availabilityFilter">
+
+                <option value="">
+                  All Products
+                </option>
+
+                <option value="in_stock">
+                  In Stock
+                </option>
+
+                <option value="pre_order">
+                  Pre-Order
+                </option>
+
+                <option value="made_to_order">
+                  Made to Order
+                </option>
+
+                <option value="out_of_stock">
+                  Out of Stock
+                </option>
+
+              </select>
+
+            </div>
+
+
+
+            <!-- SORTING -->
+
+            <div class="shop-filter-group">
+
+              <label for="sortProducts">
+                Sort By
+              </label>
+
+              <select id="sortProducts">
+
+                <option value="featured">
+                  Featured
+                </option>
+
+                <option value="newest">
+                  Newest
+                </option>
+
+                <option value="price_low">
+                  Price: Low to High
+                </option>
+
+                <option value="price_high">
+                  Price: High to Low
+                </option>
+
+                <option value="name_asc">
+                  Name: A to Z
+                </option>
+
+                <option value="name_desc">
+                  Name: Z to A
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- RESET FILTERS -->
+
+          <button
+            type="button"
+            class="shop-reset-filters"
+            id="resetFiltersButton"
+          >
+            Reset Filters
+          </button>
+
+        </div>
+
+
+
+        <!-- ======================================
+             PRODUCT RESULTS INFORMATION
+        ======================================= -->
+
+        <div class="shop-results-header">
+
+          <p id="shopResultsCount">
+            Loading products...
+          </p>
+
+        </div>
+
+
+
+        <!-- PRODUCT LOADING STATE -->
+
+        <div
+          class="shop-loading"
+          id="shopLoading"
+        >
+
+          <div class="shop-loader"></div>
+
+          <p>
+            Discovering our collection...
+          </p>
+
+        </div>
+
+
+
+        <!-- PRODUCT ERROR STATE -->
+
+        <div
+          class="shop-error"
+          id="shopError"
+          hidden
+        >
+
+          <div class="shop-state-icon">
+
+            <i
+              class="fa-solid fa-circle-exclamation"
+              aria-hidden="true"
+            ></i>
+
+          </div>
+
+          <h3>
+            Unable to Load Products
+          </h3>
+
+          <p id="shopErrorMessage">
+            Something went wrong while loading our products.
+          </p>
+
+          <button
+            type="button"
+            class="button button-primary"
+            id="retryShopButton"
+          >
+            Try Again
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY SHOP STATE -->
+
+        <div
+          class="shop-empty"
+          id="shopEmpty"
+          hidden
+        >
+
+          <div class="shop-state-icon">
+
+            <i
+              class="fa-solid fa-box-open"
+              aria-hidden="true"
+            ></i>
+
+          </div>
+
+          <h3>
+            Our Collection Is Coming Soon
+          </h3>
+
+          <p>
+            We're preparing something special.
+            Please check back soon to explore our products.
+          </p>
+
+        </div>
+
+
+
+        <!-- NO SEARCH RESULTS STATE -->
+
+        <div
+          class="shop-no-results"
+          id="shopNoResults"
+          hidden
+        >
+
+          <div class="shop-state-icon">
+
+            <i
+              class="fa-solid fa-magnifying-glass"
+              aria-hidden="true"
+            ></i>
+
+          </div>
+
+          <h3>
+            No Matching Products
+          </h3>
+
+          <p>
+            We couldn't find any products matching your search.
+            Try adjusting your search or filters.
+          </p>
+
+          <button
+            type="button"
+            class="button button-outline"
+            id="clearFiltersButton"
+          >
+            Clear Filters
+          </button>
+
+        </div>
+
+
+
+        <!-- PRODUCT GRID -->
+
+        <div
+          class="shop-product-grid"
+          id="shopProductGrid"
+          hidden
+        >
+
+          <!-- Products generated by JavaScript -->
+
+        </div>
+
+
+
+        <!-- LOAD MORE -->
+
+        <div
+          class="shop-load-more-container"
+          id="shopLoadMoreContainer"
+          hidden
+        >
+
+          <button
+            type="button"
+            class="button button-outline"
+            id="loadMoreProductsButton"
+          >
+            Load More Products
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         SHOP CALL TO ACTION
+    ========================================= -->
+
+    <section class="shop-cta-section">
+
+      <div class="section-container">
+
+        <div class="shop-cta-content">
+
+          <span class="eyebrow">
+            NEED SOMETHING SPECIAL?
+          </span>
+
+          <h2>
+            Let's Create Something Beautiful
+          </h2>
+
+          <p>
+            Looking for something personalised or planning
+            a special celebration? We'd love to help bring
+            your ideas to life.
+          </p>
+
+          <a
+            href="services.html"
+            class="button button-primary"
+          >
+            Explore Our Services
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- ==========================================
+       WEBSITE FOOTER
+  =========================================== -->
+
+  <footer class="site-footer">
+
+    <div class="section-container footer-container">
+
+
+      <!-- FOOTER BRAND -->
+
+      <div class="footer-brand">
+
+        <a
+          href="index.html"
+          class="brand footer-logo"
+          aria-label="HAFHASS home"
+        >
+
+          <img
+            src=""
+            alt="HAFHASS logo"
+            class="brand-logo-image"
+            data-store-image="logo_url"
+            hidden
+          >
+
+          <span class="brand-mark">H</span>
+
+          <span class="brand-text">
+
+            <strong data-store="business_name">
+              HAFHASS
+            </strong>
+
+            <small data-store="business_subtitle">
+              EVENTS &amp; DELIGHTS
+            </small>
+
+          </span>
+
+        </a>
+
+
+        <p>
+
+          <span data-store="tagline">
+            Where Taste Meets Creativity.
+          </span>
+
+          Beautiful treats, thoughtful gifts and unforgettable moments.
+
+        </p>
+
+      </div>
+
+
+
+      <!-- EXPLORE LINKS -->
+
+      <div class="footer-column">
+
+        <h3>
+          Explore
+        </h3>
+
+        <a href="index.html#home">
+          Home
+        </a>
+
+        <a href="shop.html">
+          Shop
+        </a>
+
+        <a href="services.html">
+          Services
+        </a>
+
+        <a href="gallery.html">
+          Gallery
+        </a>
+
+        <a href="index.html#about">
+          Our Story
+        </a>
+
+        <a href="founder.html">
+          Meet the Founder
+        </a>
+
+        <a href="index.html#testimonials">
+          Testimonials
+        </a>
+
+      </div>
+
+
+
+      <!-- CUSTOMER CARE -->
+
+      <div class="footer-column">
+
+        <h3>
+          Customer Care
+        </h3>
+
+        <a href="index.html#faqs">
+          FAQs
+        </a>
+
+        <a href="index.html#contact">
+          Contact Us
+        </a>
+
+        <a
+          href="#account"
+          id="customerCareLink"
+        >
+          My Account
+        </a>
+
+        <a href="terms.html">
+          Terms &amp; Conditions
+        </a>
+
+        <a href="privacy.html">
+          Privacy Policy
+        </a>
+
+      </div>
+
+
+
+      <!-- SOCIAL MEDIA -->
+
+      <div class="footer-column footer-social">
+
+        <h3>
+          Follow Us
+        </h3>
+
+        <p>
+          Stay connected with us for beautiful creations,
+          updates and special offers.
+        </p>
+
+
+        <div class="footer-social-links">
+
+
+          <a
+            href="#"
+            data-store-social="instagram"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+
+            <i class="fa-brands fa-instagram"></i>
+
+          </a>
+
+
+          <a
+            href="#"
+            data-store-social="facebook"
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+
+            <i class="fa-brands fa-facebook-f"></i>
+
+          </a>
+
+
+          <a
+            href="#"
+            data-store-social="tiktok"
+            aria-label="TikTok"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+
+            <i class="fa-brands fa-tiktok"></i>
+
+          </a>
+
+
+          <a
+            href="#"
+            data-store-social="whatsapp"
+            aria-label="WhatsApp"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+          </a>
+
+
+          <a
+            href="#"
+            data-store-social="other"
+            aria-label="Other social media"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+
+            <i class="fa-solid fa-globe"></i>
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CONTACT DETAILS -->
+
+      <div class="footer-column">
+
+        <h3>
+          Get in Touch
+        </h3>
+
+        <p>
+          Have a question or a special request?
+          We'd love to hear from you.
+        </p>
+
+
+        <a
+          href="https://wa.me/2348146088556"
+          data-store-href="whatsapp_number"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WhatsApp Us
+        </a>
+
+
+        <a
+          href="tel:+2348146088556"
+          data-store-href="phone"
+        >
+          0814 608 8556
+        </a>
+
+
+        <a
+          href="mailto:kadirihafsat98@gmail.com"
+          class="footer-email"
+          data-store-href="email"
+        >
+          kadirihafsat98@gmail.com
+        </a>
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- ========================================
+         FOOTER BOTTOM
+    ========================================= -->
+
+    <div class="footer-bottom">
+
+      <p>
+
+        &copy;
+
+        <span id="year"></span>
+
+        <span data-store="business_name">
+          HAFHASS
+        </span>
+
+        <span data-store="business_subtitle">
+          EVENTS &amp; DELIGHTS
+        </span>.
+
+        All rights reserved.
+
+      </p>
+
+
+      <p data-store="tagline">
+        Where Taste Meets Creativity.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- ==========================================
+       JAVASCRIPT
+  =========================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/supabase-config.js"></script>
+
+  <script src="js/store-settings.js"></script>
+
+  <script src="js/auth.js"></script>
+
+  <script src="js/main.js"></script>
+
+  <script src="js/shop.js"></script>
+
+
+</body>
+
+</html>

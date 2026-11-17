@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="View and manage your HAFHASS EVENTS & DELIGHTS profile."
+  >
+
+  <title>My Profile | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/account.css">
+
+</head>
+
+
+<body class="account-page">
+
+
+  <!-- =========================================
+       ACCOUNT HEADER
+  ========================================== -->
+
+  <header class="account-header">
+
+    <a href="../index.html" class="account-brand">
+
+      <span class="account-brand-name">
+        <span data-store="business_name">HAFHASS</span>
+      </span>
+
+      <span class="account-brand-subtitle">
+        <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>
+      </span>
+
+    </a>
+
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+
+      <button
+        type="button"
+        class="account-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-regular fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================
+       ACCOUNT LAYOUT
+  ========================================== -->
+
+  <div class="account-layout">
+
+
+    <!-- =======================================
+         SIDEBAR
+    ======================================== -->
+
+    <aside class="account-sidebar" id="accountSidebar">
+
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar" id="avatarInitials">
+          C
+        </div>
+
+
+        <div class="account-user-details">
+
+          <h3 id="sidebarUserName">
+            Customer
+          </h3>
+
+          <p id="sidebarUserEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ACCOUNT NAVIGATION -->
+
+      <nav class="account-navigation">
+
+
+        <div class="account-nav-section">
+
+          <span class="account-nav-heading">
+            ACCOUNT
+          </span>
+
+
+          <a href="dashboard.html" class="account-nav-link">
+            <i class="fa-solid fa-gauge-high nav-icon" aria-hidden="true"></i>
+            <span>Dashboard</span>
+          </a>
+
+
+          <a
+            href="profile.html"
+            class="account-nav-link active"
+            aria-current="page"
+          >
+            <i class="fa-regular fa-user nav-icon" aria-hidden="true"></i>
+            <span>My Profile</span>
+          </a>
+
+
+          <a href="orders.html" class="account-nav-link">
+            <i class="fa-solid fa-box-open nav-icon" aria-hidden="true"></i>
+            <span>My Orders</span>
+          </a>
+
+
+          <a href="favourites.html" class="account-nav-link">
+            <i class="fa-regular fa-heart nav-icon" aria-hidden="true"></i>
+            <span>My Favourites</span>
+          </a>
+
+
+          <a href="addresses.html" class="account-nav-link">
+            <i class="fa-solid fa-location-dot nav-icon" aria-hidden="true"></i>
+            <span>Saved Addresses</span>
+          </a>
+
+        </div>
+
+
+
+        <div class="account-nav-section">
+
+          <span class="account-nav-heading">
+            SHOPPING
+          </span>
+
+
+          <a href="../shop.html" class="account-nav-link">
+            <i class="fa-solid fa-store nav-icon" aria-hidden="true"></i>
+            <span>Browse Shop</span>
+          </a>
+
+
+          <a href="cart.html" class="account-nav-link">
+
+            <i class="fa-solid fa-bag-shopping nav-icon" aria-hidden="true"></i>
+
+            <span>My Shopping Bag</span>
+
+            <span
+              id="accountCartCount"
+              class="account-cart-count"
+              aria-label="Items in cart"
+            >0</span>
+
+          </a>
+
+        </div>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR BOTTOM -->
+
+      <div class="account-sidebar-bottom">
+
+        <a href="../index.html" class="account-back-home">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span>Back to Website</span>
+        </a>
+
+
+        <button
+          type="button"
+          class="account-nav-link account-logout-button"
+          id="logoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket nav-icon" aria-hidden="true"></i>
+          <span>Logout</span>
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =======================================
+         MAIN CONTENT
+    ======================================== -->
+
+    <main class="account-main">
+
+
+      <section class="profile-page">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="profile-page-heading">
+
+          <div>
+
+            <span class="account-section-eyebrow">
+              YOUR ACCOUNT
+            </span>
+
+            <h1>
+              My Profile
+            </h1>
+
+            <p>
+              Manage your personal information and account details.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             PROFILE INFORMATION
+        ================================== -->
+
+        <section class="profile-card">
+
+
+          <div class="profile-card-heading">
+
+            <div>
+
+              <h2>
+                Personal Information
+              </h2>
+
+              <p>
+                Keep your contact information up to date.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- PROFILE FORM -->
+
+          <form id="profileForm">
+
+
+            <!-- PROFILE IDENTITY -->
+
+            <div class="profile-identity">
+
+
+              <div class="profile-avatar-large" id="profileAvatar">
+                C
+              </div>
+
+
+              <div class="profile-identity-details">
+
+                <h3 id="profileDisplayName">
+                  Customer
+                </h3>
+
+                <p id="profileDisplayEmail">
+                  Loading...
+                </p>
+
+                <span class="profile-account-badge" id="profileRoleBadge">
+                  CUSTOMER
+                </span>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- FORM FIELDS -->
+
+            <div class="profile-form-grid">
+
+
+              <!-- FULL NAME -->
+
+              <div class="profile-form-group">
+
+                <label for="profileFullName">
+                  Full Name
+                </label>
+
+                <input
+                  type="text"
+                  id="profileFullName"
+                  name="full_name"
+                  placeholder="Enter your full name"
+                  autocomplete="name"
+                  required
+                >
+
+              </div>
+
+
+
+              <!-- EMAIL -->
+
+              <div class="profile-form-group">
+
+                <label for="profileEmail">
+                  Email Address
+                </label>
+
+                <input
+                  type="email"
+                  id="profileEmail"
+                  name="email"
+                  placeholder="Your email address"
+                  autocomplete="email"
+                  readonly
+                >
+
+                <small>
+                  Your registered email address cannot be changed here.
+                </small>
+
+              </div>
+
+
+
+              <!-- PHONE -->
+
+              <div class="profile-form-group">
+
+                <label for="profilePhone">
+                  Phone Number
+                </label>
+
+                <input
+                  type="tel"
+                  id="profilePhone"
+                  name="phone"
+                  placeholder="Enter your phone number"
+                  autocomplete="tel"
+                >
+
+              </div>
+
+
+            </div>
+
+
+
+            <!-- ACCOUNT STATUS -->
+
+            <div class="profile-account-information">
+
+              <div>
+
+                <span class="profile-info-label">
+                  Account Status
+                </span>
+
+                <strong id="profileAccountStatus">
+                  Active
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                <span class="profile-info-label">
+                  Member Since
+                </span>
+
+                <strong id="profileCreatedAt">
+                  —
+                </strong>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- FORM ACTIONS -->
+
+            <div class="profile-form-actions">
+
+              <button
+                type="button"
+                class="profile-edit-button"
+                id="editProfileButton"
+              >
+                <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                <span>Edit Profile</span>
+              </button>
+
+
+              <div
+                class="profile-edit-actions"
+                id="profileEditActions"
+                hidden
+              >
+
+                <button
+                  type="button"
+                  class="profile-reset-button"
+                  id="resetProfileButton"
+                >
+                  Cancel
+                </button>
+
+
+                <button
+                  type="submit"
+                  class="profile-save-button"
+                  id="saveProfileButton"
+                >
+                  <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                  <span>Save Changes</span>
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- PROFILE MESSAGE -->
+
+            <div
+              class="profile-message"
+              id="profileMessage"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></div>
+
+
+          </form>
+
+        </section>
+
+
+      </section>
+
+    </main>
+
+
+  </div>
+
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================== -->
+
+  <footer class="account-footer">
+
+    <p>
+      © <span id="accountYear"></span>
+
+      <span data-store="business_name">HAFHASS</span>
+      <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>.
+
+      All rights reserved.
+    </p>
+
+    <p>
+      <span data-store="tagline">Where Taste Meets Creativity.</span>
+    </p>
+
+  </footer>
+
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/account-layout.js"></script>
+
+  <script src="../js/account-profile.js"></script>
+
+
+</body>
+
+</html>

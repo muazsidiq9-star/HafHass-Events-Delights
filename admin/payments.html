@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- BASIC PAGE INFORMATION -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Manage and verify customer payments at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <title>Payments Management | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <link rel="stylesheet" href="../css/admin-payments.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+  <span
+    class="admin-brand-name"
+    data-store="business_name"
+  >
+    HAFHASS
+  </span>
+
+  <span
+    class="admin-brand-subtitle"
+    data-store="business_subtitle"
+  >
+    EVENTS & DELIGHTS
+  </span>
+
+  <span class="admin-brand-badge">
+    ADMIN
+  </span>
+
+</a>
+
+
+    <div class="admin-header-actions">
+
+      <span class="admin-header-user" id="adminHeaderName">
+        Administrator
+      </span>
+
+
+      <button
+        type="button"
+        class="admin-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-solid fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-mobile-menu"
+        id="adminMenuToggle"
+        aria-label="Open admin menu"
+        aria-expanded="false"
+        aria-controls="adminSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+
+      <!-- ADMIN PROFILE -->
+
+      <div class="admin-sidebar-profile">
+
+        <div class="admin-avatar" id="adminAvatar">
+          A
+        </div>
+
+        <div class="admin-profile-details">
+
+          <h3 id="adminSidebarName">
+            Administrator
+          </h3>
+
+          <p id="adminSidebarEmail">
+            Loading...
+          </p>
+
+          <span class="admin-role-badge" id="adminRole">
+            ADMIN
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link" 
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="admin-main">
+
+
+      <!-- PAGE HEADING -->
+
+      <section class="admin-page-heading">
+
+        <div>
+
+          <p class="admin-eyebrow">
+            PAYMENTS & DELIVERY
+          </p>
+
+          <h1>
+            Payments
+          </h1>
+
+          <p>
+            Monitor transactions, review payment records and verify bank transfers.
+          </p>
+
+        </div>
+
+
+        <div class="admin-date" id="adminCurrentDate">
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           PAYMENT STATISTICS
+      ================================================== -->
+
+      <section class="admin-payments-overview">
+
+        <div class="admin-payments-stat-grid">
+
+
+          <!-- TOTAL PAYMENTS -->
+
+          <article class="admin-payments-stat-card">
+
+            <div class="admin-payments-stat-icon">
+              <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <p>Total Payments</p>
+
+              <h3 id="paymentsTotalCount">—</h3>
+
+              <span>All recorded transactions</span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- PENDING PAYMENTS -->
+
+          <article class="admin-payments-stat-card">
+
+            <div class="admin-payments-stat-icon">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <p>Pending</p>
+
+              <h3 id="paymentsPendingCount">—</h3>
+
+              <span>Awaiting confirmation</span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- SUCCESSFUL PAYMENTS -->
+
+          <article class="admin-payments-stat-card">
+
+            <div class="admin-payments-stat-icon">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <p>Successful</p>
+
+              <h3 id="paymentsSuccessfulCount">—</h3>
+
+              <span>Confirmed payments</span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- FAILED PAYMENTS -->
+
+          <article class="admin-payments-stat-card">
+
+            <div class="admin-payments-stat-icon">
+              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <p>Failed</p>
+
+              <h3 id="paymentsFailedCount">—</h3>
+
+              <span>Unsuccessful transactions</span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- REFUNDED PAYMENTS -->
+
+          <article class="admin-payments-stat-card">
+
+            <div class="admin-payments-stat-icon">
+              <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <p>Refunded</p>
+
+              <h3 id="paymentsRefundedCount">—</h3>
+
+              <span>Refunded transactions</span>
+
+            </div>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           PAYMENTS MANAGEMENT
+      ================================================== -->
+
+      <section class="admin-payments-section">
+
+
+        <!-- SECTION HEADING -->
+
+        <div class="admin-section-heading">
+
+          <div>
+
+            <h2>All Payments</h2>
+
+            <p>
+              View, search and manage customer payment transactions.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- PAYMENT FILTERS -->
+
+        <div class="admin-payments-toolbar">
+
+
+          <!-- SEARCH -->
+
+          <div class="admin-payments-search">
+
+            <i
+              class="fa-solid fa-magnifying-glass"
+              aria-hidden="true"
+            ></i>
+
+            <input
+              type="search"
+              id="paymentsSearch"
+              placeholder="Search payment reference, order or customer..."
+              autocomplete="off"
+              aria-label="Search payments"
+            >
+
+          </div>
+
+
+
+          <!-- PAYMENT STATUS FILTER -->
+
+          <div class="admin-payments-filter">
+
+            <select
+              id="paymentsStatusFilter"
+              aria-label="Filter by payment status"
+            >
+
+              <option value="all">
+                All Payment Statuses
+              </option>
+
+              <option value="pending">
+                Pending
+              </option>
+
+              <option value="processing">
+                Processing
+              </option>
+
+              <option value="successful">
+                Successful
+              </option>
+
+              <option value="failed">
+                Failed
+              </option>
+
+              <option value="refunded">
+                Refunded
+              </option>
+
+              <option value="partially_refunded">
+                Partially Refunded
+              </option>
+
+            </select>
+
+          </div>
+
+
+
+          <!-- PAYMENT METHOD FILTER -->
+
+          <div class="admin-payments-filter">
+
+            <select
+              id="paymentsMethodFilter"
+              aria-label="Filter by payment method"
+            >
+
+              <option value="all">
+                All Payment Methods
+              </option>
+
+              <option value="paystack">
+                Paystack
+              </option>
+
+              <option value="bank_transfer">
+                Bank Transfer
+              </option>
+
+            </select>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- RESULT COUNT -->
+
+        <div class="admin-payments-result-bar">
+
+          <p>
+
+            Showing
+
+            <strong id="paymentsResultCount">0</strong>
+
+            payments
+
+          </p>
+
+
+          <button
+            type="button"
+            id="clearPaymentsFilters"
+            class="admin-payments-clear-filters"
+          >
+
+            <i
+              class="fa-solid fa-filter-circle-xmark"
+              aria-hidden="true"
+            ></i>
+
+            Clear Filters
+
+          </button>
+
+        </div>
+
+
+
+        <!-- LOADING STATE -->
+
+        <div
+          class="admin-payments-state"
+          id="paymentsLoading"
+          role="status"
+          aria-live="polite"
+        >
+
+          <i
+            class="fa-solid fa-spinner fa-spin"
+            aria-hidden="true"
+          ></i>
+
+          <p>Loading payments...</p>
+
+        </div>
+
+
+
+        <!-- ERROR STATE -->
+
+        <div
+          class="admin-payments-state admin-payments-error"
+          id="paymentsError"
+          hidden
+          role="alert"
+        >
+
+          <i
+            class="fa-solid fa-circle-exclamation"
+            aria-hidden="true"
+          ></i>
+
+          <h3>Unable to Load Payments</h3>
+
+          <p id="paymentsErrorMessage">
+            Something went wrong while loading payments.
+          </p>
+
+          <button
+            type="button"
+            id="retryPaymentsButton"
+          >
+
+            <i
+              class="fa-solid fa-rotate-right"
+              aria-hidden="true"
+            ></i>
+
+            Try Again
+
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+          class="admin-payments-state"
+          id="paymentsEmpty"
+          hidden
+        >
+
+          <i
+            class="fa-solid fa-wallet"
+            aria-hidden="true"
+          ></i>
+
+          <h3>No Payments Yet</h3>
+
+          <p>
+            Customer payment transactions will appear here when payments are recorded.
+          </p>
+
+        </div>
+
+
+
+        <!-- NO RESULTS -->
+
+        <div
+          class="admin-payments-state"
+          id="paymentsNoResults"
+          hidden
+        >
+
+          <i
+            class="fa-solid fa-magnifying-glass"
+            aria-hidden="true"
+          ></i>
+
+          <h3>No Matching Payments</h3>
+
+          <p>
+            Try changing your search or filters.
+          </p>
+
+          <button
+            type="button"
+            id="clearPaymentsSearch"
+          >
+            Clear Search
+          </button>
+
+        </div>
+
+
+
+        <!-- PAYMENTS TABLE -->
+
+        <div
+          class="admin-payments-table-container"
+          id="paymentsTableContainer"
+          hidden
+        >
+
+          <table class="admin-payments-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Transaction</th>
+
+                <th>Order</th>
+
+                <th>Customer</th>
+
+                <th>Date</th>
+
+                <th>Amount</th>
+
+                <th>Method</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="paymentsTableBody">
+
+              <!-- PAYMENTS WILL BE RENDERED HERE -->
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+
+        <!-- PAGINATION -->
+
+        <div
+          class="admin-payments-pagination"
+          id="paymentsPagination"
+          hidden
+        >
+
+          <p id="paymentsPaginationInfo">
+            Showing 0 of 0 payments
+          </p>
+
+
+          <div class="admin-payments-pagination-controls">
+
+            <button
+              type="button"
+              id="previousPaymentsPage"
+              disabled
+            >
+
+              <i
+                class="fa-solid fa-chevron-left"
+                aria-hidden="true"
+              ></i>
+
+              Previous
+
+            </button>
+
+
+            <span id="paymentsPageNumber">
+              1
+            </span>
+
+
+            <button
+              type="button"
+              id="nextPaymentsPage"
+              disabled
+            >
+
+              Next
+
+              <i
+                class="fa-solid fa-chevron-right"
+                aria-hidden="true"
+              ></i>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       PAYMENT DETAILS MODAL
+  ====================================================== -->
+
+  <div
+    class="admin-payment-modal-overlay"
+    id="paymentModalOverlay"
+    hidden
+  >
+
+    <div
+      class="admin-payment-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="paymentModalTitle"
+      aria-describedby="paymentModalContent"
+      tabindex="-1"
+    >
+
+
+      <!-- MODAL HEADER -->
+
+      <div class="admin-payment-modal-header">
+
+        <div>
+
+          <span class="admin-eyebrow">
+            PAYMENT MANAGEMENT
+          </span>
+
+          <h2 id="paymentModalTitle">
+            Payment Details
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="closePaymentModal"
+          class="admin-payment-modal-close"
+          aria-label="Close payment details"
+        >
+
+          <i
+            class="fa-solid fa-xmark"
+            aria-hidden="true"
+          ></i>
+
+        </button>
+
+      </div>
+
+
+
+      <!-- MODAL CONTENT -->
+
+      <div
+        class="admin-payment-modal-content"
+        id="paymentModalContent"
+      >
+
+        <!-- PAYMENT DETAILS WILL BE RENDERED HERE -->
+
+      </div>
+
+
+
+      <!-- PAYMENT VERIFICATION / ADMIN ACTIONS -->
+
+      <div
+        class="admin-payment-actions"
+        id="paymentAdminActions"
+        hidden
+      >
+
+        <!-- VERIFICATION CONTROLS WILL BE RENDERED HERE -->
+
+      </div>
+
+
+      <!-- ACTION MESSAGE -->
+
+      <p
+        id="paymentActionMessage"
+        class="admin-payment-action-message"
+        aria-live="polite"
+      ></p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase-config.js"></script>
+<!-- SHARED STORE SETTINGS -->
+<script src="../js/store-settings.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/admin-layout.js"></script>
+
+  <script src="../js/admin-payments.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="View and manage your favourite products at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <title>My Favourites | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+
+  <!-- SHARED STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/auth.css">
+
+  <link rel="stylesheet" href="../css/account.css">
+
+</head>
+
+
+<body class="account-page">
+
+
+  <!-- ==================================================
+       ACCOUNT HEADER
+       ================================================== -->
+
+  <header class="account-header">
+
+    <a href="../index.html" class="account-brand">
+
+      <span class="account-brand-name">
+        <span data-store="business_name">HAFHASS</span>
+      </span>
+
+      <span class="account-brand-subtitle">
+        <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>
+      </span>
+
+    </a>
+
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+
+      <button
+        type="button"
+        id="themeToggle"
+        class="account-theme-toggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-regular fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open account menu"
+        aria-expanded="false"
+        aria-controls="accountSidebar"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==================================================
+       ACCOUNT LAYOUT
+       ================================================== -->
+
+  <div class="account-layout">
+
+
+    <!-- ================================================
+         SIDEBAR
+         ================================================ -->
+
+    <aside
+      class="account-sidebar"
+      id="accountSidebar"
+    >
+
+
+      <!-- CUSTOMER INFORMATION -->
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar" id="accountAvatar">
+
+          <span id="avatarInitials">C</span>
+
+        </div>
+
+
+        <div class="account-user-details">
+
+          <p class="account-user-label">
+            Welcome back
+          </p>
+
+          <h2 id="sidebarUserName">
+            Customer
+          </h2>
+
+          <p id="sidebarUserEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="account-navigation">
+
+
+        <p class="account-nav-heading">
+          ACCOUNT
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </span>
+
+          Dashboard
+
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-box" aria-hidden="true"></i>
+          </span>
+
+          My Orders
+
+        </a>
+
+
+        <a
+          href="favourites.html"
+          class="account-nav-link active"
+          aria-current="page"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+          </span>
+
+          My Favourites
+
+        </a>
+
+
+        <a
+          href="addresses.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </span>
+
+          Saved Addresses
+
+        </a>
+
+
+        <a
+          href="profile.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
+          </span>
+
+          My Profile
+
+        </a>
+
+
+
+        <p class="account-nav-heading">
+          SHOPPING
+        </p>
+
+
+        <a
+          href="../shop.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+          </span>
+
+          Browse Shop
+
+        </a>
+
+
+        <a
+          href="cart.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+          </span>
+
+          My Shopping Bag
+
+          <span
+            id="accountCartCount"
+            class="account-cart-count"
+            aria-label="Cart items"
+          >0</span>
+
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR BOTTOM -->
+
+      <div class="account-sidebar-bottom">
+
+        <a
+          href="../index.html"
+          class="account-back-home"
+        >
+
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+          Back to Homepage
+
+        </a>
+
+
+        <button
+          type="button"
+          class="account-logout-button"
+          id="logoutButton"
+        >
+
+          <span class="nav-icon">
+            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          </span>
+
+          Sign Out
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+
+    <!-- ================================================
+         MAIN CONTENT
+         ================================================ -->
+
+    <main class="account-main">
+
+
+      <section class="favourites-page">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="favourites-heading">
+
+          <div>
+
+            <p class="account-eyebrow">
+              YOUR PERSONAL COLLECTION
+            </p>
+
+            <h1>
+              My Favourites
+            </h1>
+
+            <p>
+              Keep your favourite products close and find them
+              whenever you're ready to shop.
+            </p>
+
+          </div>
+
+
+          <span
+            class="favourites-count"
+            id="favouritesCount"
+          >
+            0 saved items
+          </span>
+
+        </div>
+
+
+
+        <!-- FAVOURITES TOOLBAR -->
+
+        <div class="favourites-toolbar">
+
+
+          <div class="favourites-toolbar-info">
+
+            <h2>
+              Saved Products
+            </h2>
+
+            <p>
+              Products you've added to your favourites.
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="account-secondary-button"
+            id="refreshFavouritesButton"
+          >
+
+            <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+
+            Refresh
+
+          </button>
+
+        </div>
+
+
+
+        <!-- LOADING STATE -->
+
+        <div
+          class="favourites-loading"
+          id="favouritesLoading"
+        >
+
+          <span class="account-spinner"></span>
+
+          <p>
+            Loading your favourites...
+          </p>
+
+        </div>
+
+
+
+        <!-- ERROR STATE -->
+
+        <div
+          class="favourites-error"
+          id="favouritesError"
+          hidden
+        >
+
+          <h3>
+            Unable to Load Favourites
+          </h3>
+
+          <p id="favouritesErrorMessage">
+            Something went wrong while loading your favourites.
+          </p>
+
+          <button
+            type="button"
+            id="retryFavouritesButton"
+          >
+            Try Again
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+          class="favourites-empty"
+          id="favouritesEmpty"
+          hidden
+        >
+
+          <div class="favourites-empty-icon">
+
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+
+          </div>
+
+          <h3>
+            No Favourites Yet
+          </h3>
+
+          <p>
+            You haven't saved any favourite products yet.
+            Explore our collection and save the products
+            you love for easy access later.
+          </p>
+
+          <a
+            href="../shop.html"
+            class="account-primary-button"
+          >
+
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+
+            Explore Our Shop
+
+          </a>
+
+        </div>
+
+
+
+        <!-- FAVOURITES GRID -->
+
+        <div
+          class="favourites-list"
+          id="favouritesGrid"
+          hidden
+        ></div>
+
+
+      </section>
+
+    </main>
+
+
+  </div>
+
+
+
+  <!-- FOOTER -->
+
+  <footer class="account-footer">
+
+    <p>
+
+      © <span id="accountYear"></span>
+
+      <span data-store="business_name">HAFHASS</span>
+
+      <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>.
+
+      All rights reserved.
+
+    </p>
+
+    <p>
+      <span data-store="tagline">Where Taste Meets Creativity.</span>
+    </p>
+
+  </footer>
+
+
+
+  <!-- ==================================================
+       JAVASCRIPT
+       ================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/account-layout.js"></script>
+
+  <script src="../js/account-favourites.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- BASIC PAGE INFORMATION -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Manage customers and view customer information for HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <title>Customers | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <link rel="stylesheet" href="../css/admin-customers.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+<!-- =====================================================
+     ADMIN HEADER
+====================================================== -->
+
+<header class="admin-header">
+
+  <a href="dashboard.html" class="admin-brand">
+
+  <span
+    class="admin-brand-name"
+    data-store="business_name"
+  >
+    HAFHASS
+  </span>
+
+  <span
+    class="admin-brand-subtitle"
+    data-store="business_subtitle"
+  >
+    EVENTS & DELIGHTS
+  </span>
+
+  <span class="admin-brand-badge">
+    ADMIN
+  </span>
+
+</a>
+
+
+  <div class="admin-header-actions">
+
+    <span class="admin-header-user" id="adminHeaderName">
+      Administrator
+    </span>
+
+
+    <button
+      type="button"
+      class="admin-theme-toggle"
+      id="themeToggle"
+      aria-label="Switch theme"
+    >
+
+      <i
+        class="fa-solid fa-moon theme-icon"
+        aria-hidden="true"
+      ></i>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="admin-mobile-menu"
+      id="adminMenuToggle"
+      aria-label="Open admin menu"
+      aria-expanded="false"
+      aria-controls="adminSidebar"
+    >
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     ADMIN LAYOUT
+====================================================== -->
+
+<div class="admin-layout">
+
+
+  <!-- ===================================================
+       SIDEBAR
+  ==================================================== -->
+
+  <aside class="admin-sidebar" id="adminSidebar">
+
+
+    <!-- ADMIN PROFILE -->
+
+    <div class="admin-sidebar-profile">
+
+      <div class="admin-avatar" id="adminAvatar">
+        A
+      </div>
+
+
+      <div class="admin-profile-details">
+
+        <h3 id="adminSidebarName">
+          Administrator
+        </h3>
+
+        <p id="adminSidebarEmail">
+          Loading...
+        </p>
+
+        <span class="admin-role-badge" id="adminRole">
+          ADMIN
+        </span>
+
+      </div>
+
+    </div>
+
+
+
+    
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link" 
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+  <!-- ===================================================
+       MAIN CONTENT
+  ==================================================== -->
+
+  <main class="admin-main">
+
+
+    <!-- PAGE HEADING -->
+
+    <section class="admin-page-heading">
+
+      <div>
+
+        <p class="admin-eyebrow">
+          STORE MANAGEMENT
+        </p>
+
+        <h1>Customers</h1>
+
+        <p>
+          View and manage your store's customer information.
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CUSTOMER OVERVIEW
+    ================================================== -->
+
+    <section class="admin-overview-section admin-customers-overview">
+
+
+      <div class="admin-section-heading">
+
+        <div>
+
+          <h2>Customer Overview</h2>
+
+          <p>
+            A quick summary of your registered customers.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CUSTOMER STATISTICS -->
+
+      <div class="admin-stat-grid admin-customers-stat-grid">
+
+
+        <!-- TOTAL CUSTOMERS -->
+
+        <div class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+
+          </div>
+
+
+          <div>
+
+            <p>Total Customers</p>
+
+            <h3 id="totalCustomers">—</h3>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ACTIVE CUSTOMERS -->
+
+        <div class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+
+            <i class="fa-solid fa-user-check" aria-hidden="true"></i>
+
+          </div>
+
+
+          <div>
+
+            <p>Active Customers</p>
+
+            <h3 id="activeCustomers">—</h3>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- NEW CUSTOMERS -->
+
+        <div class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+
+            <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+
+          </div>
+
+
+          <div>
+
+            <p>New Customers</p>
+
+            <h3 id="newCustomers">—</h3>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CUSTOMERS WITH ORDERS -->
+
+        <div class="admin-stat-card">
+
+          <div class="admin-stat-icon">
+
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+
+          </div>
+
+
+          <div>
+
+            <p>Customers With Orders</p>
+
+            <h3 id="customersWithOrders">—</h3>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CUSTOMER MANAGEMENT
+    ================================================== -->
+
+    <section class="admin-customers-section">
+
+
+      <!-- SECTION HEADING -->
+
+      <div class="admin-section-heading">
+
+        <div>
+
+          <h2>All Customers</h2>
+
+          <p>
+            Search, filter and view customer details.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SEARCH AND FILTER TOOLBAR -->
+
+      <div class="admin-customers-toolbar">
+
+
+        <!-- CUSTOMER SEARCH -->
+
+        <div class="admin-customers-search">
+
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+
+          <input
+            type="search"
+            id="customerSearch"
+            placeholder="Search by name, email or phone..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+
+        <!-- CUSTOMER STATUS FILTER -->
+
+        <div class="admin-customers-filter">
+
+          <select id="customerStatusFilter">
+
+            <option value="all">
+              All Customers
+            </option>
+
+            <option value="active">
+              Active Customers
+            </option>
+
+            <option value="inactive">
+              Inactive Customers
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- CLEAR FILTERS -->
+
+        <button
+          type="button"
+          class="admin-customers-clear-filters"
+          id="clearCustomerFilters"
+        >
+
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+
+          Clear Filters
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- RESULT COUNT -->
+
+      <div class="admin-customers-result-bar">
+
+        <p id="customerResultCount">
+          Showing customers
+        </p>
+
+      </div>
+
+
+
+      <!-- =================================================
+           LOADING STATE
+      ================================================== -->
+
+      <div
+        class="admin-customers-state"
+        id="customersLoading"
+        hidden
+      >
+
+        <div class="admin-empty-icon">
+
+          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+
+        </div>
+
+        <h3>Loading Customers</h3>
+
+        <p>
+          Please wait while we retrieve customer information.
+        </p>
+
+      </div>
+
+
+
+      <!-- =================================================
+           ERROR STATE
+      ================================================== -->
+
+      <div
+        class="admin-customers-state"
+        id="customersError"
+        hidden
+      >
+
+        <div class="admin-empty-icon">
+
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+
+        </div>
+
+        <h3>Unable to Load Customers</h3>
+
+        <p>
+          Something went wrong while retrieving customer information.
+          Please try again.
+        </p>
+
+        <button
+          type="button"
+          class="admin-retry-button"
+          id="retryCustomersButton"
+        >
+
+          <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+
+          Try Again
+
+        </button>
+
+      </div>
+
+
+
+      <!-- =================================================
+           EMPTY STATE
+      ================================================== -->
+
+      <div
+        class="admin-customers-state"
+        id="customersEmpty"
+        hidden
+      >
+
+        <div class="admin-empty-icon">
+
+          <i class="fa-solid fa-users" aria-hidden="true"></i>
+
+        </div>
+
+        <h3>No Customers Found</h3>
+
+        <p>
+          There are no customers matching your search or filter.
+        </p>
+
+      </div>
+
+
+
+      <!-- =================================================
+           CUSTOMERS TABLE
+      ================================================== -->
+
+      <div
+        class="admin-table-wrapper admin-customers-table-container"
+        id="customersTableContainer"
+      >
+
+        <table class="admin-table admin-customers-table">
+
+          <thead>
+
+            <tr>
+
+              <th>Customer</th>
+
+              <th>Contact Information</th>
+
+              <th>Total Orders</th>
+
+              <th>Total Spent</th>
+
+              <th>Status</th>
+
+              <th>Action</th>
+              
+              <th>View</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="customersTableBody">
+
+            <!-- CUSTOMER ROWS GENERATED BY JAVASCRIPT -->
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+
+      <!-- =================================================
+           PAGINATION
+      ================================================== -->
+
+      <div
+        class="admin-customers-pagination"
+        id="customersPagination"
+      >
+
+        <p id="customersPaginationInfo">
+          Showing 0 customers
+        </p>
+
+
+        <div class="admin-customers-pagination-controls">
+
+          <button
+            type="button"
+            id="customersPreviousPage"
+            aria-label="Previous page"
+            disabled
+          >
+
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+
+          </button>
+
+
+          <span id="customersPageNumber">
+            1
+          </span>
+
+
+          <button
+            type="button"
+            id="customersNextPage"
+            aria-label="Next page"
+            disabled
+          >
+
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CUSTOMER DETAILS MODAL
+====================================================== -->
+
+<div
+  class="admin-customer-modal-overlay"
+  id="customerModalOverlay"
+  hidden
+>
+
+  <div
+    class="admin-customer-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="customerModalTitle"
+  >
+
+
+    <!-- MODAL HEADER -->
+
+    <div class="admin-customer-modal-header">
+
+      <div>
+
+        <p class="admin-eyebrow">
+          CUSTOMER INFORMATION
+        </p>
+
+        <h2 id="customerModalTitle">
+          Customer Details
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="admin-customer-modal-close"
+        id="closeCustomerModal"
+        aria-label="Close customer details"
+      >
+
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
+      </button>
+
+    </div>
+
+
+
+    <!-- MODAL CONTENT -->
+
+    <div
+      class="admin-customer-modal-content"
+      id="customerModalContent"
+    >
+
+      <!-- CUSTOMER DETAILS GENERATED BY JAVASCRIPT -->
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ADMIN FOOTER
+====================================================== -->
+
+<footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase-config.js"></script>
+<!-- SHARED STORE SETTINGS -->
+<script src="../js/store-settings.js"></script>
+
+<script src="../js/auth.js"></script>
+
+<script src="../js/guards.js"></script>
+
+<script src="../js/admin-layout.js"></script>
+
+<script src="../js/admin-customers.js"></script>
+
+
+</body>
+
+</html>

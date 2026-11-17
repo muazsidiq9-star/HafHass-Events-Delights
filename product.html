@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- ==========================================
+       BASIC PAGE INFORMATION
+  =========================================== -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Discover beautiful cakes, pastries, treats, gifts and creative delights at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <meta name="theme-color" content="#FFF9F3">
+  
+  <link rel="icon" href="data:,">
+
+  <title>Product Details | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- ==========================================
+       GOOGLE FONTS
+  =========================================== -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+  <!-- ==========================================
+       STYLESHEETS
+  =========================================== -->
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="css/product.css">
+
+</head>
+
+
+<body class="product-page">
+    
+    <!-- ANNOUNCEMENT BAR -->
+
+  <div
+  class="announcement"
+  data-store-announcement
+  hidden
+></div>
+
+
+  <!-- ==========================================
+       WEBSITE HEADER
+  =========================================== -->
+
+  <header class="site-header">
+
+    <div class="header-container">
+
+      <a href="index.html" class="brand" aria-label="HAFHASS home">
+
+  <img
+    src=""
+    alt="HAFHASS logo"
+    class="brand-logo-image"
+    data-store-image="logo_url"
+    hidden
+  >
+
+  <span class="brand-mark">H</span>
+
+  <span class="brand-text">
+    <strong>HAFHASS</strong>
+    <small>EVENTS &amp; DELIGHTS</small>
+  </span>
+
+</a>
+
+
+      <!-- MOBILE MENU BUTTON -->
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="mainNav"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+
+      <!-- MAIN NAVIGATION -->
+
+      <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+
+        <a href="index.html#home">Home</a>
+
+        <a
+          href="shop.html"
+          class="active"
+          aria-current="page"
+        >
+          Shop
+        </a>
+
+        <a href="services.html">Services</a>
+
+        <a href="gallery.html">Gallery</a>
+
+        <a href="index.html#about">Our Story</a>
+
+        <a href="founder.html">Founder</a>
+
+        <a href="index.html#testimonials">Testimonials</a>
+
+        <a href="index.html#faqs">FAQs</a>
+
+        <a href="index.html#contact">Contact</a>
+
+
+        <a
+          href="login.html"
+          class="nav-auth-link"
+          id="authNavLink"
+          data-auth-link
+          data-auth-state="signed-out"
+        >
+          Sign In
+        </a>
+
+      </nav>
+
+
+      <!-- HEADER ACTIONS -->
+
+      <div class="header-actions">
+
+        <a
+          href="#featured"
+          class="cart-link"
+          aria-label="Shopping bag"
+        >
+
+          <span class="cart-icon">
+  <i class="fa-solid fa-bag-shopping"></i>
+</span>
+
+          <span class="cart-count" id="cartCount">0</span>
+
+        </a>
+
+
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="Switch to dark theme"
+          title="Switch theme"
+        >
+
+          <span class="theme-icon">
+  <i class="fa-solid fa-moon"></i>
+</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==========================================
+       MAIN PRODUCT CONTENT
+  =========================================== -->
+
+  <main class="product-main">
+
+
+    <!-- ========================================
+         BREADCRUMB
+    ========================================= -->
+
+    <div class="product-breadcrumb section-container">
+
+      <a href="index.html">Home</a>
+
+      <span>/</span>
+
+      <a href="shop.html">Shop</a>
+
+      <span>/</span>
+
+      <span id="breadcrumbProductName">
+        Product Details
+      </span>
+
+    </div>
+
+
+
+    <!-- ========================================
+         PRODUCT LOADING STATE
+    ========================================= -->
+
+    <section
+      class="product-loading"
+      id="productLoading"
+    >
+
+      <div class="product-loader"></div>
+
+      <p>
+        Preparing something delightful...
+      </p>
+
+    </section>
+
+
+
+    <!-- ========================================
+         PRODUCT ERROR STATE
+    ========================================= -->
+
+    <section
+      class="product-error"
+      id="productError"
+      hidden
+    >
+
+      <div class="product-state-icon">
+  <i class="fa-solid fa-circle-exclamation"></i>
+</div>
+
+      <h2>
+        Unable to Load Product
+      </h2>
+
+      <p id="productErrorMessage">
+        Something went wrong while loading this product.
+      </p>
+
+      <div class="product-state-actions">
+
+        <button
+          type="button"
+          class="button button-primary"
+          id="retryProductButton"
+        >
+          Try Again
+        </button>
+
+        <a
+          href="shop.html"
+          class="button button-outline"
+        >
+          Back to Shop
+        </a>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         PRODUCT NOT FOUND STATE
+    ========================================= -->
+
+    <section
+      class="product-not-found"
+      id="productNotFound"
+      hidden
+    >
+
+      <div class="product-state-icon">
+  <i class="fa-solid fa-box-open"></i>
+</div>
+
+      <h2>
+        Product Not Found
+      </h2>
+
+      <p>
+        We couldn't find the product you're looking for.
+        It may have been removed or is no longer available.
+      </p>
+
+      <a
+        href="shop.html"
+        class="button button-primary"
+      >
+        Explore Our Shop
+      </a>
+
+    </section>
+
+
+
+    <!-- ========================================
+         PRODUCT DETAILS CONTENT
+    ========================================= -->
+
+    <section
+      class="product-details-section"
+      id="productContent"
+      hidden
+    >
+
+      <div class="section-container">
+
+        <div class="product-content">
+
+
+          <!-- ==================================
+               PRODUCT IMAGE GALLERY
+          =================================== -->
+
+          <div class="product-gallery">
+
+
+            <!-- MAIN IMAGE -->
+
+            <div class="product-main-image-wrapper">
+
+              <img
+                src=""
+                alt=""
+                id="productMainImage"
+                class="product-main-image"
+                hidden
+              >
+
+              <div
+  class="product-image-placeholder"
+  id="productImagePlaceholder"
+>
+  <i class="fa-regular fa-image"></i>
+</div>
+
+
+              <!-- PRODUCT BADGE -->
+
+              <span
+                class="product-badge"
+                id="productBadge"
+                hidden
+              >
+                Featured
+              </span>
+
+            </div>
+
+
+
+            <!-- IMAGE THUMBNAILS -->
+
+            <div
+              class="product-thumbnail-list"
+              id="productThumbnailList"
+              hidden
+            >
+
+              <!-- Images generated by JavaScript -->
+
+            </div>
+
+
+          </div>
+
+
+
+          <!-- ==================================
+               PRODUCT INFORMATION
+          =================================== -->
+
+          <div class="product-information">
+
+
+            <!-- CATEGORY -->
+
+            <a
+              href="shop.html"
+              class="product-category"
+              id="productCategory"
+            >
+              Category
+            </a>
+
+
+
+            <!-- PRODUCT NAME -->
+
+            <h1 id="productName">
+              Product Name
+            </h1>
+
+
+
+            <!-- SKU -->
+
+            <p
+              class="product-sku"
+              id="productSku"
+              hidden
+            >
+              SKU:
+              <span></span>
+            </p>
+
+
+
+            <!-- PRODUCT PRICE -->
+
+            <div class="product-price-wrapper">
+
+              <span
+                class="product-price"
+                id="productPrice"
+              >
+                ₦0.00
+              </span>
+
+              <span
+                class="product-compare-price"
+                id="productComparePrice"
+                hidden
+              >
+                ₦0.00
+              </span>
+
+            </div>
+
+
+
+            <!-- AVAILABILITY -->
+
+            <div class="product-availability-wrapper">
+
+              <span
+                class="product-availability"
+                id="productAvailability"
+              >
+                Checking availability...
+              </span>
+
+              <span
+                class="product-stock"
+                id="productStock"
+                hidden
+              ></span>
+
+            </div>
+
+
+
+            <!-- SHORT DESCRIPTION -->
+
+            <p
+              class="product-short-description"
+              id="productShortDescription"
+            ></p>
+
+
+
+            <!-- PREPARATION TIME -->
+
+            <div
+              class="product-preparation"
+              id="productPreparation"
+              hidden
+            >
+
+              <span class="product-detail-label">
+                Preparation Time:
+              </span>
+
+              <span id="productPreparationTime"></span>
+
+            </div>
+
+
+
+            <!-- PRODUCT OPTIONS -->
+
+            <div
+              class="product-options"
+              id="productOptions"
+              hidden
+            >
+
+              <h3>
+                Customise Your Product
+              </h3>
+
+              <div
+                class="product-options-list"
+                id="productOptionsList"
+              >
+
+                <!-- Options generated by JavaScript -->
+
+              </div>
+
+            </div>
+
+
+
+            <!-- PRODUCT QUANTITY -->
+
+            <div
+              class="product-quantity-section"
+              id="productQuantitySection"
+            >
+
+              <label for="productQuantity">
+                Quantity
+              </label>
+
+              <div class="product-quantity-control">
+
+                <button
+                  type="button"
+                  id="decreaseQuantity"
+                  aria-label="Decrease quantity"
+                >
+                  <i class="fa-solid fa-minus"></i>
+                </button>
+
+                <input
+                  type="number"
+                  id="productQuantity"
+                  value="1"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                >
+
+                <button
+                  type="button"
+                  id="increaseQuantity"
+                  aria-label="Increase quantity"
+                >
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- CUSTOM TEXT -->
+
+            <div
+              class="product-custom-text-section"
+              id="productCustomTextSection"
+              hidden
+            >
+
+              <label for="productCustomText">
+                Personalisation
+              </label>
+
+              <textarea
+                id="productCustomText"
+                rows="3"
+                placeholder="Enter your preferred text..."
+              ></textarea>
+
+            </div>
+
+
+
+            <!-- CUSTOMER NOTES -->
+
+            <div class="product-customer-notes-section">
+
+              <label for="productCustomerNotes">
+                Special Instructions
+                <span>(Optional)</span>
+              </label>
+
+              <textarea
+                id="productCustomerNotes"
+                rows="3"
+                placeholder="Any special requests or instructions?"
+              ></textarea>
+
+            </div>
+
+
+
+            <!-- REFERENCE IMAGE -->
+
+            <div
+              class="product-reference-section"
+              id="productReferenceSection"
+              hidden
+            >
+
+              <label for="productReferenceImage">
+                Reference Image
+                <span>(Optional)</span>
+              </label>
+
+              <input
+                type="file"
+                id="productReferenceImage"
+                accept="image/*"
+              >
+
+              <p>
+                Upload an image to help us understand
+                your preferred design.
+              </p>
+
+            </div>
+
+
+
+            <!-- PRODUCT ACTIONS -->
+
+            <div class="product-actions">
+
+              <button
+  type="button"
+  class="button button-primary"
+  id="addToCartButton"
+>
+  <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
+  <span class="button-label">Add to Cart</span>
+</button>
+
+              <button
+                type="button"
+                class="product-favourite-button"
+                id="productFavouriteButton"
+                aria-label="Add to favourites"
+                aria-pressed="false"
+              >
+                <i class="fa-regular fa-heart"></i>
+              </button>
+
+            </div>
+
+
+
+            <!-- PRODUCT FEEDBACK -->
+
+            <div
+              class="product-message"
+              id="productMessage"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></div>
+
+
+
+            <!-- PRODUCT DESCRIPTION -->
+
+            <div class="product-description-section">
+
+              <h2>
+                Product Description
+              </h2>
+
+              <div
+                class="product-description"
+                id="productDescription"
+              ></div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         RELATED PRODUCTS
+    ========================================= -->
+
+    <section
+      class="related-products-section"
+      id="relatedProductsSection"
+      hidden
+    >
+
+      <div class="section-container">
+
+        <div class="product-section-heading">
+
+          <span class="eyebrow">
+            YOU MAY ALSO LIKE
+          </span>
+
+          <h2>
+            Related Products
+          </h2>
+
+        </div>
+
+
+        <div
+          class="related-products-grid"
+          id="relatedProductsGrid"
+        >
+
+          <!-- Related products generated by JavaScript -->
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- ==========================================
+       WEBSITE FOOTER
+  =========================================== -->
+
+  <footer class="site-footer">
+
+    <div class="section-container footer-container">
+
+
+      <!-- FOOTER BRAND -->
+
+      <div class="footer-brand">
+
+        <a
+  href="index.html"
+  class="brand footer-logo"
+>
+
+  <img
+    src=""
+    alt="HAFHASS logo"
+    class="brand-logo-image"
+    data-store-image="logo_url"
+    hidden
+  >
+
+  <span class="brand-mark">H</span>
+
+  <span class="brand-text">
+    <strong>HAFHASS</strong>
+    <small>EVENTS &amp; DELIGHTS</small>
+  </span>
+
+</a>
+
+        <p>
+  <span data-store="tagline">Where Taste Meets Creativity.</span>
+  Beautiful treats, thoughtful gifts and unforgettable moments.
+</p>
+
+      </div>
+
+
+      <!-- EXPLORE LINKS -->
+
+      <div class="footer-column">
+
+        <h3>Explore</h3>
+
+        <a href="index.html#home">Home</a>
+
+        <a href="shop.html">Shop</a>
+
+        <a href="services.htmk">Services</a>
+
+        <a href="gallery.html">Gallery</a>
+
+        <a href="index.html#about">Our Story</a>
+
+        <a href="founder.html">Meet the Founder</a>
+
+        <a href="index.html#testimonials">Testimonials</a>
+
+      </div>
+
+
+      <!-- CUSTOMER CARE -->
+
+      <div class="footer-column">
+
+        <h3>Customer Care</h3>
+
+        <a href="index.html#faqs">FAQs</a>
+
+        <a href="index.html#contact">Contact Us</a>
+
+        <a href="#account" id="customerCareLink">My Account</a>
+
+        <a href="terms.html">Terms &amp; Conditions</a>
+
+        <a href="privacy.html">Privacy Policy</a>
+
+      </div>
+      
+      
+      <!-- SOCIAL MEDIA -->
+
+<div class="footer-column footer-social">
+
+  <h3>Follow Us</h3>
+
+  <p>
+    Stay connected with us for beautiful creations,
+    updates and special offers.
+  </p>
+
+  <div class="footer-social-links">
+
+    <a
+      href="#"
+      data-store-social="instagram"
+      aria-label="Instagram"
+      target="_blank"
+      rel="noopener noreferrer"
+      hidden
+    >
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a
+      href="#"
+      data-store-social="facebook"
+      aria-label="Facebook"
+      target="_blank"
+      rel="noopener noreferrer"
+      hidden
+    >
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+
+    <a
+      href="#"
+      data-store-social="tiktok"
+      aria-label="TikTok"
+      target="_blank"
+      rel="noopener noreferrer"
+      hidden
+    >
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
+
+    <a
+      href="#"
+      data-store-social="whatsapp"
+      aria-label="WhatsApp"
+      target="_blank"
+      rel="noopener noreferrer"
+      hidden
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <a
+      href="#"
+      data-store-social="other"
+      aria-label="Other social media"
+      target="_blank"
+      rel="noopener noreferrer"
+      hidden
+    >
+      <i class="fa-solid fa-globe"></i>
+    </a>
+
+  </div>
+
+</div>
+
+
+      <!-- CONTACT DETAILS -->
+
+      <div class="footer-column">
+
+        <h3>Get in Touch</h3>
+
+        <p>
+          Have a question or a special request?
+          We'd love to hear from you.
+        </p>
+
+        <a
+  href="https://wa.me/2348146088556"
+  data-store-href="whatsapp_number"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  WhatsApp Us
+</a>
+
+        <a
+  href="tel:+2348146088556"
+  data-store-href="phone"
+>
+  0814 608 8556
+</a>
+
+        <a
+  href="mailto:kadirihafsat98@gmail.com"
+  class="footer-email"
+  data-store-href="email"
+>
+  kadirihafsat98@gmail.com
+</a>
+
+      </div>
+
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+      <p>
+        &copy;
+        <span id="year"></span>
+        HAFHASS Events &amp; Delights.
+        All rights reserved.
+      </p>
+
+      <p data-store="tagline">
+  Where Taste Meets Creativity.
+</p>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- ==========================================
+       JAVASCRIPT
+  =========================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase-config.js"></script>
+
+<script src="js/store-settings.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/main.js"></script>
+
+<script src="js/product.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Products Management | HAFHASS Admin</title>
+
+  <meta name="description" content="Manage HAFHASS EVENTS & DELIGHTS products.">
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+  <!-- GLOBAL STYLES -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- ADMIN STYLES -->
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <!-- PAGE STYLES -->
+  <link rel="stylesheet" href="../css/admin-products.css">
+
+</head>
+
+<body class="admin-page">
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+  <span
+    class="admin-brand-name"
+    data-store="business_name"
+  >
+    HAFHASS
+  </span>
+
+  <span
+    class="admin-brand-subtitle"
+    data-store="business_subtitle"
+  >
+    EVENTS & DELIGHTS
+  </span>
+
+  <span class="admin-brand-badge">
+    ADMIN
+  </span>
+
+</a>
+
+
+    <div class="admin-header-actions">
+
+      <span class="admin-header-user" id="adminHeaderName">
+        Administrator
+      </span>
+
+      <button
+        type="button"
+        class="admin-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-solid fa-moon theme-icon"></i>
+      </button>
+
+      <button
+        type="button"
+        class="admin-mobile-menu"
+        id="adminMenuToggle"
+        aria-label="Open admin menu"
+        aria-expanded="false"
+        aria-controls="adminSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- ===================================================
+         SIDEBAR
+    ==================================================== -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+      <div class="admin-sidebar-profile">
+
+        <div class="admin-avatar" id="adminAvatar">
+          A
+        </div>
+
+        <div class="admin-profile-details">
+
+          <strong id="adminSidebarName">
+            Administrator
+          </strong>
+
+          <span id="adminSidebarEmail">
+            Loading...
+          </span>
+
+          <span class="admin-role-badge" id="adminRole">
+            Administrator
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link  active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link" 
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+    <!-- ===================================================
+         MAIN CONTENT
+    ==================================================== -->
+
+    <main class="admin-main admin-products-page">
+
+
+      <!-- PAGE HEADING -->
+
+      <section class="admin-page-heading">
+
+        <div>
+
+          <span class="admin-eyebrow">
+            STORE MANAGEMENT
+          </span>
+
+          <h1>Products</h1>
+
+          <p>
+            Manage your store products, prices, availability
+            and inventory.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="admin-primary-button"
+          id="addProductButton"
+        >
+          <i class="fa-solid fa-plus"></i>
+          Add New Product
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           PRODUCT STATISTICS
+      ================================================== -->
+
+      <section class="admin-product-stats">
+
+        <article class="admin-product-stat-card">
+
+          <div class="admin-product-stat-icon">
+            <i class="fa-solid fa-box-open"></i>
+          </div>
+
+          <div>
+            <span>Total Products</span>
+            <strong id="productTotalCount">0</strong>
+          </div>
+
+        </article>
+
+
+        <article class="admin-product-stat-card">
+
+          <div class="admin-product-stat-icon">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+
+          <div>
+            <span>Active Products</span>
+            <strong id="productActiveCount">0</strong>
+          </div>
+
+        </article>
+
+
+        <article class="admin-product-stat-card">
+
+          <div class="admin-product-stat-icon">
+            <i class="fa-solid fa-box"></i>
+          </div>
+
+          <div>
+            <span>Out of Stock</span>
+            <strong id="productOutOfStockCount">0</strong>
+          </div>
+
+        </article>
+
+
+        <article class="admin-product-stat-card">
+
+          <div class="admin-product-stat-icon">
+            <i class="fa-solid fa-eye-slash"></i>
+          </div>
+
+          <div>
+            <span>Inactive Products</span>
+            <strong id="productInactiveCount">0</strong>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- =================================================
+           PRODUCT MANAGEMENT PANEL
+      ================================================== -->
+
+      <section class="admin-products-panel">
+
+
+        <!-- TOOLBAR -->
+
+        <div class="admin-products-toolbar">
+
+          <div class="admin-products-toolbar-title">
+
+            <h2>All Products</h2>
+
+            <span id="productResultCount">
+              0 products
+            </span>
+
+          </div>
+
+
+          <div class="admin-products-controls">
+
+            <div class="admin-product-search">
+
+              <span>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span>
+
+              <input
+                type="search"
+                id="productSearch"
+                placeholder="Search products..."
+                autocomplete="off"
+              >
+
+            </div>
+
+
+            <select id="productCategoryFilter">
+
+              <option value="">All Categories</option>
+
+            </select>
+
+
+            <select id="productStatusFilter">
+
+              <option value="">All Statuses</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+
+            </select>
+
+
+            <select id="productAvailabilityFilter">
+
+              <option value="">All Availability</option>
+              <option value="in_stock">In Stock</option>
+              <option value="out_of_stock">Out of Stock</option>
+              <option value="pre_order">Pre-Order</option>
+              <option value="made_to_order">Made to Order</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- LOADING -->
+
+        <div class="admin-products-state" id="productsLoading">
+
+          <div class="admin-products-spinner"></div>
+
+          <p>Loading products...</p>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+          class="admin-products-state admin-products-error"
+          id="productsError"
+          hidden
+        >
+
+          <div class="admin-products-state-icon">
+            <i class="fa-solid fa-circle-exclamation"></i>
+          </div>
+
+          <h3>Unable to Load Products</h3>
+
+          <p id="productsErrorMessage">
+            Something went wrong while loading products.
+          </p>
+
+          <button
+            type="button"
+            class="admin-secondary-button"
+            id="retryProductsButton"
+          >
+            <i class="fa-solid fa-rotate-right"></i>
+            Try Again
+          </button>
+
+        </div>
+
+
+        <!-- EMPTY -->
+
+        <div
+          class="admin-products-state"
+          id="productsEmpty"
+          hidden
+        >
+
+          <div class="admin-products-state-icon">
+            <i class="fa-solid fa-box-open"></i>
+          </div>
+
+          <h3>No Products Yet</h3>
+
+          <p>
+            Your store is waiting for its first product.
+            Start by adding a product to your catalogue.
+          </p>
+
+          <button
+            type="button"
+            class="admin-primary-button"
+            id="emptyAddProductButton"
+          >
+            <i class="fa-solid fa-plus"></i>
+            Add Your First Product
+          </button>
+
+        </div>
+
+
+        <!-- NO SEARCH RESULTS -->
+
+        <div
+          class="admin-products-state"
+          id="productsNoResults"
+          hidden
+        >
+
+          <div class="admin-products-state-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+
+          <h3>No Matching Products</h3>
+
+          <p>
+            We couldn't find any products matching your filters.
+          </p>
+
+          <button
+            type="button"
+            class="admin-secondary-button"
+            id="clearProductFiltersButton"
+          >
+            <i class="fa-solid fa-filter-circle-xmark"></i>
+            Clear Filters
+          </button>
+
+        </div>
+
+
+        <!-- PRODUCT TABLE -->
+
+        <div id="productsTableContainer" hidden>
+
+          <div class="admin-products-table-wrapper">
+
+            <table class="admin-products-table">
+
+              <thead>
+
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Availability</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+
+              </thead>
+
+              <tbody id="productsTableBody">
+              </tbody>
+
+            </table>
+
+          </div>
+
+
+          <!-- PAGINATION -->
+
+          <div class="admin-products-pagination">
+
+            <span id="productsPaginationInfo">
+              Showing 0 products
+            </span>
+
+            <div>
+
+              <button
+                type="button"
+                id="previousProductsPage"
+                disabled
+              >
+                <i class="fa-solid fa-chevron-left"></i>
+                Previous
+              </button>
+
+              <span id="productsPageNumber">
+                1 / 1
+              </span>
+
+              <button
+                type="button"
+                id="nextProductsPage"
+                disabled
+              >
+                Next
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================================
+       ADD / EDIT PRODUCT MODAL
+  ====================================================== -->
+
+  <div
+    class="admin-product-modal-overlay"
+    id="productModalOverlay"
+    hidden
+  >
+
+    <div
+      class="admin-product-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="productModalTitle"
+    >
+
+      <!-- MODAL HEADER -->
+
+      <div class="admin-product-modal-header">
+
+        <div>
+
+          <span class="admin-eyebrow">PRODUCT MANAGEMENT</span>
+
+          <h2 id="productModalTitle">Add New Product</h2>
+
+          <p>Enter your product details below.</p>
+
+        </div>
+
+        <button
+          type="button"
+          class="admin-product-modal-close"
+          id="closeProductModal"
+          aria-label="Close product form"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
+
+
+      <!-- FORM -->
+
+      <form id="productForm">
+
+        <input type="hidden" id="editingProductId">
+
+
+        <!-- ===============================================
+             1. BASIC INFORMATION
+        ================================================ -->
+
+        <section class="admin-product-form-section">
+
+          <h3>01. Basic Information</h3>
+
+          <p class="admin-form-section-description">
+            Give your product a name and describe what makes it special.
+          </p>
+
+
+          <div class="admin-form-grid">
+
+            <div class="admin-form-group full-width">
+
+              <label for="productName">
+                Product Name <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                id="productName"
+                name="name"
+                placeholder="e.g. Luxury Birthday Cake"
+                maxlength="200"
+                required
+              >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productSKU">Product SKU</label>
+
+              <input
+                type="text"
+                id="productSKU"
+                name="sku"
+                placeholder="e.g. HAF-CAKE-001"
+                maxlength="100"
+              >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productSlug">
+                Product URL Slug
+              </label>
+
+              <input
+                type="text"
+                id="productSlug"
+                name="slug"
+                placeholder="luxury-birthday-cake"
+                maxlength="200"
+              >
+
+              <small>Generated from the product name if left blank.</small>
+
+            </div>
+
+
+            <div class="admin-form-group full-width">
+
+              <label for="productCategory">
+                Product Category
+              </label>
+
+              <select id="productCategory" name="category_id">
+
+                <option value="">Select a category</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="admin-form-group full-width">
+
+              <label for="productShortDescription">
+                Short Description
+              </label>
+
+              <textarea
+                id="productShortDescription"
+                name="short_description"
+                rows="2"
+                maxlength="300"
+                placeholder="A brief description displayed on product cards."
+              ></textarea>
+
+            </div>
+
+
+            <div class="admin-form-group full-width">
+
+              <label for="productDescription">
+                Full Product Description
+              </label>
+
+              <textarea
+                id="productDescription"
+                name="description"
+                rows="5"
+                placeholder="Describe the product in detail..."
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===============================================
+             2. PRICING
+        ================================================ -->
+
+        <section class="admin-product-form-section">
+
+          <h3>02. Pricing</h3>
+
+          <p class="admin-form-section-description">
+            Choose how this product will be priced.
+          </p>
+
+
+          <div class="admin-form-grid">
+
+            <div class="admin-form-group">
+
+              <label for="productPricingType">
+                Pricing Type <span>*</span>
+              </label>
+
+              <select
+                id="productPricingType"
+                name="pricing_type"
+                required
+              >
+
+                <option value="fixed">Fixed Price</option>
+                <option value="starting_from">Starting From</option>
+                <option value="quote">Request a Quote</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="admin-form-group" id="productPriceGroup">
+
+              <label for="productPrice">
+                Price <span id="productPriceRequired">*</span>
+              </label>
+
+              <input
+                type="number"
+                id="productPrice"
+                name="price"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+              >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productComparePrice">
+                Compare-at Price
+              </label>
+
+              <input
+                type="number"
+                id="productComparePrice"
+                name="compare_at_price"
+                min="0"
+                step="0.01"
+                placeholder="Optional"
+              >
+
+              <small>Used to display an original price before a discount.</small>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productCurrency">Currency</label>
+
+              <select id="productCurrency" name="currency">
+
+                <option value="NGN" selected>NGN — Nigerian Naira</option>
+                <option value="USD">USD — US Dollar</option>
+                <option value="GBP">GBP — British Pound</option>
+                <option value="EUR">EUR — Euro</option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===============================================
+             3. INVENTORY & AVAILABILITY
+        ================================================ -->
+
+        <section class="admin-product-form-section">
+
+          <h3>03. Inventory & Availability</h3>
+
+          <p class="admin-form-section-description">
+            Control product availability and ordering limits.
+          </p>
+
+
+          <div class="admin-form-grid">
+
+            <div class="admin-form-group">
+
+              <label for="productAvailability">
+                Availability <span>*</span>
+              </label>
+
+              <select
+                id="productAvailability"
+                name="availability"
+                required
+              >
+
+                <option value="in_stock">In Stock</option>
+                <option value="out_of_stock">Out of Stock</option>
+                <option value="pre_order">Pre-Order</option>
+                <option value="made_to_order">Made to Order</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productStock">
+                Stock Quantity
+              </label>
+
+              <input
+                type="number"
+                id="productStock"
+                name="stock_quantity"
+                min="0"
+                step="1"
+                placeholder="Optional"
+              >
+
+              <small>Leave blank if stock is not tracked.</small>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productMinimumQuantity">
+                Minimum Order Quantity
+              </label>
+
+              <input
+                type="number"
+                id="productMinimumQuantity"
+                name="minimum_order_quantity"
+                min="1"
+                step="1"
+                value="1"
+              >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productMaximumQuantity">
+                Maximum Order Quantity
+              </label>
+
+              <input
+                type="number"
+                id="productMaximumQuantity"
+                name="maximum_order_quantity"
+                min="1"
+                step="1"
+                placeholder="No maximum"
+              >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productPreparationDays">
+                Preparation Time (Days)
+              </label>
+
+              <input
+                type="number"
+                id="productPreparationDays"
+                name="preparation_time_days"
+                min="0"
+                step="1"
+                placeholder="Optional"
+              >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+              <label for="productDisplayOrder">
+                Display Order
+              </label>
+
+              <input
+                type="number"
+                id="productDisplayOrder"
+                name="display_order"
+                min="0"
+                step="1"
+                value="0"
+              >
+
+              <small>Lower numbers appear first where sorting uses display order.</small>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===============================================
+             4. PRODUCT IMAGES
+        ================================================ -->
+
+        <section class="admin-product-form-section">
+
+          <h3>04. Product Images</h3>
+
+          <p class="admin-form-section-description">
+            Upload product photos for your online store.
+          </p>
+
+
+          <div class="admin-image-upload-area">
+
+            <input
+              type="file"
+              id="productImages"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              hidden
+            >
+
+            <label
+              for="productImages"
+              class="admin-image-upload-label"
+            >
+
+              <span class="admin-upload-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </span>
+
+              <strong>Choose Product Images</strong>
+
+              <span>
+                JPEG, PNG or WebP. Maximum 10MB per image.
+              </span>
+
+            </label>
+
+          </div>
+
+
+          <div
+            class="admin-product-image-preview"
+            id="productImagePreview"
+          ></div>
+
+          <small class="admin-image-help">
+            You can upload multiple images and select one as the primary image.
+          </small>
+
+        </section>
+
+
+        <!-- ===============================================
+             5. VISIBILITY & STORE SETTINGS
+        ================================================ -->
+
+        <section class="admin-product-form-section">
+
+          <h3>05. Visibility & Store Settings</h3>
+
+          <p class="admin-form-section-description">
+            Choose how this product appears in your store.
+          </p>
+
+
+          <div class="admin-product-switches">
+
+            <label class="admin-product-switch">
+
+              <input
+                type="checkbox"
+                id="productActive"
+                name="status"
+                checked
+              >
+
+              <span class="admin-switch-indicator"></span>
+
+              <span>
+                <strong>Active Product</strong>
+                <small>Make this product visible in the store.</small>
+              </span>
+
+            </label>
+
+
+            <label class="admin-product-switch">
+
+              <input
+                type="checkbox"
+                id="productFeatured"
+                name="is_featured"
+              >
+
+              <span class="admin-switch-indicator"></span>
+
+              <span>
+                <strong>Featured Product</strong>
+                <small>Highlight this product in featured sections.</small>
+              </span>
+
+            </label>
+
+
+            <label class="admin-product-switch">
+
+              <input
+                type="checkbox"
+                id="productCustomizable"
+                name="is_customizable"
+              >
+
+              <span class="admin-switch-indicator"></span>
+
+              <span>
+                <strong>Customizable Product</strong>
+                <small>Allow customers to personalize this product.</small>
+              </span>
+
+            </label>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===============================================
+             FORM FEEDBACK
+        ================================================ -->
+
+        <div
+          class="admin-product-form-message"
+          id="productFormMessage"
+          role="alert"
+          hidden
+        ></div>
+
+
+        <!-- ===============================================
+             FORM ACTIONS
+        ================================================ -->
+
+        <div class="admin-product-form-actions">
+
+          <button
+            type="button"
+            class="admin-secondary-button"
+            id="cancelProductForm"
+          >
+            <i class="fa-solid fa-xmark"></i>
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="admin-primary-button"
+            id="saveProductButton"
+          >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Save Product
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase-config.js"></script>
+<!-- SHARED STORE SETTINGS -->
+<script src="../js/store-settings.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/admin-layout.js"></script>
+
+  <script src="../js/admin-products.js"></script>
+
+</body>
+
+</html>

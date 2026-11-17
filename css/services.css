@@ -1,0 +1,551 @@
+/* =========================================================
+   HAFHASS EVENTS & DELIGHTS
+   PUBLIC SERVICES PAGE
+========================================================= */
+
+
+/* =========================================================
+   1. SERVICES PAGE HERO
+========================================================= */
+
+.services-page-hero {
+  position: relative;
+
+  background:
+    url("https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=2000&q=90")
+    center / cover no-repeat;
+}
+
+
+/* Keep the existing homepage hero structure */
+
+.services-page-hero .hero-overlay {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(38, 15, 25, 0.82),
+      rgba(38, 15, 25, 0.48)
+    );
+}
+
+.services-page-hero .hero-content {
+  max-width: 850px;
+}
+
+.services-page-hero .hero-content h1 {
+  max-width: 800px;
+}
+
+.services-page-hero .hero-content p {
+  max-width: 650px;
+}
+
+
+/* =========================================================
+   2. SERVICES INTRODUCTION
+========================================================= */
+
+.services-page-hero + .intro-section {
+  background: var(--bg);
+}
+
+.services-page-hero + .intro-section .intro-container {
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.services-page-hero + .intro-section .intro-container h2 {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.services-page-hero + .intro-section .intro-container p {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+  line-height: 2;
+  white-space: pre-line;
+}
+
+
+/* =========================================================
+   3. ALL SERVICES SECTION
+========================================================= */
+
+#all-services.services-section {
+  background: var(--surface-soft);
+}
+
+#all-services .section-heading {
+  max-width: 750px;
+
+  margin: 0 auto 45px;
+
+  text-align: center;
+}
+
+#all-services .section-heading h2 {
+  color: var(--heading);
+
+  font-family: var(--font-heading);
+
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 1.25;
+}
+
+#all-services .section-heading p {
+  max-width: 650px;
+
+  margin: 15px auto 0;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   4. SERVICES GRID
+========================================================= */
+
+#all-services .services-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 30px;
+
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   5. SERVICE CARDS
+========================================================= */
+
+#all-services .service-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  overflow: hidden;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow);
+
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+}
+
+#all-services .service-card:hover {
+  transform: translateY(-7px);
+
+  border-color: var(--gold);
+
+  box-shadow: var(--shadow-lg);
+}
+
+
+/* =========================================================
+   6. SERVICE IMAGES
+========================================================= */
+
+#all-services .service-image {
+  position: relative;
+
+  width: 100%;
+  height: 260px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: var(--surface-soft);
+}
+
+#all-services .service-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 500ms ease;
+}
+
+#all-services .service-card:hover .service-image img {
+  transform: scale(1.06);
+}
+
+
+/* IMAGE FALLBACK */
+
+#all-services .service-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--gold);
+
+  font-family: var(--font-heading);
+
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+
+/* =========================================================
+   7. SERVICE CONTENT
+========================================================= */
+
+#all-services .service-content {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+
+  padding: 28px 25px 30px;
+}
+
+
+/* SERVICE LABEL */
+
+#all-services .service-label {
+  display: inline-block;
+
+  margin-bottom: 13px;
+
+  color: var(--gold);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* SERVICE NAME */
+
+#all-services .service-name {
+  margin-bottom: 14px;
+
+  color: var(--heading);
+
+  font-family: var(--font-heading);
+
+  font-size: 23px;
+  line-height: 1.4;
+}
+
+
+/* SERVICE DESCRIPTION */
+
+#all-services .service-description {
+  margin-bottom: 22px;
+
+  color: var(--text-muted);
+
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+
+/* SERVICE PRICE */
+
+#all-services .service-price {
+  margin-top: auto;
+  margin-bottom: 20px;
+
+  color: var(--accent);
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   8. SERVICE ENQUIRY BUTTON
+========================================================= */
+
+#all-services .service-content .text-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 47px;
+
+  padding: 12px 18px;
+
+  color: var(--accent);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-align: center;
+  text-decoration: none;
+
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+}
+
+#all-services .service-content .text-link:hover {
+  color: #ffffff;
+
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+
+/* =========================================================
+   9. LOADING, EMPTY AND ERROR STATES
+========================================================= */
+
+#all-services .services-loading,
+#all-services .services-empty,
+#all-services .services-error {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  padding: 55px 20px;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+  line-height: 1.8;
+
+  text-align: center;
+}
+
+#all-services .services-loading p {
+  margin-top: 15px;
+}
+
+#all-services .services-empty,
+#all-services .services-error {
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+
+/* =========================================================
+   10. CUSTOM REQUEST CTA
+========================================================= */
+
+/*
+   The contact CTA reuses the existing homepage styles.
+   These small adjustments keep its content balanced
+   on the Services page.
+*/
+
+.services-section + .contact-cta .contact-cta-content {
+  max-width: 850px;
+
+  margin: 0 auto;
+}
+
+.services-section + .contact-cta .contact-cta-content p {
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   11. DARK THEME SUPPORT
+========================================================= */
+
+[data-theme="dark"] .services-page-hero .hero-overlay {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 10, 13, 0.88),
+      rgba(15, 10, 13, 0.58)
+    );
+}
+
+[data-theme="dark"] #all-services .service-card {
+  background: var(--surface);
+}
+
+
+/* =========================================================
+   12. LARGE TABLETS
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  #all-services .services-grid {
+    gap: 22px;
+  }
+
+  #all-services .service-image {
+    height: 230px;
+  }
+
+  #all-services .service-content {
+    padding: 24px 20px 27px;
+  }
+
+}
+
+
+/* =========================================================
+   13. TABLETS
+========================================================= */
+
+@media (max-width: 800px) {
+
+  #all-services .services-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+  }
+
+  #all-services .service-image {
+    height: 220px;
+  }
+
+  .services-page-hero + .intro-section .intro-container {
+    max-width: 700px;
+  }
+
+}
+
+
+/* =========================================================
+   14. MOBILE DEVICES
+========================================================= */
+
+@media (max-width: 520px) {
+
+  /* HERO */
+
+  .services-page-hero .hero-content h1 {
+    font-size: 40px;
+  }
+
+  .services-page-hero .hero-content p {
+    font-size: 13px;
+  }
+
+
+  /* INTRODUCTION */
+
+  .services-page-hero + .intro-section .intro-container h2 {
+    font-size: 35px;
+  }
+
+  .services-page-hero + .intro-section .intro-container p {
+    font-size: 12px;
+    line-height: 1.9;
+  }
+
+
+  /* SECTION HEADING */
+
+  #all-services .section-heading {
+    margin-bottom: 35px;
+  }
+
+  #all-services .section-heading h2 {
+    font-size: 32px;
+  }
+
+  #all-services .section-heading p {
+    font-size: 12px;
+  }
+
+
+  /* SERVICES GRID */
+
+  #all-services .services-grid {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+  }
+
+
+  /* SERVICE CARDS */
+
+  #all-services .service-image {
+    height: 250px;
+  }
+
+  #all-services .service-content {
+    padding: 24px 22px 26px;
+  }
+
+  #all-services .service-name {
+    font-size: 21px;
+  }
+
+  #all-services .service-description {
+    font-size: 12px;
+  }
+
+
+  /* CUSTOM REQUEST CTA */
+
+  .services-section + .contact-cta .contact-cta-content h2 {
+    font-size: 32px;
+  }
+
+  .services-section + .contact-cta .contact-cta-content p {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   15. VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .services-page-hero .hero-content h1 {
+    font-size: 34px;
+  }
+
+  #all-services .service-image {
+    height: 210px;
+  }
+
+  #all-services .service-content {
+    padding: 21px 18px 23px;
+  }
+
+}

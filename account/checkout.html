@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Complete your order securely."
+  >
+
+  <title>Checkout | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+
+  <!-- SHARED STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/account.css">
+  <link rel="stylesheet" href="../css/checkout.css">
+
+</head>
+
+
+<body class="account-page">
+
+
+  <!-- ==================================================
+       ACCOUNT HEADER
+  ================================================== -->
+
+  <header class="account-header">
+
+    <a href="../index.html" class="account-brand">
+
+      <span
+        class="account-brand-name"
+        data-store="business_name"
+      >
+        HAFHASS
+      </span>
+
+      <span
+        class="account-brand-subtitle"
+        data-store="business_subtitle"
+      >
+        EVENTS & DELIGHTS
+      </span>
+
+    </a>
+
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+
+      <button
+        type="button"
+        class="account-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+
+        <span class="theme-icon">
+          <i class="fa-solid fa-moon" aria-hidden="true"></i>
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open account menu"
+        aria-expanded="false"
+        aria-controls="accountSidebar"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==================================================
+       ACCOUNT LAYOUT
+  ================================================== -->
+
+  <div class="account-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside
+      class="account-sidebar"
+      id="accountSidebar"
+    >
+
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar">
+
+          <span id="avatarInitials">C</span>
+
+        </div>
+
+
+        <div class="account-user-details">
+
+          <p class="account-user-label">
+            Welcome back
+          </p>
+
+          <h2 id="sidebarUserName">
+            Customer
+          </h2>
+
+          <p id="sidebarUserEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <nav class="account-navigation">
+
+
+        <p class="account-nav-heading">
+          ACCOUNT
+        </p>
+
+
+        <a href="dashboard.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </span>
+
+          Dashboard
+
+        </a>
+
+
+        <a href="orders.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-box" aria-hidden="true"></i>
+          </span>
+
+          My Orders
+
+        </a>
+
+
+        <a href="favourites.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+          </span>
+
+          My Favourites
+
+        </a>
+
+
+        <a href="addresses.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </span>
+
+          Saved Addresses
+
+        </a>
+
+
+        <a href="profile.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
+          </span>
+
+          My Profile
+
+        </a>
+
+
+
+        <p class="account-nav-heading">
+          SHOPPING
+        </p>
+
+
+        <a href="../shop.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+          </span>
+
+          Browse Shop
+
+        </a>
+
+
+        <a href="cart.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          My Cart
+
+        </a>
+
+      </nav>
+
+
+
+      <div class="account-sidebar-bottom">
+
+        <a href="../index.html" class="account-back-home">
+
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+          Back to Homepage
+
+        </a>
+
+
+        <button
+          type="button"
+          class="account-logout-button"
+          id="logoutButton"
+        >
+
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+
+          Sign Out
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="account-main">
+
+
+      <section class="checkout-page">
+
+
+        <div class="checkout-heading">
+
+          <div>
+
+            <p class="account-eyebrow">
+              ALMOST THERE
+            </p>
+
+            <h1>
+              Checkout
+            </h1>
+
+            <p>
+              Review your order and provide the details
+              needed to complete your purchase.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- LOADING STATE -->
+
+        <div
+          class="checkout-loading"
+          id="checkoutLoading"
+        >
+
+          <span class="account-spinner"></span>
+
+          <p>
+            Preparing your checkout...
+          </p>
+
+        </div>
+
+
+
+        <!-- ERROR STATE -->
+
+        <div
+          class="checkout-error"
+          id="checkoutError"
+          hidden
+        >
+
+          <h3>
+            Unable to Load Checkout
+          </h3>
+
+          <p id="checkoutErrorMessage">
+            Something went wrong while preparing your checkout.
+          </p>
+
+          <button
+            type="button"
+            id="retryCheckoutButton"
+          >
+            Try Again
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY CART STATE -->
+
+        <div
+          class="checkout-empty"
+          id="checkoutEmpty"
+          hidden
+        >
+
+          <div class="checkout-empty-icon">
+            <i class="fa-solid fa-basket-shopping" aria-hidden="true"></i>
+          </div>
+
+          <h3>
+            Your Cart Is Empty
+          </h3>
+
+          <p>
+            You need to add products to your cart before
+            proceeding to checkout.
+          </p>
+
+          <a
+            href="../shop.html"
+            class="account-primary-button"
+          >
+            Explore Our Shop
+          </a>
+
+        </div>
+
+
+
+        <!-- CHECKOUT CONTENT -->
+
+        <div
+          class="checkout-content"
+          id="checkoutContent"
+          hidden
+        >
+
+
+          <form
+            id="checkoutForm"
+            novalidate
+          >
+
+
+            <!-- ========================================
+                 01. CUSTOMER INFORMATION
+            ======================================== -->
+
+            <section class="checkout-section checkout-customer-section">
+
+              <div class="checkout-section-heading">
+
+                <span class="checkout-section-number">
+                  01
+                </span>
+
+                <div>
+
+                  <h2>
+                    Contact Information
+                  </h2>
+
+                  <p>
+                    Confirm the details we should use for your order.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="checkout-customer-information"
+                id="checkoutCustomerInformation"
+              >
+
+                <div class="checkout-field">
+
+                  <label for="checkoutCustomerName">
+                    Full Name
+                  </label>
+
+                  <input
+                    type="text"
+                    id="checkoutCustomerName"
+                    autocomplete="name"
+                    readonly
+                  >
+
+                </div>
+
+
+                <div class="checkout-field">
+
+                  <label for="checkoutCustomerEmail">
+                    Email Address
+                  </label>
+
+                  <input
+                    type="email"
+                    id="checkoutCustomerEmail"
+                    autocomplete="email"
+                    readonly
+                  >
+
+                </div>
+
+
+                <div class="checkout-field">
+
+                  <label for="checkoutCustomerPhone">
+                    Phone Number
+                  </label>
+
+                  <input
+                    type="tel"
+                    id="checkoutCustomerPhone"
+                    autocomplete="tel"
+                    readonly
+                  >
+
+                </div>
+
+
+                <p class="checkout-field-note">
+
+                  These details come from your customer profile.
+                  Update your profile if any information is incorrect.
+
+                </p>
+
+              </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 02. FULFILMENT METHOD
+            ======================================== -->
+
+            <section class="checkout-section checkout-fulfillment-section">
+
+              <div class="checkout-section-heading">
+
+                <span class="checkout-section-number">
+                  02
+                </span>
+
+                <div>
+
+                  <h2>
+                    Delivery or Pickup
+                  </h2>
+
+                  <p>
+                    Choose how you would like to receive your order.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="checkout-fulfillment-options">
+
+
+                <label class="checkout-fulfillment-option">
+
+                  <input
+                    type="radio"
+                    name="fulfillment_method"
+                    id="fulfillmentPickup"
+                    value="pickup"
+                  >
+
+                  <span class="checkout-option-content">
+
+                    <span class="checkout-option-icon">
+                      <i class="fa-solid fa-store" aria-hidden="true"></i>
+                    </span>
+
+                    <span>
+
+                      <strong>
+                        Store Pickup
+                      </strong>
+
+                      <small>
+                        Collect your order from our designated location.
+                      </small>
+
+                    </span>
+
+                  </span>
+
+                </label>
+
+
+
+                <label class="checkout-fulfillment-option">
+
+                  <input
+                    type="radio"
+                    name="fulfillment_method"
+                    id="fulfillmentDelivery"
+                    value="delivery"
+                  >
+
+                  <span class="checkout-option-content">
+
+                    <span class="checkout-option-icon">
+                      <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+                    </span>
+
+                    <span>
+
+                      <strong>
+                        Home Delivery
+                      </strong>
+
+                      <small>
+                        Have your order delivered to your location.
+                      </small>
+
+                    </span>
+
+                  </span>
+
+                </label>
+
+
+              </div>
+
+
+              <p
+                class="checkout-fulfillment-message"
+                id="fulfillmentMessage"
+                aria-live="polite"
+              ></p>
+
+
+
+              <!-- ======================================
+                   DELIVERY ADDRESS
+              ====================================== -->
+
+              <div
+                class="checkout-delivery-address"
+                id="deliveryAddressSection"
+                hidden
+              >
+
+                <div class="checkout-subsection-heading">
+
+                  <h3>
+                    Delivery Address
+                  </h3>
+
+                  <p>
+                    Select where you want your order delivered.
+                  </p>
+
+                </div>
+
+
+
+                <!-- DELIVERY SOURCE SELECTION -->
+
+                <div class="checkout-field checkout-field-full">
+
+                  <label>
+                    Choose Your Delivery Address Source
+                  </label>
+
+                  <div class="checkout-fulfillment-options checkout-delivery-source-options">
+
+
+                    <!-- SAVED ADDRESSES -->
+
+                    <label class="checkout-fulfillment-option">
+
+                      <input
+                        type="radio"
+                        name="delivery_source"
+                        id="deliverySourceSaved"
+                        value="saved"
+                        checked
+                      >
+
+                      <span class="checkout-option-content">
+
+                        <span class="checkout-option-icon">
+                          <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+                        </span>
+
+                        <span>
+
+                          <strong>
+                            My Saved Addresses
+                          </strong>
+
+                          <small>
+                            Choose an address you have previously saved.
+                          </small>
+
+                        </span>
+
+                      </span>
+
+                    </label>
+
+
+
+                    <!-- HAFHASS DELIVERY LOCATIONS -->
+
+                    <label class="checkout-fulfillment-option">
+
+                      <input
+                        type="radio"
+                        name="delivery_source"
+                        id="deliverySourceSystem"
+                        value="system"
+                      >
+
+                      <span class="checkout-option-content">
+
+                        <span class="checkout-option-icon">
+                          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                        </span>
+
+                        <span>
+
+                          <strong>
+                            HAFHASS Delivery Locations
+                          </strong>
+
+                          <small>
+                            Choose from our approved delivery locations.
+                          </small>
+
+                        </span>
+
+                      </span>
+
+                    </label>
+
+
+
+                    <!-- NEW LOCATION -->
+
+                    <label class="checkout-fulfillment-option">
+
+                      <input
+                        type="radio"
+                        name="delivery_source"
+                        id="deliverySourceNew"
+                        value="new"
+                      >
+
+                      <span class="checkout-option-content">
+
+                        <span class="checkout-option-icon">
+                          <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+                        </span>
+
+                        <span>
+
+                          <strong>
+                            Enter a New Location
+                          </strong>
+
+                          <small>
+                            Provide a delivery location not already saved.
+                          </small>
+
+                        </span>
+
+                      </span>
+
+                    </label>
+
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     SOURCE 1: SAVED ADDRESSES
+                ================================== -->
+
+                <div
+                  class="checkout-delivery-source-panel"
+                  id="savedAddressPanel"
+                >
+
+                  <div class="checkout-field checkout-field-full">
+
+                    <label for="savedAddressSelect">
+                      Select a Saved Address
+                    </label>
+
+                    <select
+                      id="savedAddressSelect"
+                      name="saved_address_id"
+                      autocomplete="off"
+                    >
+
+                      <option value="">
+                        Loading saved addresses...
+                      </option>
+
+                    </select>
+
+
+                    <small
+                      class="checkout-saved-address-message"
+                      id="savedAddressMessage"
+                      aria-live="polite"
+                    >
+                      Select one of your saved addresses.
+                    </small>
+
+
+                    <div class="checkout-manage-address-wrapper">
+
+                      <a
+                        href="addresses.html"
+                        class="checkout-manage-address-link"
+                      >
+
+                        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+
+                        Manage Saved Addresses
+
+                      </a>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     SOURCE 2: HAFHASS DELIVERY LOCATIONS
+                ================================== -->
+
+                <div
+                  class="checkout-delivery-source-panel"
+                  id="systemDeliveryLocationPanel"
+                  hidden
+                >
+
+                  <div class="checkout-field checkout-field-full">
+
+                    <label for="hafhassDeliveryLocationSelect">
+                      Select a HAFHASS Delivery Location
+                    </label>
+
+                    <select
+                      id="hafhassDeliveryLocationSelect"
+                      name="hafhass_delivery_location"
+                      autocomplete="off"
+                    >
+
+                      <option value="">
+                        Loading delivery locations...
+                      </option>
+
+                    </select>
+
+
+                    <small
+                      class="checkout-system-location-message"
+                      id="systemDeliveryLocationMessage"
+                      aria-live="polite"
+                    >
+                      Select one of our approved delivery locations.
+                    </small>
+
+                  </div>
+
+
+                  <div
+                    class="checkout-system-location-details"
+                    id="systemDeliveryLocationDetails"
+                    hidden
+                  >
+
+                    <div class="checkout-field-note">
+
+                      <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+
+                      This location has an approved HAFHASS delivery fee.
+                      The applicable fee will be displayed in your order summary.
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     SOURCE 3: NEW LOCATION
+                ================================== -->
+
+                <div
+                  class="checkout-delivery-source-panel"
+                  id="newDeliveryLocationPanel"
+                  hidden
+                >
+
+                  <div class="checkout-subsection-heading">
+
+                    <h3>
+                      Enter Your Delivery Location
+                    </h3>
+
+                    <p>
+                      Select your geographical location below. If an option
+                      is not listed, you can provide it manually.
+                    </p>
+
+                  </div>
+
+
+
+                  <div class="checkout-address-grid">
+
+
+                    <!-- STATE -->
+
+                    <div class="checkout-field">
+
+                      <label for="deliveryState">
+                        State
+                      </label>
+
+                      <select
+                        id="deliveryState"
+                        name="state_id"
+                        autocomplete="address-level1"
+                      >
+
+                        <option value="">
+                          Select state
+                        </option>
+
+                        <option value="__custom__">
+                          My state is not listed
+                        </option>
+
+                      </select>
+
+                    </div>
+
+
+
+                    <div
+                      class="checkout-field"
+                      id="customStateField"
+                      hidden
+                    >
+
+                      <label for="deliveryCustomState">
+                        Enter State
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryCustomState"
+                        name="custom_state"
+                        placeholder="Enter your state"
+                      >
+
+                    </div>
+
+
+
+                    <!-- LGA -->
+
+                    <div class="checkout-field">
+
+                      <label for="deliveryLga">
+                        Local Government Area (LGA)
+                      </label>
+
+                      <select
+                        id="deliveryLga"
+                        name="lga_id"
+                        autocomplete="off"
+                        disabled
+                      >
+
+                        <option value="">
+                          Select LGA
+                        </option>
+
+                        <option value="__custom__">
+                          My LGA is not listed
+                        </option>
+
+                      </select>
+
+                    </div>
+
+
+
+                    <div
+                      class="checkout-field"
+                      id="customLgaField"
+                      hidden
+                    >
+
+                      <label for="deliveryCustomLga">
+                        Enter LGA
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryCustomLga"
+                        name="custom_lga"
+                        placeholder="Enter your LGA"
+                      >
+
+                    </div>
+
+
+
+                    <!-- SETTLEMENT -->
+
+                    <div class="checkout-field">
+
+                      <label for="deliverySettlement">
+                        Settlement / City / Town
+                      </label>
+
+                      <select
+                        id="deliverySettlement"
+                        name="city_id"
+                        autocomplete="address-level2"
+                        disabled
+                      >
+
+                        <option value="">
+                          Select settlement
+                        </option>
+
+                        <option value="__custom__">
+                          My settlement is not listed
+                        </option>
+
+                      </select>
+
+                    </div>
+
+
+
+                    <div
+                      class="checkout-field"
+                      id="customSettlementField"
+                      hidden
+                    >
+
+                      <label for="deliveryCustomSettlement">
+                        Enter Settlement
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryCustomSettlement"
+                        name="custom_city"
+                        placeholder="Enter your settlement or town"
+                      >
+
+                    </div>
+
+
+
+                    <!-- AREA -->
+
+                    <div class="checkout-field">
+
+                      <label for="deliveryArea">
+                        Area / Neighbourhood
+                        <span>(Optional)</span>
+                      </label>
+
+                      <select
+                        id="deliveryArea"
+                        name="area_id"
+                        autocomplete="off"
+                        disabled
+                      >
+
+                        <option value="">
+                          Select area
+                        </option>
+
+                        <option value="__custom__">
+                          My area is not listed
+                        </option>
+
+                      </select>
+
+                    </div>
+
+
+
+                    <div
+                      class="checkout-field"
+                      id="customAreaField"
+                      hidden
+                    >
+
+                      <label for="deliveryCustomArea">
+                        Enter Area
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryCustomArea"
+                        name="custom_area"
+                        placeholder="Enter your area or neighbourhood"
+                      >
+
+                    </div>
+
+
+
+                    <!-- SPECIFIC LOCATION -->
+
+                    <div class="checkout-field checkout-field-full">
+
+                      <label for="deliverySpecificLocation">
+                        Specific Location
+                        <span>(Optional)</span>
+                      </label>
+
+                      <select
+                        id="deliverySpecificLocation"
+                        name="location_node_id"
+                        autocomplete="off"
+                        disabled
+                      >
+
+                        <option value="">
+                          Select specific location
+                        </option>
+
+                        <option value="__custom__">
+                          My specific location is not listed
+                        </option>
+
+                      </select>
+
+                    </div>
+
+
+
+                    <div
+                      class="checkout-field checkout-field-full"
+                      id="customSpecificLocationField"
+                      hidden
+                    >
+
+                      <label for="deliveryCustomSpecificLocation">
+                        Enter Specific Location
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryCustomSpecificLocation"
+                        name="custom_location_text"
+                        placeholder="Enter your street, landmark, estate, market, etc."
+                      >
+
+                    </div>
+
+
+
+                    <!-- ADDRESS LINE 1 -->
+
+                    <div class="checkout-field checkout-field-full">
+
+                      <label for="deliveryAddressLine1">
+                        Address Line 1
+                        <span>(Optional)</span>
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryAddressLine1"
+                        name="address_line_1"
+                        autocomplete="address-line1"
+                        placeholder="Street address, house number..."
+                      >
+
+                    </div>
+
+
+
+                    <!-- ADDRESS LINE 2 -->
+
+                    <div class="checkout-field checkout-field-full">
+
+                      <label for="deliveryAddressLine2">
+                        Address Line 2
+                        <span>(Optional)</span>
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryAddressLine2"
+                        name="address_line_2"
+                        autocomplete="address-line2"
+                        placeholder="Apartment, building, floor, etc."
+                      >
+
+                    </div>
+
+
+
+                    <!-- POSTAL CODE -->
+
+                    <div class="checkout-field">
+
+                      <label for="deliveryPostalCode">
+                        Postal Code
+                        <span>(Optional)</span>
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryPostalCode"
+                        name="postal_code"
+                        autocomplete="postal-code"
+                        placeholder="Postal code"
+                      >
+
+                    </div>
+
+
+
+                    <!-- COUNTRY -->
+
+                    <div class="checkout-field">
+
+                      <label for="deliveryCountry">
+                        Country
+                      </label>
+
+                      <input
+                        type="text"
+                        id="deliveryCountry"
+                        name="country"
+                        value="Nigeria"
+                        autocomplete="country-name"
+                      >
+
+                    </div>
+
+
+
+                    <!-- DELIVERY INSTRUCTIONS -->
+
+                    <div class="checkout-field checkout-field-full">
+
+                      <label for="deliveryInstructions">
+                        Delivery Instructions
+                        <span>(Optional)</span>
+                      </label>
+
+                      <textarea
+                        id="deliveryInstructions"
+                        name="delivery_instructions"
+                        rows="3"
+                        maxlength="500"
+                        placeholder="Provide directions or additional information to help us locate you..."
+                      ></textarea>
+
+                    </div>
+
+
+                  </div>
+
+
+                  <p class="checkout-field-note">
+
+                    Your new address will be saved to your customer account
+                    for future orders. Saving an address does not mean that
+                    HAFHASS has approved delivery coverage for that location.
+
+                  </p>
+
+                </div>
+
+
+
+                <!-- DELIVERY FEE STATUS -->
+
+                <div
+                  class="checkout-delivery-fee-message"
+                  id="deliveryFeeMessage"
+                  aria-live="polite"
+                ></div>
+
+              </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 03. PREFERRED SCHEDULE
+            ======================================== -->
+
+            <section class="checkout-section checkout-schedule-section">
+
+              <div class="checkout-section-heading">
+
+                <span class="checkout-section-number">
+                  03
+                </span>
+
+                <div>
+
+                  <h2>
+                    Preferred Schedule
+                  </h2>
+
+                  <p>
+                    Tell us when you would prefer to receive your order.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="checkout-schedule-grid">
+
+
+                <div class="checkout-field">
+
+                  <label for="requestedDate">
+                    Preferred Date
+                  </label>
+
+                  <input
+                    type="date"
+                    id="requestedDate"
+                    name="requested_date"
+                  >
+
+                </div>
+
+
+
+                <div class="checkout-field">
+
+                  <label for="requestedTime">
+                    Preferred Time
+                  </label>
+
+                  <input
+                    type="text"
+                    id="requestedTime"
+                    name="requested_time"
+                    placeholder="e.g. 2:00 PM"
+                  >
+
+                </div>
+
+              </div>
+
+
+              <p class="checkout-field-note">
+
+                Your preferred schedule will be reviewed and confirmed
+                based on availability.
+
+              </p>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 04. ADDITIONAL INSTRUCTIONS
+            ======================================== -->
+
+            <section class="checkout-section checkout-notes-section">
+
+              <div class="checkout-section-heading">
+
+                <span class="checkout-section-number">
+                  04
+                </span>
+
+                <div>
+
+                  <h2>
+                    Additional Instructions
+                  </h2>
+
+                  <p>
+                    Anything else we should know about your order?
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="checkout-field">
+
+                <label for="checkoutCustomerNotes">
+
+                  Order Notes
+
+                  <span>(Optional)</span>
+
+                </label>
+
+                <textarea
+                  id="checkoutCustomerNotes"
+                  name="customer_notes"
+                  rows="4"
+                  maxlength="1000"
+                  placeholder="Add any special instructions or important information..."
+                ></textarea>
+
+              </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 05. PAYMENT METHOD
+            ======================================== -->
+
+            <section class="checkout-section checkout-payment-section">
+
+              <div class="checkout-section-heading">
+
+                <span class="checkout-section-number">
+                  05
+                </span>
+
+                <div>
+
+                  <h2>
+                    Payment Method
+                  </h2>
+
+                  <p>
+                    Choose your preferred payment method.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="checkout-payment-option">
+
+                <div class="checkout-payment-icon">
+
+                  <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+
+                </div>
+
+
+                <div class="checkout-payment-details">
+
+                  <strong>
+                    Bank Transfer
+                  </strong>
+
+                  <p>
+                    Transfer your order payment directly to our business account.
+                  </p>
+
+                  <span class="checkout-payment-badge">
+                    Available
+                  </span>
+
+
+                  <div class="checkout-bank-details-action">
+
+                    <button
+                      type="button"
+                      class="account-primary-button"
+                      id="viewBankDetailsButton"
+                      aria-expanded="false"
+                      aria-controls="bankDetailsPanel"
+                    >
+
+                      <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+
+                      View Bank Details
+
+                    </button>
+
+                  </div>
+
+
+
+                  <div
+                    class="checkout-bank-details-panel"
+                    id="bankDetailsPanel"
+                    hidden
+                  >
+
+                    <div class="checkout-subsection-heading">
+
+                      <h3>
+                        Our Bank Account Details
+                      </h3>
+
+                      <p>
+                        Use the following details to complete your transfer.
+                      </p>
+
+                    </div>
+
+
+                    <div class="checkout-bank-details-list">
+
+
+                      <div class="checkout-bank-detail">
+
+                        <span>Bank Name</span>
+
+                        <div class="checkout-bank-detail-value">
+
+                          <strong id="bankName">
+                            Loading...
+                          </strong>
+
+                          <button
+                            type="button"
+                            class="checkout-copy-button"
+                            data-copy-target="bankName"
+                            aria-label="Copy bank name"
+                            title="Copy bank name"
+                          >
+                            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                            <span>Copy</span>
+                          </button>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <div class="checkout-bank-detail">
+
+                        <span>Account Name</span>
+
+                        <div class="checkout-bank-detail-value">
+
+                          <strong id="bankAccountName">
+                            Loading...
+                          </strong>
+
+                          <button
+                            type="button"
+                            class="checkout-copy-button"
+                            data-copy-target="bankAccountName"
+                            aria-label="Copy account name"
+                            title="Copy account name"
+                          >
+                            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                            <span>Copy</span>
+                          </button>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <div class="checkout-bank-detail">
+
+                        <span>Account Number</span>
+
+                        <div class="checkout-bank-detail-value">
+
+                          <strong id="bankAccountNumber">
+                            Loading...
+                          </strong>
+
+                          <button
+                            type="button"
+                            class="checkout-copy-button"
+                            data-copy-target="bankAccountNumber"
+                            aria-label="Copy account number"
+                            title="Copy account number"
+                          >
+                            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                            <span>Copy</span>
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+
+
+                    <div
+                      class="checkout-bank-transfer-instructions"
+                      id="bankTransferInstructions"
+                    ></div>
+
+
+                    <p
+                      class="checkout-bank-details-message"
+                      id="bankDetailsMessage"
+                      role="status"
+                      aria-live="polite"
+                    ></p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+              <!-- TRANSFER REFERENCE -->
+
+              <div class="checkout-transfer-reference checkout-field">
+
+                <label for="transferReference">
+
+                  Transfer Reference
+
+                  <span>(Optional)</span>
+
+                </label>
+
+                <input
+                  type="text"
+                  id="transferReference"
+                  name="transfer_reference"
+                  maxlength="150"
+                  autocomplete="off"
+                  placeholder="Enter your bank transaction reference"
+                >
+
+                <p class="checkout-field-note">
+
+                  Enter the transaction reference provided by your bank
+                  after completing the transfer.
+
+                </p>
+
+              </div>
+
+
+
+              <!-- PAYMENT RECEIPT -->
+
+              <div class="checkout-receipt-section">
+
+                <div class="checkout-subsection-heading">
+
+                  <h3>
+                    Upload Payment Receipt
+                  </h3>
+
+                  <p>
+                    Upload proof of payment after completing your transfer.
+                  </p>
+
+                </div>
+
+
+                <div class="checkout-field">
+
+                  <label for="receiptFile">
+                    Payment Receipt
+                  </label>
+
+                  <input
+                    type="file"
+                    id="receiptFile"
+                    name="payment_receipt"
+                    accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
+                    aria-describedby="receiptUploadHint receiptUploadStatus"
+                  >
+
+                  <p
+                    class="checkout-field-note"
+                    id="receiptUploadHint"
+                  >
+
+                    Accepted formats: JPG, JPEG, PNG and PDF.
+                    Maximum file size: 5 MB.
+
+                  </p>
+
+                </div>
+
+
+                <div
+                  class="checkout-receipt-upload-status"
+                  id="receiptUploadStatus"
+                  role="status"
+                  aria-live="polite"
+                >
+
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+
+                  No receipt uploaded yet.
+
+                </div>
+
+              </div>
+
+
+
+              <!-- PAYMENT INFORMATION -->
+
+              <div class="checkout-payment-note">
+
+                <strong>
+
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+
+                  Important Payment Information
+
+                </strong>
+
+                <p>
+
+                  Please ensure that you transfer the correct order amount
+                  and upload your payment receipt before placing your order.
+
+                </p>
+
+                <p>
+
+                  Uploading a receipt does not automatically confirm payment.
+                  Your payment will remain pending until our team verifies it.
+
+                </p>
+
+              </div>
+
+            </section>
+
+
+
+            <!-- ========================================
+                 06. ORDER SUMMARY
+            ======================================== -->
+
+            <section class="checkout-section checkout-summary-section">
+
+              <div class="checkout-section-heading">
+
+                <span class="checkout-section-number">
+                  06
+                </span>
+
+                <div>
+
+                  <h2>
+                    Order Summary
+                  </h2>
+
+                  <p>
+                    Review your items and order total before placing your order.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="checkout-items-list"
+                id="checkoutItemsList"
+              ></div>
+
+
+
+              <div class="checkout-summary-breakdown">
+
+
+                <div class="checkout-summary-row">
+
+                  <span>
+                    Subtotal
+                  </span>
+
+                  <strong id="checkoutSubtotal">
+                    ₦0.00
+                  </strong>
+
+                </div>
+
+
+
+                <div class="checkout-summary-row">
+
+                  <span>
+                    Delivery Fee
+                  </span>
+
+                  <strong id="checkoutDeliveryFee">
+                    ₦0.00
+                  </strong>
+
+                </div>
+
+
+
+                <div class="checkout-summary-row checkout-summary-total">
+
+                  <span>
+                    Total
+                  </span>
+
+                  <strong id="checkoutTotal">
+                    ₦0.00
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </section>
+
+
+
+            <!-- CHECKOUT FEEDBACK -->
+
+            <div
+              class="checkout-message"
+              id="checkoutMessage"
+              role="status"
+              aria-live="polite"
+            ></div>
+
+
+
+            <!-- PLACE ORDER -->
+
+            <div class="checkout-submit-section">
+
+              <p>
+
+                By placing your order, you confirm that the
+                information provided is correct and that you
+                have completed the required payment process.
+
+              </p>
+
+
+              <button
+                type="submit"
+                class="checkout-place-order-button"
+                id="placeOrderButton"
+              >
+
+                <span>
+                  Place Order
+                </span>
+
+                <span aria-hidden="true">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+              </button>
+
+
+              <a
+                href="cart.html"
+                class="checkout-back-to-cart"
+              >
+
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+                Return to My Cart
+
+              </a>
+
+            </div>
+
+
+          </form>
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- ==================================================
+       ACCOUNT FOOTER
+  ================================================== -->
+
+  <footer class="account-footer">
+
+    <p>
+
+      © <span id="accountYear"></span>
+
+      <span data-store="business_name">HAFHASS</span>
+
+      <span data-store="business_subtitle">Events &amp; Delights</span>.
+
+      All rights reserved.
+
+    </p>
+
+
+    <p data-store="tagline">
+      Where Taste Meets Creativity.
+    </p>
+
+  </footer>
+
+
+
+  <!-- ==================================================
+       SEARCHABLE LOCATION PICKER
+       Opens when a delivery location dropdown is selected.
+       Styled by account.css.
+  ================================================== -->
+
+  <div
+    class="customer-location-picker-overlay"
+    id="checkoutLocationPickerModal"
+    hidden
+  >
+
+    <div
+      class="customer-location-picker-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="checkoutLocationPickerTitle"
+      aria-describedby="checkoutLocationPickerDescription"
+    >
+
+      <div class="customer-location-picker-header">
+
+        <div>
+
+          <h2 id="checkoutLocationPickerTitle">
+            Select Location
+          </h2>
+
+          <p id="checkoutLocationPickerDescription">
+            Search and select a location from the available options.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="customer-location-picker-close"
+          id="closeCheckoutLocationPicker"
+          aria-label="Close location selection"
+        >
+
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
+        </button>
+
+      </div>
+
+
+      <div class="customer-location-picker-body">
+
+        <div class="customer-location-picker-search">
+
+          <i
+            class="fa-solid fa-magnifying-glass"
+            aria-hidden="true"
+          ></i>
+
+          <input
+            type="search"
+            id="checkoutLocationPickerSearch"
+            placeholder="Search locations..."
+            autocomplete="off"
+            aria-label="Search available locations"
+            aria-controls="checkoutLocationPickerResults"
+          >
+
+          <button
+            type="button"
+            id="clearCheckoutLocationPickerSearch"
+            aria-label="Clear search"
+            hidden
+          >
+
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
+          </button>
+
+        </div>
+
+        <div class="customer-location-picker-result-count">
+
+          <span id="checkoutLocationPickerResultCount">
+            Available locations
+          </span>
+
+        </div>
+
+        <div
+          class="customer-location-picker-results"
+          id="checkoutLocationPickerResults"
+          role="listbox"
+          aria-labelledby="checkoutLocationPickerTitle"
+          aria-live="polite"
+        ></div>
+
+        <div
+          class="customer-location-picker-empty"
+          id="checkoutLocationPickerEmpty"
+          hidden
+        >
+
+          <i
+            class="fa-solid fa-magnifying-glass"
+            aria-hidden="true"
+          ></i>
+
+          <h3>
+            No Matching Locations
+          </h3>
+
+          <p id="checkoutLocationPickerEmptyText">
+            No locations match your search. Try another name.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- "NOT LISTED" OPTION (SHOWN ONLY WHEN THE FIELD OFFERS IT) -->
+
+      <div
+        class="customer-location-picker-custom"
+        id="checkoutLocationPickerCustom"
+        hidden
+      >
+
+        <button
+          type="button"
+          id="checkoutLocationPickerCustomButton"
+        ></button>
+
+      </div>
+
+
+      <div class="customer-location-picker-footer">
+
+        <button
+          type="button"
+          class="address-cancel-button"
+          id="cancelCheckoutLocationPicker"
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ==================================================
+       JAVASCRIPT
+  ================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/account-layout.js"></script>
+
+  <script src="../js/checkout.js"></script>
+
+
+</body>
+
+</html>

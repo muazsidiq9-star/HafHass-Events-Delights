@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- BASIC PAGE INFORMATION -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Manage business information, branding, delivery and store preferences at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <title>Store Settings | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <link rel="stylesheet" href="../css/admin-settings.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+  <span
+    class="admin-brand-name"
+    data-store="business_name"
+  >
+    HAFHASS
+  </span>
+
+  <span
+    class="admin-brand-subtitle"
+    data-store="business_subtitle"
+  >
+    EVENTS & DELIGHTS
+  </span>
+
+  <span class="admin-brand-badge">
+    ADMIN
+  </span>
+
+</a>
+
+
+    <div class="admin-header-actions">
+
+      <span class="admin-header-user" id="adminHeaderName">
+        Administrator
+      </span>
+
+
+      <button
+        type="button"
+        class="admin-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-solid fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-mobile-menu"
+        id="adminMenuToggle"
+        aria-label="Open admin menu"
+        aria-expanded="false"
+        aria-controls="adminSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+
+      <!-- ADMIN PROFILE -->
+
+      <div class="admin-sidebar-profile">
+
+        <div class="admin-avatar" id="adminAvatar">
+          A
+        </div>
+
+        <div class="admin-profile-details">
+
+          <h3 id="adminSidebarName">
+            Administrator
+          </h3>
+
+          <p id="adminSidebarEmail">
+            Loading...
+          </p>
+
+          <span class="admin-role-badge" id="adminRole">
+            ADMIN
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="#"
+          class="admin-nav-link admin-nav-pending"
+          aria-disabled="true"
+          title="Coming soon"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="settings.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="admin-main">
+
+
+      <!-- PAGE HEADING -->
+
+      <section class="admin-page-heading">
+
+        <div>
+
+          <p class="admin-eyebrow">
+            CONFIGURATION
+          </p>
+
+          <h1>
+            Store Settings
+          </h1>
+
+          <p>
+            Manage your business information, branding and store preferences.
+          </p>
+
+        </div>
+
+
+        <div class="admin-date" id="adminCurrentDate">
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           SETTINGS CONTENT
+      ================================================== -->
+
+      <section class="admin-settings-content">
+
+
+        <!-- SETTINGS NAVIGATION -->
+
+        <nav
+          class="settings-navigation"
+          id="settingsNavigation"
+          aria-label="Settings sections"
+        >
+
+          <a
+            href="#businessInformation"
+            class="settings-nav-link active"
+          >
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+            <span>Business Information</span>
+          </a>
+
+
+          <a
+            href="#businessAddress"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-address-card" aria-hidden="true"></i>
+            <span>Address & Contact</span>
+          </a>
+
+
+          <a
+            href="#businessBranding"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-palette" aria-hidden="true"></i>
+            <span>Branding</span>
+          </a>
+
+
+          <a
+            href="#generalPreferences"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+            <span>General Preferences</span>
+          </a>
+
+
+          <a
+            href="#deliveryPickup"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+            <span>Delivery & Pickup</span>
+          </a>
+
+
+          <a
+            href="#openingHours"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            <span>Opening Hours</span>
+          </a>
+
+
+          <a
+            href="#bankTransfer"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+            <span>Bank Transfer</span>
+          </a>
+
+
+          <a
+            href="#socialMedia"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+            <span>Social Media</span>
+          </a>
+
+
+          <a
+            href="#announcementBar"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
+            <span>Announcement</span>
+          </a>
+
+
+          <a
+            href="#legalInformation"
+            class="settings-nav-link"
+          >
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+            <span>Legal Information</span>
+          </a>
+
+        </nav>
+
+
+
+        <!-- =================================================
+             BUSINESS INFORMATION
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="businessInformation"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-store" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Business Information</h2>
+
+              <p>
+                Update the name and basic information of your business.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="businessInformationForm" class="settings-form">
+
+            <!-- BUSINESS TITLE -->
+
+<div class="settings-form-group">
+
+  <label for="businessName">
+    Business Title
+  </label>
+
+  <input
+    type="text"
+    id="businessName"
+    name="business_name"
+    placeholder="e.g. HAFHASS"
+    required
+  >
+
+</div>
+
+
+<!-- BUSINESS SUBTITLE -->
+
+<div class="settings-form-group">
+
+  <label for="businessSubtitle">
+    Business Subtitle
+  </label>
+
+  <input
+    type="text"
+    id="businessSubtitle"
+    name="business_subtitle"
+    placeholder="e.g. EVENTS & DELIGHTS"
+  >
+
+</div>
+
+
+<!-- BUSINESS TAGLINE -->
+
+<div class="settings-form-group">
+
+  <label for="businessTagline">
+    Business Tagline
+  </label>
+
+  <input
+    type="text"
+    id="businessTagline"
+    name="tagline"
+    placeholder="Enter your business tagline"
+  >
+
+</div>
+
+
+            <div class="settings-form-group">
+
+              <label for="businessOwnerName">
+                Owner's Name
+              </label>
+
+              <input
+                type="text"
+                id="businessOwnerName"
+                name="owner_name"
+                placeholder="Enter owner's name"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="businessDescription">
+                Business Description
+              </label>
+
+              <textarea
+                id="businessDescription"
+                name="business_description"
+                rows="4"
+                placeholder="Briefly describe your business"
+              ></textarea>
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="businessInformationMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveBusinessInformationButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Business Information</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BUSINESS ADDRESS & CONTACT
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="businessAddress"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-address-card" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Address & Contact</h2>
+
+              <p>
+                Manage your business contact details and physical address.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="businessAddressForm" class="settings-form">
+
+            <div class="settings-form-group">
+
+              <label for="businessPhone">
+                Phone Number
+              </label>
+
+              <input
+                type="tel"
+                id="businessPhone"
+                name="phone"
+                placeholder="e.g. 08012345678"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="businessWhatsapp">
+                WhatsApp Number
+              </label>
+
+              <input
+                type="tel"
+                id="businessWhatsapp"
+                name="whatsapp_number"
+                placeholder="e.g. 2348012345678"
+              >
+
+              <small>
+                Include your country code.
+              </small>
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="businessEmail">
+                Business Email
+              </label>
+
+              <input
+                type="email"
+                id="businessEmail"
+                name="email"
+                placeholder="business@example.com"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="businessAddressInput">
+                Street Address
+              </label>
+
+              <textarea
+                id="businessAddressInput"
+                name="address"
+                rows="2"
+                placeholder="Enter your business address"
+              ></textarea>
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="businessCity">
+                City
+              </label>
+
+              <input
+                type="text"
+                id="businessCity"
+                name="city"
+                placeholder="Enter city"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="businessState">
+                State
+              </label>
+
+              <input
+                type="text"
+                id="businessState"
+                name="state"
+                placeholder="Enter state"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="businessCountry">
+                Country
+              </label>
+
+              <input
+                type="text"
+                id="businessCountry"
+                name="country"
+                placeholder="Enter country"
+              >
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="businessAddressMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveBusinessAddressButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Address & Contact</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BUSINESS BRANDING
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="businessBranding"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-palette" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Branding</h2>
+
+              <p>
+                Manage your business logo, favicon and brand colours.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="businessBrandingForm" class="settings-form">
+
+
+            <!-- LOGO -->
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="businessLogoUrl">
+                Business Logo URL
+              </label>
+
+              <input
+                type="url"
+                id="businessLogoUrl"
+                name="logo_url"
+                placeholder="https://example.com/logo.png"
+              >
+
+              <small>
+                Enter the public URL of your business logo.
+              </small>
+
+
+              <div
+                class="settings-logo-preview"
+                id="businessLogoPreview"
+              >
+
+                <i class="fa-solid fa-image" aria-hidden="true"></i>
+
+                <span>No logo available</span>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- FAVICON -->
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="businessFaviconUrl">
+                Favicon URL
+              </label>
+
+              <input
+                type="url"
+                id="businessFaviconUrl"
+                name="favicon_url"
+                placeholder="https://example.com/favicon.ico"
+              >
+
+              <small>
+                Enter the public URL of your website favicon.
+              </small>
+
+            </div>
+
+
+
+            <!-- BRAND COLOURS -->
+
+            <div class="settings-subsection settings-full-width">
+
+              <h3>Brand Colours</h3>
+
+              <p>
+                Choose the colours that represent your business identity.
+              </p>
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="brandPrimaryColor">
+                Primary Colour
+              </label>
+
+              <div class="settings-color-input">
+
+                <input
+                  type="color"
+                  id="brandPrimaryColor"
+                  name="brand_primary_color"
+                  value="#702D43"
+                >
+
+                <input
+                  type="text"
+                  id="brandPrimaryColorValue"
+                  value="#702D43"
+                  maxlength="7"
+                  aria-label="Primary colour hex value"
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="brandSecondaryColor">
+                Secondary Colour
+              </label>
+
+              <div class="settings-color-input">
+
+                <input
+                  type="color"
+                  id="brandSecondaryColor"
+                  name="brand_secondary_color"
+                  value="#E8B8C3"
+                >
+
+                <input
+                  type="text"
+                  id="brandSecondaryColorValue"
+                  value="#E8B8C3"
+                  maxlength="7"
+                  aria-label="Secondary colour hex value"
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="brandAccentColor">
+                Accent Colour
+              </label>
+
+              <div class="settings-color-input">
+
+                <input
+                  type="color"
+                  id="brandAccentColor"
+                  name="brand_accent_color"
+                  value="#C6A46A"
+                >
+
+                <input
+                  type="text"
+                  id="brandAccentColorValue"
+                  value="#C6A46A"
+                  maxlength="7"
+                  aria-label="Accent colour hex value"
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="businessBrandingMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveBusinessBrandingButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Branding</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             GENERAL PREFERENCES
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="generalPreferences"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>General Preferences</h2>
+
+              <p>
+                Configure your store's currency, timezone and order requirements.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="generalPreferencesForm" class="settings-form">
+
+            <div class="settings-form-group">
+
+              <label for="businessCurrency">
+                Store Currency
+              </label>
+
+              <select
+                id="businessCurrency"
+                name="currency"
+                required
+              >
+
+                <option value="NGN">Nigerian Naira (NGN)</option>
+
+                <option value="USD">US Dollar (USD)</option>
+
+                <option value="GBP">British Pound (GBP)</option>
+
+                <option value="EUR">Euro (EUR)</option>
+
+                <option value="GHS">Ghanaian Cedi (GHS)</option>
+
+                <option value="KES">Kenyan Shilling (KES)</option>
+
+                <option value="ZAR">South African Rand (ZAR)</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="businessTimezone">
+                Store Timezone
+              </label>
+
+              <select
+                id="businessTimezone"
+                name="timezone"
+                required
+              >
+
+                <option value="Africa/Lagos">
+                  Africa/Lagos (WAT)
+                </option>
+
+                <option value="Africa/Accra">
+                  Africa/Accra (GMT)
+                </option>
+
+                <option value="Africa/Nairobi">
+                  Africa/Nairobi (EAT)
+                </option>
+
+                <option value="Africa/Johannesburg">
+                  Africa/Johannesburg (SAST)
+                </option>
+
+                <option value="Europe/London">
+                  Europe/London
+                </option>
+
+                <option value="Europe/Paris">
+                  Europe/Paris
+                </option>
+
+                <option value="America/New_York">
+                  America/New_York
+                </option>
+
+                <option value="America/Los_Angeles">
+                  America/Los_Angeles
+                </option>
+
+                <option value="Asia/Dubai">
+                  Asia/Dubai
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="minimumOrderAmount">
+                Minimum Order Amount
+              </label>
+
+              <div class="settings-money-input">
+
+                <span id="minimumOrderCurrency">
+                  ₦
+                </span>
+
+                <input
+                  type="number"
+                  id="minimumOrderAmount"
+                  name="minimum_order_amount"
+                  min="0"
+                  step="0.01"
+                  placeholder="0.00"
+                >
+
+              </div>
+
+              <small>
+                Set to zero if you do not require a minimum order amount.
+              </small>
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="generalPreferencesMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveGeneralPreferencesButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Preferences</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DELIVERY & PICKUP
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="deliveryPickup"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Delivery & Pickup</h2>
+
+              <p>
+                Configure your general delivery and customer pickup options.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="deliveryPickupForm" class="settings-form">
+
+
+            <!-- DELIVERY AND PICKUP TOGGLES -->
+
+            <div class="settings-toggle-list settings-full-width">
+
+
+              <div class="settings-toggle-item">
+
+                <div class="settings-toggle-info">
+
+                  <h3>Enable Delivery</h3>
+
+                  <p>
+                    Allow customers to receive orders through delivery.
+                  </p>
+
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="deliveryEnabled"
+                    name="delivery_enabled"
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+              </div>
+
+
+
+              <div class="settings-toggle-item">
+
+                <div class="settings-toggle-info">
+
+                  <h3>Enable Pickup</h3>
+
+                  <p>
+                    Allow customers to collect their orders themselves.
+                  </p>
+
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="pickupEnabled"
+                    name="pickup_enabled"
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+              </div>
+
+
+
+              <div class="settings-toggle-item">
+
+                <div class="settings-toggle-info">
+
+                  <h3>Free Delivery</h3>
+
+                  <p>
+                    Offer free delivery when customers reach a specified order amount.
+                  </p>
+
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="freeDeliveryEnabled"
+                    name="free_delivery_enabled"
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- DELIVERY FEE -->
+
+            <div class="settings-form-group">
+
+              <label for="defaultDeliveryFee">
+                Default Delivery Fee
+              </label>
+
+              <div class="settings-money-input">
+
+                <span id="deliveryFeeCurrency">
+                  ₦
+                </span>
+
+                <input
+                  type="number"
+                  id="defaultDeliveryFee"
+                  name="delivery_fee"
+                  min="0"
+                  step="0.01"
+                  placeholder="0.00"
+                >
+
+              </div>
+
+            </div>
+
+
+
+            <!-- FREE DELIVERY THRESHOLD -->
+
+            <div
+              class="settings-form-group"
+              id="freeDeliveryThresholdGroup"
+            >
+
+              <label for="freeDeliveryThreshold">
+                Free Delivery Minimum Order
+              </label>
+
+              <div class="settings-money-input">
+
+                <span id="freeDeliveryCurrency">
+                  ₦
+                </span>
+
+                <input
+                  type="number"
+                  id="freeDeliveryThreshold"
+                  name="free_delivery_threshold"
+                  min="0"
+                  step="0.01"
+                  placeholder="Enter minimum amount"
+                >
+
+              </div>
+
+            </div>
+
+
+
+            <!-- ESTIMATED DELIVERY DAYS -->
+
+            <div class="settings-form-group">
+
+              <label for="estimatedDeliveryDays">
+                Estimated Delivery Days
+              </label>
+
+              <input
+                type="number"
+                id="estimatedDeliveryDays"
+                name="estimated_delivery_days"
+                min="0"
+                step="1"
+                placeholder="e.g. 3"
+              >
+
+              <small>
+                Estimated number of days for delivery.
+              </small>
+
+            </div>
+
+
+
+            <!-- ESTIMATED PREPARATION DAYS -->
+
+            <div class="settings-form-group">
+
+              <label for="estimatedPreparationDays">
+                Estimated Preparation Days
+              </label>
+
+              <input
+                type="number"
+                id="estimatedPreparationDays"
+                name="estimated_preparation_days"
+                min="0"
+                step="1"
+                placeholder="e.g. 2"
+              >
+
+              <small>
+                Estimated number of days required to prepare an order.
+              </small>
+
+            </div>
+
+
+
+            <!-- DELIVERY INFORMATION -->
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="deliveryInformation">
+                Delivery Information
+              </label>
+
+              <textarea
+                id="deliveryInformation"
+                name="delivery_information"
+                rows="4"
+                placeholder="Enter information customers should know about delivery"
+              ></textarea>
+
+            </div>
+
+
+
+            <!-- PICKUP INFORMATION -->
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="pickupInformation">
+                Pickup Information
+              </label>
+
+              <textarea
+                id="pickupInformation"
+                name="pickup_information"
+                rows="4"
+                placeholder="Enter information customers should know about pickup"
+              ></textarea>
+
+            </div>
+
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="deliveryPickupMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveDeliveryPickupButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Delivery & Pickup</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             OPENING HOURS
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="openingHours"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Opening Hours</h2>
+
+              <p>
+                Set the days and hours your business is available.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="openingHoursForm" class="settings-form">
+
+
+            <div class="settings-opening-hours settings-full-width">
+
+
+              <!-- MONDAY -->
+
+              <div
+                class="settings-day-row"
+                data-day="monday"
+              >
+
+                <div class="settings-day-name">
+                  Monday
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="mondayOpen"
+                    data-day-toggle
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+
+                <div class="settings-day-time">
+
+                  <input
+                    type="time"
+                    id="mondayOpeningTime"
+                    data-day-start
+                    aria-label="Monday opening time"
+                  >
+
+                  <span>to</span>
+
+                  <input
+                    type="time"
+                    id="mondayClosingTime"
+                    data-day-end
+                    aria-label="Monday closing time"
+                  >
+
+                </div>
+
+
+                <span
+                  class="settings-day-status"
+                  id="mondayStatus"
+                >
+                  Closed
+                </span>
+
+              </div>
+
+
+
+              <!-- TUESDAY -->
+
+              <div
+                class="settings-day-row"
+                data-day="tuesday"
+              >
+
+                <div class="settings-day-name">
+                  Tuesday
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="tuesdayOpen"
+                    data-day-toggle
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+
+                <div class="settings-day-time">
+
+                  <input
+                    type="time"
+                    id="tuesdayOpeningTime"
+                    data-day-start
+                    aria-label="Tuesday opening time"
+                  >
+
+                  <span>to</span>
+
+                  <input
+                    type="time"
+                    id="tuesdayClosingTime"
+                    data-day-end
+                    aria-label="Tuesday closing time"
+                  >
+
+                </div>
+
+
+                <span
+                  class="settings-day-status"
+                  id="tuesdayStatus"
+                >
+                  Closed
+                </span>
+
+              </div>
+
+
+
+              <!-- WEDNESDAY -->
+
+              <div
+                class="settings-day-row"
+                data-day="wednesday"
+              >
+
+                <div class="settings-day-name">
+                  Wednesday
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="wednesdayOpen"
+                    data-day-toggle
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+
+                <div class="settings-day-time">
+
+                  <input
+                    type="time"
+                    id="wednesdayOpeningTime"
+                    data-day-start
+                    aria-label="Wednesday opening time"
+                  >
+
+                  <span>to</span>
+
+                  <input
+                    type="time"
+                    id="wednesdayClosingTime"
+                    data-day-end
+                    aria-label="Wednesday closing time"
+                  >
+
+                </div>
+
+
+                <span
+                  class="settings-day-status"
+                  id="wednesdayStatus"
+                >
+                  Closed
+                </span>
+
+              </div>
+
+
+
+              <!-- THURSDAY -->
+
+              <div
+                class="settings-day-row"
+                data-day="thursday"
+              >
+
+                <div class="settings-day-name">
+                  Thursday
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="thursdayOpen"
+                    data-day-toggle
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+
+                <div class="settings-day-time">
+
+                  <input
+                    type="time"
+                    id="thursdayOpeningTime"
+                    data-day-start
+                    aria-label="Thursday opening time"
+                  >
+
+                  <span>to</span>
+
+                  <input
+                    type="time"
+                    id="thursdayClosingTime"
+                    data-day-end
+                    aria-label="Thursday closing time"
+                  >
+
+                </div>
+
+
+                <span
+                  class="settings-day-status"
+                  id="thursdayStatus"
+                >
+                  Closed
+                </span>
+
+              </div>
+
+
+
+              <!-- FRIDAY -->
+
+              <div
+                class="settings-day-row"
+                data-day="friday"
+              >
+
+                <div class="settings-day-name">
+                  Friday
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="fridayOpen"
+                    data-day-toggle
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+
+                <div class="settings-day-time">
+
+                  <input
+                    type="time"
+                    id="fridayOpeningTime"
+                    data-day-start
+                    aria-label="Friday opening time"
+                  >
+
+                  <span>to</span>
+
+                  <input
+                    type="time"
+                    id="fridayClosingTime"
+                    data-day-end
+                    aria-label="Friday closing time"
+                  >
+
+                </div>
+
+
+                <span
+                  class="settings-day-status"
+                  id="fridayStatus"
+                >
+                  Closed
+                </span>
+
+              </div>
+
+
+
+              <!-- SATURDAY -->
+
+              <div
+                class="settings-day-row"
+                data-day="saturday"
+              >
+
+                <div class="settings-day-name">
+                  Saturday
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="saturdayOpen"
+                    data-day-toggle
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+
+                <div class="settings-day-time">
+
+                  <input
+                    type="time"
+                    id="saturdayOpeningTime"
+                    data-day-start
+                    aria-label="Saturday opening time"
+                  >
+
+                  <span>to</span>
+
+                  <input
+                    type="time"
+                    id="saturdayClosingTime"
+                    data-day-end
+                    aria-label="Saturday closing time"
+                  >
+
+                </div>
+
+
+                <span
+                  class="settings-day-status"
+                  id="saturdayStatus"
+                >
+                  Closed
+                </span>
+
+              </div>
+
+
+
+              <!-- SUNDAY -->
+
+              <div
+                class="settings-day-row"
+                data-day="sunday"
+              >
+
+                <div class="settings-day-name">
+                  Sunday
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="sundayOpen"
+                    data-day-toggle
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+
+                <div class="settings-day-time">
+
+                  <input
+                    type="time"
+                    id="sundayOpeningTime"
+                    data-day-start
+                    aria-label="Sunday opening time"
+                  >
+
+                  <span>to</span>
+
+                  <input
+                    type="time"
+                    id="sundayClosingTime"
+                    data-day-end
+                    aria-label="Sunday closing time"
+                  >
+
+                </div>
+
+
+                <span
+                  class="settings-day-status"
+                  id="sundayStatus"
+                >
+                  Closed
+                </span>
+
+              </div>
+
+
+            </div>
+
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="openingHoursMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveOpeningHoursButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Opening Hours</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BANK TRANSFER DETAILS
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="bankTransfer"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Bank Transfer Details</h2>
+
+              <p>
+                Manage the bank account information customers can use for transfers.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="bankTransferForm" class="settings-form">
+
+            <div class="settings-form-group">
+
+              <label for="bankName">
+                Bank Name
+              </label>
+
+              <input
+                type="text"
+                id="bankName"
+                placeholder="Enter bank name"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="bankAccountName">
+                Account Name
+              </label>
+
+              <input
+                type="text"
+                id="bankAccountName"
+                placeholder="Enter account name"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="bankAccountNumber">
+                Account Number
+              </label>
+
+              <input
+                type="text"
+                id="bankAccountNumber"
+                inputmode="numeric"
+                placeholder="Enter account number"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="bankTransferInstructions">
+                Transfer Instructions
+              </label>
+
+              <textarea
+                id="bankTransferInstructions"
+                rows="4"
+                placeholder="Enter additional payment instructions for customers"
+              ></textarea>
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="bankTransferMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveBankTransferButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Bank Details</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SOCIAL MEDIA
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="socialMedia"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Social Media</h2>
+
+              <p>
+                Add your business social media links.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="socialMediaForm" class="settings-form">
+
+            <div class="settings-form-group">
+
+              <label for="socialInstagram">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                Instagram
+              </label>
+
+              <input
+                type="url"
+                id="socialInstagram"
+                placeholder="https://instagram.com/yourbusiness"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="socialFacebook">
+                <i class="fa-brands fa-facebook" aria-hidden="true"></i>
+                Facebook
+              </label>
+
+              <input
+                type="url"
+                id="socialFacebook"
+                placeholder="https://facebook.com/yourbusiness"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="socialTiktok">
+                <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+                TikTok
+              </label>
+
+              <input
+                type="url"
+                id="socialTiktok"
+                placeholder="https://tiktok.com/@yourbusiness"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+              <label for="socialWhatsapp">
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                WhatsApp
+              </label>
+
+              <input
+                type="url"
+                id="socialWhatsapp"
+                placeholder="https://wa.me/234..."
+              >
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="socialOther">
+                Other Social Media Link
+              </label>
+
+              <input
+                type="url"
+                id="socialOther"
+                placeholder="https://example.com"
+              >
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="socialMediaMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveSocialMediaButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Social Links</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ANNOUNCEMENT BAR
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="announcementBar"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Announcement Bar</h2>
+
+              <p>
+                Display important announcements to visitors on your website.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="announcementForm" class="settings-form">
+
+
+            <div class="settings-toggle-list settings-full-width">
+
+              <div class="settings-toggle-item">
+
+                <div class="settings-toggle-info">
+
+                  <h3>Enable Announcement</h3>
+
+                  <p>
+                    Show the announcement message on your website.
+                  </p>
+
+                </div>
+
+
+                <label class="settings-switch">
+
+                  <input
+                    type="checkbox"
+                    id="announcementEnabled"
+                    name="announcement_enabled"
+                  >
+
+                  <span class="settings-switch-slider"></span>
+
+                </label>
+
+              </div>
+
+            </div>
+
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="announcementText">
+                Announcement Message
+              </label>
+
+              <textarea
+                id="announcementText"
+                name="announcement_text"
+                rows="3"
+                placeholder="Enter your announcement"
+              ></textarea>
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="announcementLink">
+                Announcement Link
+              </label>
+
+              <input
+                type="url"
+                id="announcementLink"
+                name="announcement_link"
+                placeholder="https://example.com"
+              >
+
+              <small>
+                Optional link customers can visit from the announcement.
+              </small>
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="announcementMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveAnnouncementButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Announcement</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LEGAL INFORMATION
+        ================================================== -->
+
+        <section
+          class="settings-section"
+          id="legalInformation"
+        >
+
+          <div class="settings-section-heading">
+
+            <div class="settings-section-icon">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+              <h2>Legal Information</h2>
+
+              <p>
+                Add links to your website's terms and privacy policy.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form id="legalInformationForm" class="settings-form">
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="termsUrl">
+                Terms & Conditions URL
+              </label>
+
+              <input
+                type="url"
+                id="termsUrl"
+                name="terms_url"
+                placeholder="https://example.com/terms"
+              >
+
+            </div>
+
+
+            <div class="settings-form-group settings-full-width">
+
+              <label for="privacyUrl">
+                Privacy Policy URL
+              </label>
+
+              <input
+                type="url"
+                id="privacyUrl"
+                name="privacy_url"
+                placeholder="https://example.com/privacy"
+              >
+
+            </div>
+
+
+            <div class="settings-form-footer settings-full-width">
+
+              <p
+                id="legalInformationMessage"
+                class="settings-form-message"
+                hidden
+                aria-live="polite"
+              ></p>
+
+
+              <button
+                type="submit"
+                id="saveLegalInformationButton"
+                class="settings-save-button"
+              >
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                <span>Save Legal Information</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase-config.js"></script>
+
+<!-- SHARED STORE SETTINGS -->
+<script src="../js/store-settings.js"></script>
+
+<script src="../js/auth.js"></script>
+
+<script src="../js/guards.js"></script>
+
+<script src="../js/admin-layout.js"></script>
+
+<script src="../js/admin-settings.js"></script>
+
+
+</body>
+
+</html>

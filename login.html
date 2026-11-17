@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sign In | HAFHASS EVENTS & DELIGHTS</title>
+
+  <meta
+    name="description"
+    content="Sign in to your HAFHASS EVENTS & DELIGHTS account to manage your orders and enjoy a personalised shopping experience."
+  >
+
+  <meta name="theme-color" content="#FFF9F3">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Main Website Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Authentication Styles -->
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-page">
+
+  <main class="auth-shell">
+
+    <!-- ======================================
+         BRAND PANEL
+    ======================================= -->
+
+    <section class="auth-brand-panel">
+
+      <a href="index.html" class="auth-brand">
+
+        <span class="auth-brand-logo">H</span>
+
+        <span>
+          <span class="auth-brand-name" data-store="business_name">HAFHASS</span>
+
+          <span class="auth-brand-tagline" data-store="business_subtitle">
+            EVENTS & DELIGHTS
+          </span>
+        </span>
+
+      </a>
+
+
+      <div class="auth-brand-content">
+
+        <span class="auth-eyebrow">
+          WELCOME BACK
+        </span>
+
+        <h1>
+          Your favourite moments are just a sign-in away.
+        </h1>
+
+        <p>
+          Sign in to explore our collections, manage your
+          orders and keep track of your special requests.
+        </p>
+
+      </div>
+
+
+      <div class="auth-brand-decoration">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+
+      <div class="auth-brand-footer" data-store="tagline">
+        Where Taste Meets Creativity.
+      </div>
+
+    </section>
+
+
+    <!-- ======================================
+         LOGIN FORM PANEL
+    ======================================= -->
+
+    <section class="auth-form-panel">
+
+      <div class="auth-card">
+
+        <!-- Mobile Brand -->
+        <a href="index.html" class="auth-mobile-brand">
+
+          <span class="auth-brand-logo">H</span>
+
+          <span>
+            <span class="auth-brand-name" data-store="business_name">HAFHASS</span>
+
+            <span class="auth-brand-tagline" data-store="business_subtitle">
+              EVENTS & DELIGHTS
+            </span>
+          </span>
+
+        </a>
+
+
+        <!-- Heading -->
+        <div class="auth-heading">
+
+          <span class="auth-eyebrow">
+            YOUR ACCOUNT
+          </span>
+
+          <h2 class="auth-title">
+            Welcome back
+          </h2>
+
+          <p class="auth-description">
+            Enter your account details to continue.
+          </p>
+
+        </div>
+
+
+        <!-- Feedback Message -->
+        <div
+          id="authMessage"
+          class="auth-message"
+          role="alert"
+          aria-live="polite"
+        ></div>
+
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+
+          <!-- Email -->
+          <div class="auth-field">
+
+            <label for="email" class="auth-label">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="auth-input"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+
+          </div>
+
+
+          <!-- Password -->
+          <div class="auth-field">
+
+            <label for="password" class="auth-label">
+              Password
+            </label>
+
+            <div class="auth-input-wrap">
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="auth-input"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="auth-password-toggle"
+                data-toggle-password="password"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- Remember Me and Forgot Password -->
+          <div class="auth-form-row">
+
+            <label class="auth-checkbox">
+
+              <input
+                type="checkbox"
+                id="rememberMe"
+                name="remember_me"
+                checked
+              >
+
+              <span>Keep me signed in</span>
+
+            </label>
+
+
+            <a
+              href="forgot-password.html"
+              class="auth-link"
+            >
+              Forgot password?
+            </a>
+
+          </div>
+
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            id="loginButton"
+            class="auth-button"
+          >
+
+            <span class="button-text">
+              Sign In
+            </span>
+
+          </button>
+
+        </form>
+
+
+        <!-- Registration Link -->
+        <div class="auth-divider">
+          <span>NEW TO HAFHASS?</span>
+        </div>
+
+
+        <a
+          href="register.html"
+          class="auth-button auth-button-secondary"
+        >
+          Create an Account
+        </a>
+
+
+        <!-- Return Home -->
+        <p class="auth-terms">
+
+          <a href="index.html" class="auth-link">
+            ← Back to Homepage
+          </a>
+
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ======================================
+       JAVASCRIPT
+  ======================================= -->
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Supabase Configuration -->
+  <script src="js/supabase-config.js"></script>
+
+  <!-- Authentication Functions -->
+  <script src="js/auth.js"></script>
+
+  <!-- STORE SETTINGS (BRAND NAME, SUBTITLE, TAGLINE) -->
+
+  <script src="js/store-settings.js"></script>
+
+  <!-- Login Page Logic -->
+  <script src="js/login.js"></script>
+
+</body>
+
+</html>

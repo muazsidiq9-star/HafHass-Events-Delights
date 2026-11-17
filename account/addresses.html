@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Manage your saved delivery addresses at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <title>Saved Addresses | HAFHASS EVENTS & DELIGHTS</title>
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <!-- SHARED STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/account.css">
+
+</head>
+
+
+<body class="account-page">
+
+
+  <!-- ==================================================
+       ACCOUNT HEADER
+  ================================================== -->
+
+  <header class="account-header">
+
+    <a href="../index.html" class="account-brand">
+
+      <span class="account-brand-name">
+        <span data-store="business_name">HAFHASS</span>
+      </span>
+
+      <span class="account-brand-subtitle">
+        <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>
+      </span>
+
+    </a>
+
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+
+      <button
+        type="button"
+        class="account-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+
+        <i
+          class="fa-regular fa-moon theme-icon"
+          aria-hidden="true"
+        ></i>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open account menu"
+        aria-expanded="false"
+        aria-controls="accountSidebar"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==================================================
+       ACCOUNT LAYOUT
+  ================================================== -->
+
+  <div class="account-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside
+      class="account-sidebar"
+      id="accountSidebar"
+    >
+
+
+      <!-- CUSTOMER INFORMATION -->
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar">
+          <span id="avatarInitials">C</span>
+        </div>
+
+
+        <div class="account-user-details">
+
+          <p class="account-user-label">
+            Welcome back
+          </p>
+
+          <h2 id="sidebarUserName">
+            Customer
+          </h2>
+
+          <p id="sidebarUserEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="account-navigation">
+
+
+        <p class="account-nav-heading">
+          ACCOUNT
+        </p>
+
+
+        <a href="dashboard.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </span>
+
+          Dashboard
+
+        </a>
+
+
+        <a href="orders.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-box" aria-hidden="true"></i>
+          </span>
+
+          My Orders
+
+        </a>
+
+
+        <a href="favourites.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+          </span>
+
+          My Favourites
+
+        </a>
+
+
+        <a
+          href="addresses.html"
+          class="account-nav-link active"
+          aria-current="page"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </span>
+
+          Saved Addresses
+
+        </a>
+
+
+        <a href="profile.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-user" aria-hidden="true"></i>
+          </span>
+
+          My Profile
+
+        </a>
+
+
+
+        <p class="account-nav-heading">
+          SHOPPING
+        </p>
+
+
+        <a href="../shop.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+          </span>
+
+          Browse Shop
+
+        </a>
+
+
+        <a href="cart.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+          </span>
+
+          My Shopping Bag
+
+          <span
+            id="accountCartCount"
+            class="account-cart-count"
+            aria-label="Items in cart"
+          >0</span>
+
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR BOTTOM -->
+
+      <div class="account-sidebar-bottom">
+
+        <a href="../index.html" class="account-back-home">
+
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+          Back to Homepage
+
+        </a>
+
+
+        <button
+          type="button"
+          class="account-logout-button"
+          id="logoutButton"
+        >
+
+          <span>
+            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          </span>
+
+          Sign Out
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="account-main">
+
+
+      <section class="addresses-page">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="addresses-heading">
+
+          <div>
+
+            <p class="account-eyebrow">
+              YOUR DELIVERY DETAILS
+            </p>
+
+            <h1>
+              Saved Addresses
+            </h1>
+
+            <p>
+              Manage your delivery addresses for a smoother shopping experience.
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="account-primary-button"
+            id="addAddressButton"
+          >
+
+            <span>
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </span>
+
+            Add New Address
+
+          </button>
+
+        </div>
+
+
+
+        <!-- ADDRESS COUNT -->
+
+        <div class="addresses-summary">
+
+          <div>
+
+            <span class="addresses-summary-icon">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+              <strong id="addressesCount">
+                0 Addresses
+              </strong>
+
+              <p>
+                Your saved delivery locations
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             ADDRESS FORM
+        ================================================== -->
+
+        <div
+          class="address-form-card"
+          id="addressFormCard"
+          hidden
+        >
+
+          <div class="address-form-heading">
+
+            <div>
+
+              <p class="account-eyebrow">
+                DELIVERY INFORMATION
+              </p>
+
+              <h2 id="addressFormTitle">
+                Add New Address
+              </h2>
+
+              <p>
+                Enter your delivery details and select your location.
+              </p>
+
+            </div>
+
+
+            <button
+              type="button"
+              id="closeAddressFormButton"
+              class="address-close-button"
+              aria-label="Close address form"
+            >
+
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
+            </button>
+
+          </div>
+
+
+
+          <form id="addressForm" novalidate>
+
+            <input
+              type="hidden"
+              id="addressId"
+            >
+
+
+            <!-- DATABASE LOCATION IDENTIFIERS -->
+
+            <input
+              type="hidden"
+              id="addressLgaId"
+            >
+
+            <input
+              type="hidden"
+              id="addressSettlementId"
+            >
+
+            <input
+              type="hidden"
+              id="addressAreaId"
+            >
+
+            <input
+              type="hidden"
+              id="addressLocationNodeId"
+            >
+
+
+            <div class="address-form-grid">
+
+
+              <!-- ADDRESS LABEL -->
+
+              <div class="address-form-group">
+
+                <label for="addressLabel">
+                  Address Label
+                </label>
+
+                <input
+                  type="text"
+                  id="addressLabel"
+                  maxlength="50"
+                  placeholder="e.g. Home, Office"
+                >
+
+              </div>
+
+
+
+              <!-- RECIPIENT NAME -->
+
+              <div class="address-form-group">
+
+                <label for="recipientName">
+                  Recipient Name *
+                </label>
+
+                <input
+                  type="text"
+                  id="recipientName"
+                  maxlength="150"
+                  placeholder="Full name"
+                  required
+                >
+
+              </div>
+
+
+
+              <!-- PHONE -->
+
+              <div class="address-form-group">
+
+                <label for="recipientPhone">
+                  Phone Number *
+                </label>
+
+                <input
+                  type="tel"
+                  id="recipientPhone"
+                  maxlength="30"
+                  placeholder="e.g. 08012345678"
+                  required
+                >
+
+              </div>
+
+
+
+              <!-- ==================================================
+                   DELIVERY LOCATION HIERARCHY
+              ================================================== -->
+
+
+              <!-- STATE -->
+
+              <div class="address-form-group address-location-group">
+
+                <label for="customerAddressState">
+                  State *
+                </label>
+
+                <select
+                  id="customerAddressState"
+                  required
+                >
+
+                  <option value="">
+                    Loading states...
+                  </option>
+
+                </select>
+
+              </div>
+
+
+
+              <!-- LGA -->
+
+              <div
+                class="address-form-group address-location-group"
+                id="customerAddressLgaGroup"
+                hidden
+              >
+
+                <label for="customerAddressLga">
+                  Local Government Area *
+                </label>
+
+                <select
+                  id="customerAddressLga"
+                  disabled
+                  required
+                >
+
+                  <option value="">
+                    Select an LGA
+                  </option>
+
+                </select>
+
+              </div>
+
+
+
+              <!-- SETTLEMENT -->
+
+              <div
+                class="address-form-group address-location-group"
+                id="customerAddressSettlementGroup"
+                hidden
+              >
+
+                <label for="customerAddressSettlement">
+                  Settlement / City *
+                </label>
+
+                <select
+                  id="customerAddressSettlement"
+                  disabled
+                  required
+                >
+
+                  <option value="">
+                    Select a settlement
+                  </option>
+
+                </select>
+
+              </div>
+
+
+
+              <!-- AREA -->
+
+              <div
+                class="address-form-group address-location-group"
+                id="customerAddressAreaGroup"
+                hidden
+              >
+
+                <label for="customerAddressArea">
+                  Area
+                </label>
+
+                <select
+                  id="customerAddressArea"
+                  disabled
+                >
+
+                  <option value="">
+                    Select an area
+                  </option>
+
+                </select>
+
+              </div>
+
+
+
+              <!-- SPECIFIC LOCATION -->
+
+              <div
+                class="address-form-group address-location-group address-form-full"
+                id="customerAddressLocationGroup"
+                hidden
+              >
+
+                <label for="customerAddressLocation">
+                  Specific Location
+                </label>
+
+                <select
+                  id="customerAddressLocation"
+                  disabled
+                >
+
+                  <option value="">
+                    Select a specific location
+                  </option>
+
+                </select>
+
+                <small>
+                  Select a recognised street, landmark, market,
+                  junction, community or other listed location.
+                </small>
+
+              </div>
+
+
+
+              <!-- SELECTED LOCATION PREVIEW -->
+
+              <div
+                class="address-form-group address-form-full"
+                id="customerAddressLocationPreviewGroup"
+                hidden
+              >
+
+                <label>
+                  Selected Delivery Location
+                </label>
+
+                <div
+                  class="customer-address-location-preview"
+                  id="customerAddressLocationPreview"
+                  aria-live="polite"
+                ></div>
+
+              </div>
+
+
+
+              <!-- MANUAL LOCATION OPTION -->
+
+              <div class="address-form-group address-form-full">
+
+                <button
+                  type="button"
+                  id="toggleCustomerCustomLocation"
+                  class="customer-custom-location-toggle"
+                  aria-expanded="false"
+                  aria-controls="customerCustomLocationFields"
+                >
+
+                  <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+
+                  Can't find your location? Enter it manually
+
+                </button>
+
+              </div>
+
+
+
+              <!-- CUSTOM LOCATION FIELDS -->
+
+              <div
+                class="address-form-group address-form-full"
+                id="customerCustomLocationFields"
+                hidden
+              >
+
+                <div class="customer-custom-location-notice">
+
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+
+                  <p>
+                    If your location is not listed, enter its details below.
+                    Your address can still be saved, even if the location
+                    has not yet been added to our delivery directory.
+                  </p>
+
+                </div>
+
+
+                <div class="address-form-grid">
+
+
+                  <div class="address-form-group">
+
+                    <label for="customerCustomLga">
+                      Local Government Area
+                    </label>
+
+                    <input
+                      type="text"
+                      id="customerCustomLga"
+                      maxlength="150"
+                      placeholder="Enter your LGA"
+                    >
+
+                  </div>
+
+
+
+                  <div class="address-form-group">
+
+                    <label for="customerCustomCity">
+                      Settlement / City
+                    </label>
+
+                    <input
+                      type="text"
+                      id="customerCustomCity"
+                      maxlength="150"
+                      placeholder="Enter your town or settlement"
+                    >
+
+                  </div>
+
+
+
+                  <div class="address-form-group">
+
+                    <label for="customerCustomArea">
+                      Area
+                    </label>
+
+                    <input
+                      type="text"
+                      id="customerCustomArea"
+                      maxlength="150"
+                      placeholder="Enter your area"
+                    >
+
+                  </div>
+
+
+
+                  <div class="address-form-group address-form-full">
+
+                    <label for="customerCustomLocationText">
+                      Specific Location
+                    </label>
+
+                    <input
+                      type="text"
+                      id="customerCustomLocationText"
+                      maxlength="255"
+                      placeholder="Street, community, landmark or junction"
+                    >
+
+                  </div>
+
+
+                </div>
+
+              </div>
+
+
+
+              <!-- ==================================================
+                   ADDITIONAL ADDRESS DETAILS
+              ================================================== -->
+
+
+              <!-- ADDRESS LINE 1 -->
+
+              <div class="address-form-group address-form-full">
+
+                <label for="addressLine1">
+                  Additional Address Detail (Optional)
+                </label>
+
+                <input
+                  type="text"
+                  id="addressLine1"
+                  maxlength="255"
+                  placeholder="House number, building name or street details"
+                >
+
+              </div>
+
+
+
+              <!-- ADDRESS LINE 2 -->
+
+              <div class="address-form-group address-form-full">
+
+                <label for="addressLine2">
+                  Additional Directions (Optional)
+                </label>
+
+                <input
+                  type="text"
+                  id="addressLine2"
+                  maxlength="255"
+                  placeholder="Apartment, floor, nearby landmark or other directions"
+                >
+
+              </div>
+
+
+
+              <!-- POSTAL CODE -->
+
+              <div class="address-form-group">
+
+                <label for="addressPostalCode">
+                  Postal Code
+                </label>
+
+                <input
+                  type="text"
+                  id="addressPostalCode"
+                  maxlength="20"
+                  placeholder="Optional"
+                >
+
+              </div>
+
+
+
+              <!-- COUNTRY -->
+
+              <div class="address-form-group">
+
+                <label for="addressCountry">
+                  Country *
+                </label>
+
+                <input
+                  type="text"
+                  id="addressCountry"
+                  maxlength="100"
+                  value="Nigeria"
+                  required
+                >
+
+              </div>
+
+
+
+              <!-- DELIVERY INSTRUCTIONS -->
+
+              <div class="address-form-group address-form-full">
+
+                <label for="deliveryInstructions">
+                  Delivery Instructions
+                </label>
+
+                <textarea
+                  id="deliveryInstructions"
+                  rows="3"
+                  maxlength="1000"
+                  placeholder="Any additional directions to help us locate your address?"
+                ></textarea>
+
+              </div>
+
+
+
+              <!-- DEFAULT ADDRESS -->
+
+              <div class="address-form-group address-form-full">
+
+                <label class="address-default-option">
+
+                  <input
+                    type="checkbox"
+                    id="addressIsDefault"
+                  >
+
+                  <span>
+                    Set as my default delivery address
+                  </span>
+
+                </label>
+
+              </div>
+
+
+            </div>
+
+
+
+            <!-- FORM FEEDBACK -->
+
+            <div
+              class="address-form-message"
+              id="addressFormMessage"
+              hidden
+              role="alert"
+            ></div>
+
+
+
+            <!-- FORM ACTIONS -->
+
+            <div class="address-form-actions">
+
+              <button
+                type="button"
+                class="address-cancel-button"
+                id="cancelAddressButton"
+              >
+                Cancel
+              </button>
+
+
+              <button
+                type="submit"
+                class="account-primary-button"
+                id="saveAddressButton"
+              >
+                Save Address
+              </button>
+
+            </div>
+
+
+          </form>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             SEARCHABLE LOCATION PICKER
+        ================================================== -->
+
+        <div
+          class="customer-location-picker-overlay"
+          id="customerLocationPickerModal"
+          hidden
+        >
+
+          <div
+            class="customer-location-picker-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="customerLocationPickerTitle"
+            aria-describedby="customerLocationPickerDescription"
+          >
+
+            <!-- PICKER HEADER -->
+
+            <div class="customer-location-picker-header">
+
+              <div>
+
+                <h2 id="customerLocationPickerTitle">
+                  Select Location
+                </h2>
+
+                <p id="customerLocationPickerDescription">
+                  Search and select a location from the available options.
+                </p>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="customer-location-picker-close"
+                id="closeCustomerLocationPicker"
+                aria-label="Close location selection"
+              >
+
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
+              </button>
+
+            </div>
+
+
+
+            <!-- PICKER BODY -->
+
+            <div class="customer-location-picker-body">
+
+
+              <!-- SEARCH -->
+
+              <div class="customer-location-picker-search">
+
+                <i
+                  class="fa-solid fa-magnifying-glass"
+                  aria-hidden="true"
+                ></i>
+
+                <input
+                  type="search"
+                  id="customerLocationPickerSearch"
+                  placeholder="Search locations..."
+                  autocomplete="off"
+                  aria-label="Search available locations"
+                  aria-controls="customerLocationPickerResults"
+                >
+
+                <button
+                  type="button"
+                  id="clearCustomerLocationPickerSearch"
+                  aria-label="Clear search"
+                  hidden
+                >
+
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
+                </button>
+
+              </div>
+
+
+
+              <!-- RESULT COUNT -->
+
+              <div class="customer-location-picker-result-count">
+
+                <span id="customerLocationPickerResultCount">
+                  Available locations
+                </span>
+
+              </div>
+
+
+
+              <!-- RESULTS -->
+
+              <div
+                class="customer-location-picker-results"
+                id="customerLocationPickerResults"
+                role="listbox"
+                aria-labelledby="customerLocationPickerTitle"
+                aria-live="polite"
+              ></div>
+
+
+
+              <!-- EMPTY RESULTS -->
+
+              <div
+                class="customer-location-picker-empty"
+                id="customerLocationPickerEmpty"
+                hidden
+              >
+
+                <i
+                  class="fa-solid fa-magnifying-glass"
+                  aria-hidden="true"
+                ></i>
+
+                <h3>
+                  No Matching Locations
+                </h3>
+
+                <p>
+                  No locations match your search. Try another name.
+                </p>
+
+              </div>
+
+
+            </div>
+
+
+
+            <!-- PICKER FOOTER -->
+
+            <div class="customer-location-picker-footer">
+
+              <button
+                type="button"
+                class="address-cancel-button"
+                id="cancelCustomerLocationPicker"
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             CONFIRMATION DIALOG
+        ================================================== -->
+
+        <div
+          class="account-dialog-overlay"
+          id="accountDialog"
+          hidden
+        >
+
+          <div
+            class="account-dialog"
+            id="accountDialogPanel"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="accountDialogTitle"
+            aria-describedby="accountDialogMessage"
+          >
+
+            <div class="account-dialog-icon">
+
+              <i
+                class="fa-solid fa-trash-can"
+                id="accountDialogIcon"
+                aria-hidden="true"
+              ></i>
+
+            </div>
+
+            <h2 id="accountDialogTitle"></h2>
+
+            <p id="accountDialogMessage"></p>
+
+            <div class="account-dialog-actions">
+
+              <button
+                type="button"
+                class="address-cancel-button"
+                id="accountDialogCancel"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                class="account-dialog-confirm"
+                id="accountDialogConfirm"
+              >
+                Confirm
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             LOADING STATE
+        ================================================== -->
+
+        <div
+          class="addresses-loading"
+          id="addressesLoading"
+        >
+
+          <span class="account-spinner"></span>
+
+          <p>
+            Loading your saved addresses...
+          </p>
+
+        </div>
+
+
+
+        <!-- ERROR STATE -->
+
+        <div
+          class="addresses-error"
+          id="addressesError"
+          hidden
+        >
+
+          <h3>
+            Unable to Load Addresses
+          </h3>
+
+          <p id="addressesErrorMessage">
+            Something went wrong while loading your saved addresses.
+          </p>
+
+          <button
+            type="button"
+            id="retryAddressesButton"
+          >
+
+            <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+
+            Try Again
+
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+          class="addresses-empty"
+          id="addressesEmpty"
+          hidden
+        >
+
+          <div class="addresses-empty-icon">
+
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+
+          </div>
+
+          <h3>
+            No Saved Addresses
+          </h3>
+
+          <p>
+            You haven't saved any delivery addresses yet.
+            Add your first address to make future orders easier.
+          </p>
+
+          <button
+            type="button"
+            class="account-primary-button"
+            id="emptyAddAddressButton"
+          >
+
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+
+            Add Your First Address
+
+          </button>
+
+        </div>
+
+
+
+        <!-- ADDRESSES LIST -->
+
+        <div
+          class="addresses-list"
+          id="addressesList"
+          hidden
+        ></div>
+
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- ==================================================
+       ACCOUNT FOOTER
+  ================================================== -->
+
+  <footer class="account-footer">
+
+    <p>
+
+      © <span id="accountYear"></span>
+
+      <span data-store="business_name">HAFHASS</span>
+
+      <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>.
+
+      All rights reserved.
+
+    </p>
+
+    <p>
+      <span data-store="tagline">Where Taste Meets Creativity.</span>
+    </p>
+
+  </footer>
+
+
+
+  <!-- ==================================================
+       JAVASCRIPT
+  ================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/account-layout.js"></script>
+
+  <script src="../js/account-addresses.js"></script>
+
+
+</body>
+
+</html>

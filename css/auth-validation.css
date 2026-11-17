@@ -1,0 +1,85 @@
+/* =========================================================
+   HAFHASS EVENTS & DELIGHTS
+   AUTH PAGES: FIELD VALIDATION MESSAGES
+   Load after auth.css
+========================================================= */
+
+.auth-field-message {
+  margin: 8px 0 0;
+  color: var(--text-muted, #8b8085);
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.auth-field-message[hidden] {
+  display: none;
+}
+
+.auth-field-message.is-error {
+  color: #a52d2d;
+}
+
+.auth-field-message.is-warning {
+  color: #8a6420;
+}
+
+.auth-field-message.is-success {
+  color: #26743a;
+}
+
+.auth-input.is-invalid,
+.auth-input.is-invalid:focus {
+  border-color: #c25b5b;
+  box-shadow: 0 0 0 3px rgba(165, 45, 45, 0.08);
+}
+
+.auth-input.is-valid {
+  border-color: #7fbf8f;
+}
+
+.auth-field-action {
+  display: inline;
+  margin: 0 4px 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent, #702d43);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.auth-field-action:hover {
+  color: var(--accent-hover, #582135);
+}
+
+.auth-field-action:focus-visible {
+  outline: 2px solid var(--gold, #c6a46a);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+html[data-theme="dark"] .auth-field-message.is-error {
+  color: #ffaaaa;
+}
+
+html[data-theme="dark"] .auth-field-message.is-warning {
+  color: #e7c17d;
+}
+
+html[data-theme="dark"] .auth-field-message.is-success {
+  color: #9cdda9;
+}
+
+html[data-theme="dark"] .auth-input.is-invalid,
+html[data-theme="dark"] .auth-input.is-invalid:focus {
+  border-color: #d46a6a;
+  box-shadow: 0 0 0 3px rgba(212, 106, 106, 0.14);
+}
+
+html[data-theme="dark"] .auth-input.is-valid {
+  border-color: #5fa874;
+}

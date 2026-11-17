@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- BASIC PAGE INFORMATION -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Manage customer orders at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <title>Orders Management | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <link rel="stylesheet" href="../css/admin-orders.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+  <span
+    class="admin-brand-name"
+    data-store="business_name"
+  >
+    HAFHASS
+  </span>
+
+  <span
+    class="admin-brand-subtitle"
+    data-store="business_subtitle"
+  >
+    EVENTS & DELIGHTS
+  </span>
+
+  <span class="admin-brand-badge">
+    ADMIN
+  </span>
+
+</a>
+
+
+    <div class="admin-header-actions">
+
+      <span class="admin-header-user" id="adminHeaderName">
+        Administrator
+      </span>
+
+
+      <button
+        type="button"
+        class="admin-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-solid fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-mobile-menu"
+        id="adminMenuToggle"
+        aria-label="Open admin menu"
+        aria-expanded="false"
+        aria-controls="adminSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+
+      <!-- ADMIN PROFILE -->
+
+      <div class="admin-sidebar-profile">
+
+        <div class="admin-avatar" id="adminAvatar">
+          A
+        </div>
+
+        <div class="admin-profile-details">
+
+          <h3 id="adminSidebarName">
+            Administrator
+          </h3>
+
+          <p id="adminSidebarEmail">
+            Loading...
+          </p>
+
+          <span class="admin-role-badge" id="adminRole">
+            ADMIN
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="admin-main">
+
+
+      <!-- PAGE HEADING -->
+
+      <section class="admin-page-heading">
+
+        <div>
+
+          <p class="admin-eyebrow">
+            STORE MANAGEMENT
+          </p>
+
+          <h1>
+            Orders
+          </h1>
+
+          <p>
+            Manage customer orders and track their progress.
+          </p>
+
+        </div>
+
+
+        <div class="admin-date" id="adminCurrentDate">
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           ORDER STATISTICS
+      ================================================== -->
+
+      <section class="admin-orders-overview">
+
+        <div class="admin-orders-stat-grid">
+
+
+          <!-- TOTAL ORDERS -->
+
+          <article class="admin-orders-stat-card">
+
+            <div class="admin-orders-stat-icon">
+              <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Total Orders</p>
+              <h3 id="ordersTotalCount">—</h3>
+              <span>All customer orders</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- PENDING ORDERS -->
+
+          <article class="admin-orders-stat-card">
+
+            <div class="admin-orders-stat-icon">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Pending</p>
+              <h3 id="ordersPendingCount">—</h3>
+              <span>Awaiting processing</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- PROCESSING ORDERS -->
+
+          <article class="admin-orders-stat-card">
+
+            <div class="admin-orders-stat-icon">
+              <i class="fa-solid fa-box" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Processing</p>
+              <h3 id="ordersProcessingCount">—</h3>
+              <span>Currently being prepared</span>
+            </div>
+
+          </article>
+
+
+
+          <!-- COMPLETED ORDERS -->
+
+          <article class="admin-orders-stat-card">
+
+            <div class="admin-orders-stat-icon">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <p>Completed</p>
+              <h3 id="ordersCompletedCount">—</h3>
+              <span>Successfully completed</span>
+            </div>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           ORDERS MANAGEMENT
+      ================================================== -->
+
+      <section class="admin-orders-section">
+
+
+        <!-- SECTION HEADING -->
+
+        <div class="admin-section-heading">
+
+          <div>
+
+            <h2>All Orders</h2>
+
+            <p>
+              View, search and manage customer orders.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ORDER FILTERS -->
+
+        <div class="admin-orders-toolbar">
+
+
+          <!-- SEARCH -->
+
+          <div class="admin-orders-search">
+
+            <i
+              class="fa-solid fa-magnifying-glass"
+              aria-hidden="true"
+            ></i>
+
+            <input
+              type="search"
+              id="ordersSearch"
+              placeholder="Search order number or customer..."
+              autocomplete="off"
+              aria-label="Search orders"
+            >
+
+          </div>
+
+
+
+          <!-- ORDER STATUS FILTER -->
+
+          <div class="admin-orders-filter">
+
+            <select
+              id="ordersStatusFilter"
+              aria-label="Filter by order status"
+            >
+
+              <option value="all">
+                All Order Statuses
+              </option>
+
+              <option value="pending">
+                Pending
+              </option>
+
+              <option value="awaiting_payment">
+                Awaiting Payment
+              </option>
+
+              <option value="payment_confirmed">
+                Payment Confirmed
+              </option>
+
+              <option value="processing">
+                Processing
+              </option>
+
+              <option value="ready_for_pickup">
+                Ready for Pickup
+              </option>
+
+              <option value="out_for_delivery">
+                Out for Delivery
+              </option>
+
+              <option value="completed">
+                Completed
+              </option>
+
+              <option value="cancelled">
+                Cancelled
+              </option>
+
+            </select>
+
+          </div>
+
+
+
+          <!-- PAYMENT STATUS FILTER -->
+
+          <div class="admin-orders-filter">
+
+            <select
+              id="ordersPaymentFilter"
+              aria-label="Filter by payment status"
+            >
+
+              <option value="all">
+                All Payment Statuses
+              </option>
+
+              <option value="pending">
+                Pending
+              </option>
+
+              <option value="processing">
+                Processing
+              </option>
+
+              <option value="successful">
+                Successful
+              </option>
+
+              <option value="failed">
+                Failed
+              </option>
+
+              <option value="refunded">
+                Refunded
+              </option>
+
+              <option value="partially_refunded">
+                Partially Refunded
+              </option>
+
+            </select>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- RESULT COUNT -->
+
+        <div class="admin-orders-result-bar">
+
+          <p>
+            Showing
+            <strong id="ordersResultCount">0</strong>
+            orders
+          </p>
+
+
+          <button
+            type="button"
+            id="clearOrdersFilters"
+            class="admin-orders-clear-filters"
+          >
+            <i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i>
+            Clear Filters
+          </button>
+
+        </div>
+
+
+
+        <!-- LOADING STATE -->
+
+        <div
+          class="admin-orders-state"
+          id="ordersLoading"
+          role="status"
+          aria-live="polite"
+        >
+
+          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+
+          <p>Loading orders...</p>
+
+        </div>
+
+
+
+        <!-- ERROR STATE -->
+
+        <div
+          class="admin-orders-state admin-orders-error"
+          id="ordersError"
+          hidden
+          role="alert"
+        >
+
+          <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+
+          <h3>Unable to Load Orders</h3>
+
+          <p id="ordersErrorMessage">
+            Something went wrong while loading orders.
+          </p>
+
+          <button
+            type="button"
+            id="retryOrdersButton"
+          >
+            <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+            Try Again
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+          class="admin-orders-state"
+          id="ordersEmpty"
+          hidden
+        >
+
+          <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+
+          <h3>No Orders Yet</h3>
+
+          <p>
+            Customer orders will appear here when they start purchasing from your store.
+          </p>
+
+        </div>
+
+
+
+        <!-- NO RESULTS -->
+
+        <div
+          class="admin-orders-state"
+          id="ordersNoResults"
+          hidden
+        >
+
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+
+          <h3>No Matching Orders</h3>
+
+          <p>
+            Try changing your search or filters.
+          </p>
+
+          <button
+            type="button"
+            id="clearOrdersSearch"
+          >
+            Clear Search
+          </button>
+
+        </div>
+
+
+
+        <!-- ORDERS TABLE -->
+
+        <div
+          class="admin-orders-table-container"
+          id="ordersTableContainer"
+          hidden
+        >
+
+          <table class="admin-orders-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Order</th>
+
+                <th>Customer</th>
+
+                <th>Date</th>
+
+                <th>Amount</th>
+
+                <th>Payment</th>
+
+                <th>Order Status</th>
+
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="ordersTableBody">
+
+              <!-- ORDERS WILL BE RENDERED HERE -->
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+
+        <!-- PAGINATION -->
+
+        <div
+          class="admin-orders-pagination"
+          id="ordersPagination"
+          hidden
+        >
+
+          <p id="ordersPaginationInfo">
+            Showing 0 of 0 orders
+          </p>
+
+
+          <div class="admin-orders-pagination-controls">
+
+            <button
+              type="button"
+              id="previousOrdersPage"
+              disabled
+            >
+              <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+              Previous
+            </button>
+
+
+            <span id="ordersPageNumber">
+              1
+            </span>
+
+
+            <button
+              type="button"
+              id="nextOrdersPage"
+              disabled
+            >
+              Next
+              <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ORDER DETAILS MODAL
+  ====================================================== -->
+
+  <div
+    class="admin-order-modal-overlay"
+    id="orderModalOverlay"
+    hidden
+  >
+
+    <div
+      class="admin-order-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="orderModalTitle"
+      aria-describedby="orderModalContent"
+      tabindex="-1"
+    >
+
+
+      <!-- MODAL HEADER -->
+
+      <div class="admin-order-modal-header">
+
+        <div>
+
+          <span class="admin-eyebrow">
+            ORDER MANAGEMENT
+          </span>
+
+          <h2 id="orderModalTitle">
+            Order Details
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="closeOrderModal"
+          class="admin-order-modal-close"
+          aria-label="Close order details"
+        >
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+
+      </div>
+
+
+
+      <!-- MODAL CONTENT -->
+
+      <div
+        class="admin-order-modal-content"
+        id="orderModalContent"
+      >
+
+        <!-- ORDER DETAILS WILL BE RENDERED HERE -->
+
+      </div>
+
+
+
+      <!-- ORDER STATUS UPDATE -->
+
+      <div class="admin-order-status-editor">
+
+        <label for="updateOrderStatus">
+          Update Order Status
+        </label>
+
+
+        <select id="updateOrderStatus">
+
+          <option value="pending">
+            Pending
+          </option>
+
+          <option value="awaiting_payment">
+            Awaiting Payment
+          </option>
+
+          <option value="payment_confirmed">
+            Payment Confirmed
+          </option>
+
+          <option value="processing">
+            Processing
+          </option>
+
+          <option value="ready_for_pickup">
+            Ready for Pickup
+          </option>
+
+          <option value="out_for_delivery">
+            Out for Delivery
+          </option>
+
+          <option value="completed">
+            Completed
+          </option>
+
+          <option value="cancelled">
+            Cancelled
+          </option>
+
+        </select>
+
+
+        <button
+          type="button"
+          id="saveOrderStatusButton"
+        >
+          <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+          Update Status
+        </button>
+
+
+        <p
+          id="orderStatusMessage"
+          class="admin-order-status-message"
+          aria-live="polite"
+        ></p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase-config.js"></script>
+<!-- SHARED STORE SETTINGS -->
+<script src="../js/store-settings.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/admin-layout.js"></script>
+
+  <script src="../js/admin-orders.js"></script>
+
+
+</body>
+
+</html>

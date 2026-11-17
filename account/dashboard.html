@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Dashboard | HAFHASS EVENTS & DELIGHTS</title>
+
+  <meta
+    name="description"
+    content="Manage your HAFHASS account, orders, favourites, addresses and profile."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/account.css">
+</head>
+
+<body class="account-page">
+
+  <!-- =========================================
+       ACCOUNT HEADER
+  ========================================== -->
+
+  <header class="account-header">
+
+    <a href="../index.html" class="account-brand">
+      <span class="account-brand-name"><span data-store="business_name">HAFHASS</span></span>
+      <span class="account-brand-subtitle"><span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span></span>
+    </a>
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+      <button
+        type="button"
+        class="account-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+        title="Switch theme"
+      >
+        <i class="fa-regular fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open account navigation"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================
+       ACCOUNT LAYOUT
+  ========================================== -->
+
+  <div class="account-layout">
+
+
+    <!-- =======================================
+         SIDEBAR NAVIGATION
+    ======================================== -->
+
+    <aside class="account-sidebar" id="accountSidebar">
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar" id="accountAvatar">
+          <span id="avatarInitials">...</span>
+        </div>
+
+        <div class="account-user-details">
+          <p class="account-user-label">Welcome back</p>
+
+          <h2 id="sidebarUserName">
+            Loading...
+          </h2>
+
+          <p id="sidebarUserEmail">
+            Please wait
+          </p>
+        </div>
+
+      </div>
+
+
+      <nav class="account-navigation" aria-label="Account navigation">
+
+        <p class="account-nav-heading">MY ACCOUNT</p>
+
+        <a
+          href="dashboard.html"
+          class="account-nav-link active"
+          aria-current="page"
+        >
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </span>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="orders.html" class="account-nav-link">
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-receipt" aria-hidden="true"></i>
+          </span>
+          <span>My Orders</span>
+        </a>
+
+        <a href="favourites.html" class="account-nav-link">
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+          </span>
+          <span>My Favourites</span>
+        </a>
+
+
+        <p class="account-nav-heading">PERSONAL DETAILS</p>
+
+        <a href="addresses.html" class="account-nav-link">
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </span>
+          <span>My Addresses</span>
+        </a>
+
+        <a href="profile.html" class="account-nav-link">
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-user" aria-hidden="true"></i>
+          </span>
+          <span>My Profile</span>
+        </a>
+
+
+        <p class="account-nav-heading">SHOPPING</p>
+
+        <a href="../shop.html" class="account-nav-link">
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+          </span>
+          <span>Visit Shop</span>
+        </a>
+
+        <a href="cart.html" class="account-nav-link">
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+          </span>
+          <span>My Shopping Bag</span>
+          <span class="account-cart-count" id="accountCartCount">0</span>
+        </a>
+
+      </nav>
+
+
+      <div class="account-sidebar-bottom">
+
+        <a href="../index.html" class="account-back-home">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Homepage
+        </a>
+
+        <button
+          type="button"
+          class="account-logout-button"
+          id="logoutButton"
+        >
+          <span>
+            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          </span>
+          Sign Out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- =======================================
+         MOBILE SIDEBAR OVERLAY
+    ======================================== -->
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+    <!-- =======================================
+         MAIN CONTENT
+    ======================================== -->
+
+    <main class="account-main">
+
+      <!-- Page Heading -->
+
+      <section class="account-welcome-section">
+
+        <div>
+          <p class="account-eyebrow">YOUR PERSONAL SPACE</p>
+
+          <h1>
+            My Dashboard<span>.</span>
+          </h1>
+
+          <p class="account-welcome-text">
+            Manage your orders, keep track of your purchases
+            and make every occasion special.
+          </p>
+        </div>
+
+        <a href="../shop.html" class="account-primary-button">
+          Explore Our Shop
+          <span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </span>
+        </a>
+
+      </section>
+
+
+      <!-- =====================================
+           ACCOUNT STATISTICS
+      ====================================== -->
+
+      <section class="account-stats-grid">
+
+        <article class="account-stat-card">
+
+          <div class="account-stat-icon orders-icon">
+            <i class="fa-solid fa-receipt" aria-hidden="true"></i>
+          </div>
+
+          <div>
+            <p>Total Orders</p>
+
+            <h2 id="totalOrdersCount">—</h2>
+
+            <span>All your purchases</span>
+          </div>
+
+        </article>
+
+
+        <article class="account-stat-card">
+
+          <div class="account-stat-icon pending-icon">
+            <i class="fa-regular fa-clock" aria-hidden="true"></i>
+          </div>
+
+          <div>
+            <p>Pending Orders</p>
+
+            <h2 id="pendingOrdersCount">—</h2>
+
+            <span>Awaiting completion</span>
+          </div>
+
+        </article>
+
+
+        <article class="account-stat-card">
+
+          <div class="account-stat-icon completed-icon">
+            <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+          </div>
+
+          <div>
+            <p>Completed Orders</p>
+
+            <h2 id="completedOrdersCount">—</h2>
+
+            <span>Successfully delivered</span>
+          </div>
+
+        </article>
+
+
+        <article class="account-stat-card">
+
+          <div class="account-stat-icon favourites-icon">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+          </div>
+
+          <div>
+            <p>My Favourites</p>
+
+            <h2 id="favouritesCount">—</h2>
+
+            <span>Your saved products</span>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- =====================================
+           RECENT ORDERS
+      ====================================== -->
+
+      <section class="account-content-card">
+
+        <div class="account-section-heading">
+
+          <div>
+            <p class="account-eyebrow">YOUR PURCHASES</p>
+            <h2>Recent Orders</h2>
+          </div>
+
+          <a href="orders.html" class="account-view-all">
+            View All
+            <span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </span>
+          </a>
+
+        </div>
+
+
+        <div class="account-orders-container">
+
+          <div
+            class="account-loading-state"
+            id="recentOrdersLoading"
+          >
+            <span class="account-spinner"></span>
+            <p>Loading your recent orders...</p>
+          </div>
+
+
+          <div
+            class="account-orders-list"
+            id="recentOrdersList"
+            hidden
+          >
+            <!-- Recent orders will be rendered here -->
+          </div>
+
+
+          <div
+            class="account-empty-state"
+            id="recentOrdersEmpty"
+            hidden
+          >
+
+            <div class="account-empty-icon">
+              <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+            </div>
+
+            <h3>No orders yet</h3>
+
+            <p>
+              Your shopping journey starts here.
+              Explore our collection and find something special.
+            </p>
+
+            <a href="../shop.html" class="account-primary-button">
+              Start Shopping
+              <span>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </span>
+            </a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================
+           QUICK ACTIONS
+      ====================================== -->
+
+      <section class="account-quick-actions">
+
+        <div class="account-section-heading">
+          <div>
+            <p class="account-eyebrow">MAKE YOUR NEXT MOVE</p>
+            <h2>Quick Actions</h2>
+          </div>
+        </div>
+
+
+        <div class="account-action-grid">
+
+          <a href="../shop.html" class="account-action-card">
+
+            <div class="account-action-icon">
+              <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <h3>Explore Products</h3>
+              <p>Discover our treats, gifts and creations.</p>
+            </div>
+
+            <span class="account-action-arrow">
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </span>
+
+          </a>
+
+
+          <a href="../services.html" class="account-action-card">
+
+            <div class="account-action-icon">
+              <i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <h3>Our Services</h3>
+              <p>Make your special occasions memorable.</p>
+            </div>
+
+            <span class="account-action-arrow">
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </span>
+
+          </a>
+
+
+          <a href="addresses.html" class="account-action-card">
+
+            <div class="account-action-icon">
+              <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <h3>Manage Addresses</h3>
+              <p>Update your delivery information.</p>
+            </div>
+
+            <span class="account-action-arrow">
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </span>
+
+          </a>
+
+
+          <a href="profile.html" class="account-action-card">
+
+            <div class="account-action-icon">
+              <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
+            </div>
+
+            <div>
+              <h3>Update Profile</h3>
+              <p>Keep your personal information up to date.</p>
+            </div>
+
+            <span class="account-action-arrow">
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </span>
+
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================
+           PERSONAL SHOPPING NOTE
+      ====================================== -->
+
+      <section class="account-promo-card">
+
+        <div class="account-promo-content">
+
+          <p class="account-eyebrow">A LITTLE SOMETHING SPECIAL</p>
+
+          <h2>
+            Make every moment<br>
+            worth celebrating.
+          </h2>
+
+          <p>
+            From delicious treats to thoughtful gifts,
+            let us help you create beautiful memories.
+          </p>
+
+          <a href="../shop.html" class="account-promo-button">
+            Discover Our Collection
+            <span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </span>
+          </a>
+
+        </div>
+
+        <div class="account-promo-decoration">
+          <i class="fa-solid fa-spa" aria-hidden="true"></i>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================
+       FOOTER
+  ====================================== -->
+
+  <footer class="account-footer">
+
+    <p>
+      © <span id="accountYear"></span>
+      <span data-store="business_name">HAFHASS</span>
+      <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>.
+      All rights reserved.
+    </p>
+
+    <p data-store="tagline">
+      Where Taste Meets Creativity.
+    </p>
+
+  </footer>
+
+
+  <!-- =========================================
+       SUPABASE & ACCOUNT SCRIPTS
+  ========================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/guards.js"></script>
+  <script src="../js/store-settings.js"></script>
+  <script src="../js/account-dashboard.js"></script>
+
+</body>
+</html>

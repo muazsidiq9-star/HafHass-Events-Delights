@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Review and manage your shopping cart at HAFHASS EVENTS & DELIGHTS."
+  >
+
+  <title>My Cart | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/auth.css">
+
+  <link rel="stylesheet" href="../css/account.css">
+
+</head>
+
+
+<body class="account-page">
+
+
+  <!-- ==================================================
+       ACCOUNT HEADER
+       ================================================== -->
+
+  <header class="account-header">
+
+    <a href="../index.html" class="account-brand">
+
+      <span class="account-brand-name">
+        <span data-store="business_name">HAFHASS</span>
+      </span>
+
+      <span class="account-brand-subtitle">
+        <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>
+      </span>
+
+    </a>
+
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+
+      <button
+        type="button"
+        class="account-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+
+        <i
+          class="fa-regular fa-moon theme-icon"
+          aria-hidden="true"
+        ></i>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open account menu"
+        aria-expanded="false"
+        aria-controls="accountSidebar"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==================================================
+       ACCOUNT LAYOUT
+       ================================================== -->
+
+  <div class="account-layout">
+
+
+    <!-- ==================================================
+         ACCOUNT SIDEBAR
+         ================================================== -->
+
+    <aside class="account-sidebar" id="accountSidebar">
+
+
+      <!-- CUSTOMER INFORMATION -->
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar">
+
+          <span id="avatarInitials">C</span>
+
+        </div>
+
+
+        <div class="account-user-details">
+
+          <span class="account-user-label">
+            Welcome back
+          </span>
+
+          <h2 id="sidebarUserName">
+            Customer
+          </h2>
+
+          <p id="sidebarUserEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="account-navigation">
+
+
+        <p class="account-nav-heading">
+          ACCOUNT
+        </p>
+
+
+        <a href="dashboard.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="orders.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-box" aria-hidden="true"></i>
+          </span>
+
+          <span>My Orders</span>
+
+        </a>
+
+
+        <a href="favourites.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+          </span>
+
+          <span>My Favourites</span>
+
+        </a>
+
+
+        <a href="addresses.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </span>
+
+          <span>Saved Addresses</span>
+
+        </a>
+
+
+        <a href="profile.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-user" aria-hidden="true"></i>
+          </span>
+
+          <span>My Profile</span>
+
+        </a>
+
+
+
+        <!-- SHOPPING LINKS -->
+
+        <p class="account-nav-heading">
+          SHOPPING
+        </p>
+
+
+        <a href="../shop.html" class="account-nav-link">
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+          </span>
+
+          <span>Browse Shop</span>
+
+        </a>
+
+
+        <a
+          href="cart.html"
+          class="account-nav-link active"
+          aria-current="page"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>My Shopping Bag</span>
+
+          <span
+            id="accountCartCount"
+            class="account-cart-count"
+            aria-label="Items in cart"
+          >0</span>
+
+        </a>
+
+
+      </nav>
+
+
+
+      <!-- SIDEBAR BOTTOM -->
+
+      <div class="account-sidebar-bottom">
+
+
+        <a
+          href="../index.html"
+          class="account-back-home"
+        >
+
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+          Back to Homepage
+
+        </a>
+
+
+        <button
+          type="button"
+          class="account-logout-button"
+          id="logoutButton"
+        >
+
+          <i
+            class="fa-solid fa-right-from-bracket"
+            aria-hidden="true"
+          ></i>
+
+          Sign Out
+
+        </button>
+
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+         ================================================== -->
+
+    <main class="account-main">
+
+
+      <section class="cart-page">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="cart-page-header">
+
+          <div>
+
+            <span class="account-eyebrow">
+              YOUR SHOPPING BAG
+            </span>
+
+            <h1>
+              My Cart
+            </h1>
+
+            <p>
+              Review your selected items before proceeding
+              to checkout.
+            </p>
+
+          </div>
+
+
+          <a
+            href="../shop.html"
+            class="cart-continue-link"
+          >
+
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+            Continue Shopping
+
+          </a>
+
+        </div>
+
+
+
+        <!-- CART LOADING -->
+
+        <div
+          class="cart-loading"
+          id="cartLoading"
+        >
+
+          <div class="account-spinner"></div>
+
+          <p>
+            Loading your cart...
+          </p>
+
+        </div>
+
+
+
+        <!-- CART ERROR -->
+
+        <div
+          class="cart-error"
+          id="cartError"
+          hidden
+        >
+
+          <div class="cart-error-icon">
+
+            <i
+              class="fa-solid fa-circle-exclamation"
+              aria-hidden="true"
+            ></i>
+
+          </div>
+
+
+          <h2>
+            Unable to Load Cart
+          </h2>
+
+
+          <p id="cartErrorMessage">
+            Something went wrong while loading your cart.
+          </p>
+
+
+          <button
+            type="button"
+            class="account-primary-button"
+            id="retryCartButton"
+          >
+
+            <i
+              class="fa-solid fa-rotate-right"
+              aria-hidden="true"
+            ></i>
+
+            Try Again
+
+          </button>
+
+        </div>
+
+
+
+        <!-- EMPTY CART -->
+
+        <div
+          class="cart-empty"
+          id="cartEmpty"
+          hidden
+        >
+
+          <div class="cart-empty-icon">
+
+            <i
+              class="fa-solid fa-bag-shopping"
+              aria-hidden="true"
+            ></i>
+
+          </div>
+
+
+          <h2>
+            Your Cart Is Empty
+          </h2>
+
+
+          <p>
+            You haven't added anything to your cart yet.
+            Explore our collection and find something special.
+          </p>
+
+
+          <a
+            href="../shop.html"
+            class="account-primary-button"
+          >
+
+            <i
+              class="fa-solid fa-store"
+              aria-hidden="true"
+            ></i>
+
+            Explore Our Shop
+
+          </a>
+
+        </div>
+
+
+
+        <!-- CART CONTENT -->
+
+        <div
+          class="cart-content"
+          id="cartContent"
+          hidden
+        >
+
+
+          <!-- CART ITEMS SECTION -->
+
+          <div class="cart-items-section">
+
+
+            <div class="cart-items-heading">
+
+              <div>
+
+                <h2>
+                  Cart Items
+                </h2>
+
+                <p>
+                  <span id="cartItemCount">0</span>
+                  items in your cart
+                </p>
+
+              </div>
+
+
+              <a
+                href="../shop.html"
+                class="cart-add-more-link"
+              >
+
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+
+                Add More
+
+              </a>
+
+            </div>
+
+
+
+            <!-- CART ITEMS -->
+
+            <div
+              class="cart-items-list"
+              id="cartItemsList"
+            ></div>
+
+
+          </div>
+
+
+
+          <!-- ORDER SUMMARY -->
+
+          <div class="cart-summary">
+
+
+            <div class="cart-summary-header">
+
+              <h2>
+                Order Summary
+              </h2>
+
+              <span>
+                <i class="fa-solid fa-receipt" aria-hidden="true"></i>
+              </span>
+
+            </div>
+
+
+
+            <div class="cart-summary-body">
+
+
+              <div class="cart-summary-row">
+
+                <span>
+                  Subtotal
+                </span>
+
+                <strong id="cartSubtotal">
+                  ₦0.00
+                </strong>
+
+              </div>
+
+
+
+              <div class="cart-summary-row">
+
+                <span>
+                  Delivery Fee
+                </span>
+
+                <span class="cart-delivery-note">
+                  Calculated at checkout
+                </span>
+
+              </div>
+
+
+
+              <div class="cart-summary-divider"></div>
+
+
+
+              <div class="cart-summary-total">
+
+                <span>
+                  Estimated Total
+                </span>
+
+                <strong id="cartSummaryTotal">
+                  ₦0.00
+                </strong>
+
+              </div>
+
+
+              <p class="cart-summary-disclaimer">
+                Delivery fees and any applicable charges
+                will be confirmed during checkout.
+              </p>
+
+
+
+              <!-- CHECKOUT BUTTON -->
+
+              <button
+                type="button"
+                class="cart-checkout-button"
+                id="checkoutButton"
+              >
+
+                Proceed to Checkout
+
+                <i
+                  class="fa-solid fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
+
+              </button>
+
+
+
+              <!-- CONTINUE SHOPPING -->
+
+              <a
+                href="../shop.html"
+                class="cart-summary-continue"
+              >
+
+                <i
+                  class="fa-solid fa-bag-shopping"
+                  aria-hidden="true"
+                ></i>
+
+                Continue Shopping
+
+              </a>
+
+
+            </div>
+
+
+
+            <!-- PAYMENT INFORMATION -->
+
+            <div class="cart-payment-information">
+
+              <i class="fa-solid fa-lock" aria-hidden="true"></i>
+
+              <span>
+                Secure checkout experience
+              </span>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+
+  </div>
+
+
+
+  <!-- ==================================================
+       ACCOUNT FOOTER
+       ================================================== -->
+
+  <footer class="account-footer">
+
+    <p>
+
+      © <span id="accountYear"></span>
+
+      <span data-store="business_name">HAFHASS</span>
+
+      <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>.
+
+      All rights reserved.
+
+    </p>
+
+
+    <p>
+      <span data-store="tagline">Where Taste Meets Creativity</span>.
+    </p>
+
+  </footer>
+
+
+
+  <!-- ==================================================
+       SCRIPTS
+       ================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/account-layout.js"></script>
+
+  <script src="../js/account-cart.js"></script>
+
+
+</body>
+
+</html>

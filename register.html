@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account | HAFHASS EVENTS & DELIGHTS</title>
+
+  <meta
+    name="description"
+    content="Create your HAFHASS EVENTS & DELIGHTS account to explore our products, place orders and manage your purchases."
+  >
+
+  <meta name="theme-color" content="#FFF9F3">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Main Website Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Authentication Styles -->
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/auth-validation.css">
+</head>
+
+<body class="auth-page">
+
+  <main class="auth-shell">
+
+    <!-- BRAND PANEL -->
+    <section class="auth-brand-panel">
+
+      <a href="index.html" class="auth-brand">
+        <span class="auth-brand-logo">H</span>
+
+        <span>
+          <span class="auth-brand-name" data-store="business_name">
+            HAFHASS
+          </span>
+
+          <span class="auth-brand-tagline" data-store="business_subtitle">
+            EVENTS & DELIGHTS
+          </span>
+        </span>
+      </a>
+
+      <div class="auth-brand-content">
+
+        <span class="auth-eyebrow">
+          A LITTLE SOMETHING SPECIAL
+        </span>
+
+        <h1>
+          Beautiful moments begin with thoughtful details.
+        </h1>
+
+        <p>
+          Create your account and enjoy a more personal
+          shopping experience with HAFHASS.
+        </p>
+
+      </div>
+
+      <div class="auth-brand-decoration">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="auth-brand-footer" data-store="tagline">
+        Where Taste Meets Creativity.
+      </div>
+
+    </section>
+
+
+    <!-- REGISTRATION FORM PANEL -->
+    <section class="auth-form-panel">
+
+      <div class="auth-card">
+
+        <!-- Mobile Brand -->
+        <a href="index.html" class="auth-mobile-brand">
+          <span class="auth-brand-logo">H</span>
+
+          <span>
+            <span class="auth-brand-name" data-store="business_name">
+              HAFHASS
+            </span>
+
+            <span class="auth-brand-tagline" data-store="business_subtitle">
+              EVENTS & DELIGHTS
+            </span>
+          </span>
+        </a>
+
+
+        <!-- Heading -->
+        <div class="auth-heading">
+
+          <span class="auth-eyebrow">
+            JOIN OUR COMMUNITY
+          </span>
+
+          <h2 class="auth-title">
+            Create your account
+          </h2>
+
+          <p class="auth-description">
+            Enter your details below to get started.
+          </p>
+
+        </div>
+
+
+        <!-- Registration Feedback -->
+        <div
+          id="authMessage"
+          class="auth-message"
+          role="alert"
+          aria-live="polite"
+        ></div>
+
+
+        <!-- Registration Form -->
+        <form id="registerForm" class="auth-form">
+
+          <!-- Full Name -->
+          <div class="auth-field">
+
+            <label for="fullName" class="auth-label">
+              Full Name
+            </label>
+
+            <input
+              type="text"
+              id="fullName"
+              name="full_name"
+              class="auth-input"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              required
+              minlength="2"
+            >
+
+          </div>
+
+
+          <!-- Email -->
+          <div class="auth-field">
+
+            <label for="email" class="auth-label">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="auth-input"
+              placeholder="you@example.com"
+              autocomplete="email"
+              inputmode="email"
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
+              maxlength="254"
+              required
+            >
+
+          </div>
+
+
+          <!-- Confirm Email -->
+          <div class="auth-field">
+
+            <label for="confirmEmail" class="auth-label">
+              Confirm Email Address
+            </label>
+
+            <input
+              type="email"
+              id="confirmEmail"
+              name="confirm_email"
+              class="auth-input"
+              placeholder="Re-enter your email address"
+              autocomplete="off"
+              inputmode="email"
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
+              maxlength="254"
+              required
+            >
+
+          </div>
+
+
+          <!-- Phone -->
+          <div class="auth-field">
+
+            <label for="phone" class="auth-label">
+              Phone Number
+            </label>
+
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="auth-input"
+              placeholder="e.g. 0814 608 8556"
+              autocomplete="tel"
+              inputmode="tel"
+              maxlength="20"
+              required
+            >
+
+          </div>
+
+
+          <!-- Password -->
+          <div class="auth-field">
+
+            <label for="password" class="auth-label">
+              Password
+            </label>
+
+            <div class="auth-input-wrap">
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="auth-input"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              >
+
+              <button
+                type="button"
+                class="auth-password-toggle"
+                data-toggle-password="password"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- Confirm Password -->
+          <div class="auth-field">
+
+            <label for="confirmPassword" class="auth-label">
+              Confirm Password
+            </label>
+
+            <div class="auth-input-wrap">
+
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirm_password"
+                class="auth-input"
+                placeholder="Enter your password again"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              >
+
+              <button
+                type="button"
+                class="auth-password-toggle"
+                data-toggle-password="confirmPassword"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- Terms -->
+          <div class="auth-field">
+
+            <label class="auth-checkbox">
+
+              <input
+                type="checkbox"
+                id="acceptTerms"
+                name="accept_terms"
+                required
+              >
+
+              <span>
+                I agree to the
+                <a href="terms.html" class="auth-link">
+                  Terms & Conditions
+                </a>
+                and
+                <a href="privacy.html" class="auth-link">
+                  Privacy Policy
+                </a>.
+              </span>
+
+            </label>
+
+          </div>
+
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            id="registerButton"
+            class="auth-button"
+          >
+            <span class="button-text">
+              Create Account
+            </span>
+          </button>
+
+        </form>
+
+
+        <!-- Login Link -->
+        <div class="auth-divider">
+          <span>ALREADY HAVE AN ACCOUNT?</span>
+        </div>
+
+        <a
+          href="login.html"
+          class="auth-button auth-button-secondary"
+        >
+          Sign In
+        </a>
+
+
+        <!-- Return Home -->
+        <p class="auth-terms">
+          <a href="index.html" class="auth-link">
+            ← Back to Homepage
+          </a>
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Shared Supabase Configuration -->
+  <script src="js/supabase-config.js"></script>
+
+  <!-- Authentication Functions -->
+  <script src="js/auth.js"></script>
+
+  <!-- STORE SETTINGS (BRAND NAME, SUBTITLE, TAGLINE) -->
+
+  <script src="js/store-settings.js"></script>
+
+  <!-- Registration Page Logic -->
+  <script src="js/register.js"></script>
+
+</body>
+</html>

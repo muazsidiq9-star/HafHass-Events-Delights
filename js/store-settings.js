@@ -1,0 +1,887 @@
+/* =========================================================
+   HAFHASS EVENTS & DELIGHTS
+   SHARED STORE SETTINGS CONTROLLER
+========================================================= */
+
+(() => {
+
+  "use strict";
+
+
+  /* =======================================================
+     1. CONFIGURATION
+  ======================================================= */
+
+  const supabase = window.hafhassSupabase;
+
+  const SETTINGS_TABLE = "business_settings";
+  const SETTINGS_ID = 1;
+
+  const CACHE_KEY = "hafhass_store_settings";
+  const CACHE_DURATION = 60 * 1000; // 1 minute
+
+
+  /* =======================================================
+     2. INTERNAL STATE
+  ======================================================= */
+
+  let storeSettings = null;
+  let settingsPromise = null;
+
+
+  /* =======================================================
+     3. BASIC HELPERS
+  ======================================================= */
+
+  function getElement(selector, parent = document) {
+
+    return parent.querySelector(selector);
+
+  }
+
+
+  function isValidUrl(value) {
+
+    if (!value || typeof value !== "string") {
+      return false;
+    }
+
+    try {
+
+      const url = new URL(
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+          ? value
+          : `https://${value}`
+      );
+
+      return (
+        url.protocol === "http:" ||
+        url.protocol === "https:"
+      );
+
+    } catch {
+
+      return false;
+
+    }
+
+  }
+
+
+  function normalizeUrl(value) {
+
+    if (!value || typeof value !== "string") {
+      return "";
+    }
+
+    const cleaned = value.trim();
+
+    if (!cleaned) {
+      return "";
+    }
+
+    if (!isValidUrl(cleaned)) {
+      return "";
+    }
+
+    return /^https?:\/\//i.test(cleaned)
+      ? cleaned
+      : `https://${cleaned}`;
+
+  }
+
+
+  function getDigits(value) {
+
+    return String(value || "").replace(/\D/g, "");
+
+  }
+
+
+  function getWhatsAppUrl(number) {
+
+    const digits = getDigits(number);
+
+    if (!digits) {
+      return "";
+    }
+
+    return `https://wa.me/${digits}`;
+
+  }
+
+
+  function getTelephoneUrl(number) {
+
+    const cleaned = String(number || "").trim();
+
+    if (!cleaned) {
+      return "";
+    }
+
+    return `tel:${cleaned.replace(/[^\d+]/g, "")}`;
+
+  }
+
+
+  function getEmailUrl(email) {
+
+    const cleaned = String(email || "").trim();
+
+    if (!cleaned) {
+      return "";
+    }
+
+    return `mailto:${cleaned}`;
+
+  }
+
+
+  /* =======================================================
+     4. CACHE MANAGEMENT
+  ======================================================= */
+
+  function getCachedSettings() {
+
+    try {
+
+      const cached = sessionStorage.getItem(CACHE_KEY);
+
+      if (!cached) {
+        return null;
+      }
+
+      const parsed = JSON.parse(cached);
+
+      if (!parsed.timestamp || !parsed.data) {
+        return null;
+      }
+
+      const age = Date.now() - parsed.timestamp;
+
+      if (age > CACHE_DURATION) {
+
+        sessionStorage.removeItem(CACHE_KEY);
+
+        return null;
+
+      }
+
+      return parsed.data;
+
+    } catch (error) {
+
+      console.warn(
+        "Store settings cache could not be read:",
+        error
+      );
+
+      return null;
+
+    }
+
+  }
+
+
+  function saveCachedSettings(data) {
+
+    try {
+
+      sessionStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+          timestamp: Date.now(),
+          data
+        })
+      );
+
+    } catch (error) {
+
+      console.warn(
+        "Store settings could not be cached:",
+        error
+      );
+
+    }
+
+  }
+
+
+  function clearSettingsCache() {
+
+    try {
+
+      sessionStorage.removeItem(CACHE_KEY);
+
+    } catch (error) {
+
+      console.warn(
+        "Store settings cache could not be cleared:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /* =======================================================
+     5. FETCH SETTINGS
+  ======================================================= */
+
+  async function fetchSettings(forceRefresh = false) {
+
+    if (!supabase) {
+
+      throw new Error(
+        "Supabase client is not available. Check supabase-config.js."
+      );
+
+    }
+
+
+    if (!forceRefresh && storeSettings) {
+      return storeSettings;
+    }
+
+
+    if (!forceRefresh) {
+
+      const cached = getCachedSettings();
+
+      if (cached) {
+
+        storeSettings = cached;
+
+        return cached;
+
+      }
+
+    }
+
+
+    if (settingsPromise) {
+      return settingsPromise;
+    }
+
+
+    settingsPromise = (async () => {
+
+      const { data, error } = await supabase
+        .from(SETTINGS_TABLE)
+        .select("*")
+        .eq("id", SETTINGS_ID)
+        .maybeSingle();
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      if (!data) {
+
+        throw new Error(
+          "Business settings record was not found."
+        );
+
+      }
+
+
+      storeSettings = data;
+
+      saveCachedSettings(data);
+
+      return data;
+
+    })();
+
+
+    try {
+
+      return await settingsPromise;
+
+    } finally {
+
+      settingsPromise = null;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     6. TEXT CONTENT
+  ======================================================= */
+
+  function applyTextSettings(settings) {
+
+    document.querySelectorAll("[data-store]").forEach(element => {
+
+      const key = element.dataset.store;
+
+      if (!key || !(key in settings)) {
+        return;
+      }
+
+      const value = settings[key];
+
+      if (value === null || value === undefined) {
+        return;
+      }
+
+      element.textContent = String(value);
+
+    });
+
+  }
+
+
+  /* =======================================================
+     7. IMAGE SETTINGS
+  ======================================================= */
+
+  function applyImageSettings(settings) {
+
+  document.querySelectorAll("[data-store-image]").forEach(element => {
+
+    const key = element.dataset.storeImage;
+
+    if (!key || !(key in settings)) {
+      return;
+    }
+
+    const imageUrl = normalizeUrl(settings[key]);
+
+    if (!imageUrl) {
+      return;
+    }
+
+    if (element.tagName === "IMG") {
+
+      element.onload = () => {
+
+        element.hidden = false;
+
+        const brand = element.closest(".brand");
+
+        if (brand) {
+
+          const fallback = brand.querySelector(".brand-mark");
+
+          if (fallback) {
+            fallback.hidden = true;
+          }
+
+        }
+
+      };
+
+      element.onerror = () => {
+
+        element.hidden = true;
+
+        const brand = element.closest(".brand");
+
+        if (brand) {
+
+          const fallback = brand.querySelector(".brand-mark");
+
+          if (fallback) {
+            fallback.hidden = false;
+          }
+
+        }
+
+      };
+
+      element.src = imageUrl;
+
+    } else {
+
+      element.style.backgroundImage =
+        `url("${imageUrl.replace(/"/g, "%22")}")`;
+
+    }
+
+  });
+
+}
+
+
+  /* =======================================================
+     8. FAVICON
+  ======================================================= */
+
+  function applyFavicon(settings) {
+
+    const faviconUrl = normalizeUrl(
+      settings.favicon_url
+    );
+
+    if (!faviconUrl) {
+      return;
+    }
+
+
+    let favicon = getElement(
+      'link[rel="icon"]'
+    );
+
+
+    if (!favicon) {
+
+      favicon = document.createElement("link");
+
+      favicon.rel = "icon";
+
+      document.head.appendChild(favicon);
+
+    }
+
+
+    favicon.href = faviconUrl;
+
+  }
+
+
+  /* =======================================================
+     9. CONTACT LINKS
+  ======================================================= */
+
+  function getStoreLink(key, settings) {
+
+    const value = settings[key];
+
+    if (!value) {
+      return "";
+    }
+
+
+    switch (key) {
+
+      case "phone":
+        return getTelephoneUrl(value);
+
+
+      case "email":
+        return getEmailUrl(value);
+
+
+      case "whatsapp_number":
+        return getWhatsAppUrl(value);
+
+
+      default:
+        return normalizeUrl(value);
+
+    }
+
+  }
+
+
+  function applyLinkSettings(settings) {
+
+    document.querySelectorAll("[data-store-href]").forEach(element => {
+
+      const key = element.dataset.storeHref;
+
+      if (!key || !(key in settings)) {
+        return;
+      }
+
+
+      const href = getStoreLink(key, settings);
+
+      if (!href) {
+        return;
+      }
+
+
+      element.setAttribute("href", href);
+
+
+      if (href.startsWith("https://")) {
+
+        element.setAttribute(
+          "target",
+          "_blank"
+        );
+
+        element.setAttribute(
+          "rel",
+          "noopener noreferrer"
+        );
+
+      }
+
+    });
+
+  }
+  
+  
+  /* =======================================================
+   SOCIAL MEDIA LINKS
+======================================================= */
+
+function applySocialLinks(settings) {
+
+  const socialLinks = settings.social_links || {};
+
+  console.log(
+    "HAFHASS: Social links received from database:",
+    socialLinks
+  );
+
+  document.querySelectorAll("[data-store-social]").forEach(element => {
+
+    const key = element.dataset.storeSocial;
+    const url = normalizeUrl(socialLinks[key]);
+
+    console.log(
+      `HAFHASS: ${key}:`,
+      url || "No URL found"
+    );
+
+    if (!url) {
+
+      element.hidden = true;
+
+      return;
+
+    }
+
+    element.href = url;
+    element.hidden = false;
+
+  });
+
+}
+
+
+  /* =======================================================
+     10. BRAND COLOURS
+  ======================================================= */
+
+  /* =======================================================
+   10. BRAND COLOURS
+======================================================= */
+
+function applyBrandColours(settings) {
+
+  const root = document.documentElement;
+
+  const colours = {
+
+    "--burgundy": settings.brand_primary_color,
+
+    "--blush": settings.brand_secondary_color,
+
+    "--gold": settings.brand_accent_color
+
+  };
+
+
+  Object.entries(colours).forEach(([variable, value]) => {
+
+    if (
+      typeof value !== "string" ||
+      !/^#[0-9a-f]{3,8}$/i.test(value)
+    ) {
+      return;
+    }
+
+    root.style.setProperty(variable, value);
+
+  });
+
+}
+
+
+  /* =======================================================
+     11. ANNOUNCEMENT BAR
+  ======================================================= */
+
+  function renderAnnouncement(settings) {
+
+    const containers = document.querySelectorAll(
+      "[data-store-announcement]"
+    );
+
+
+    containers.forEach(container => {
+
+      container.innerHTML = "";
+
+
+      if (!settings.announcement_enabled) {
+
+        container.hidden = true;
+
+        return;
+
+      }
+
+
+      const announcementText =
+        settings.announcement_text || "";
+
+
+      if (!announcementText.trim()) {
+
+        container.hidden = true;
+
+        return;
+
+      }
+
+
+      container.hidden = false;
+
+
+      const wrapper = document.createElement("div");
+
+      wrapper.className = "store-announcement";
+
+
+      const message = document.createElement("span");
+
+      message.className = "store-announcement-text";
+
+      message.textContent = announcementText;
+
+
+      wrapper.appendChild(message);
+
+
+      const announcementLink = normalizeUrl(
+        settings.announcement_link
+      );
+
+
+      if (announcementLink) {
+
+        const link = document.createElement("a");
+
+        link.className = "store-announcement-link";
+
+        link.href = announcementLink;
+
+        link.target = "_blank";
+
+        link.rel = "noopener noreferrer";
+
+        link.textContent = "Learn More";
+
+
+        wrapper.appendChild(link);
+
+      }
+
+
+      container.appendChild(wrapper);
+
+    });
+
+  }
+
+
+  /* =======================================================
+     12. APPLY ALL SETTINGS
+  ======================================================= */
+
+  function applySettings(settings) {
+
+  if (!settings) {
+    return;
+  }
+
+  applyTextSettings(settings);
+
+  applyImageSettings(settings);
+
+  applyFavicon(settings);
+
+  applyLinkSettings(settings);
+
+  applySocialLinks(settings);
+
+  applyBrandColours(settings);
+
+  renderAnnouncement(settings);
+
+  document.documentElement.dataset.storeSettingsLoaded =
+    "true";
+
+  document.dispatchEvent(
+    new CustomEvent("hafhass:settings-loaded", {
+      detail: settings
+    })
+  );
+
+}
+
+
+  /* =======================================================
+     13. CURRENCY FORMATTER
+  ======================================================= */
+
+  function formatCurrency(amount, options = {}) {
+
+    const settings = storeSettings || {};
+
+    const currency = settings.currency || "NGN";
+
+
+    const locale = options.locale ||
+      (currency === "NGN" ? "en-NG" : "en");
+
+
+    const numericAmount = Number(amount);
+
+
+    if (!Number.isFinite(numericAmount)) {
+      return "";
+    }
+
+
+    try {
+
+      return new Intl.NumberFormat(locale, {
+
+        style: "currency",
+
+        currency,
+
+        minimumFractionDigits:
+          options.minimumFractionDigits ?? 2,
+
+        maximumFractionDigits:
+          options.maximumFractionDigits ?? 2
+
+      }).format(numericAmount);
+
+    } catch (error) {
+
+      console.error(
+        "Currency formatting failed:",
+        error
+      );
+
+      return `${currency} ${numericAmount.toFixed(2)}`;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     14. PUBLIC API
+  ======================================================= */
+
+  window.HafhassStoreSettings = {
+
+    get() {
+
+      return storeSettings;
+
+    },
+
+
+    async ready() {
+
+      const settings = await fetchSettings();
+
+      applySettings(settings);
+
+      return settings;
+
+    },
+
+
+    async refresh() {
+
+      clearSettingsCache();
+
+      storeSettings = null;
+
+      settingsPromise = null;
+
+
+      const settings = await fetchSettings(true);
+
+      applySettings(settings);
+
+      return settings;
+
+    },
+
+
+    formatCurrency,
+
+
+    getWhatsAppUrl,
+
+
+    getTelephoneUrl,
+
+
+    getEmailUrl,
+
+
+    getLink(key) {
+
+      if (!storeSettings) {
+        return "";
+      }
+
+      return getStoreLink(key, storeSettings);
+
+    },
+
+
+    clearCache: clearSettingsCache
+
+  };
+
+
+  /* =======================================================
+     15. INITIALISE
+  ======================================================= */
+
+  async function initialiseStoreSettings() {
+
+    try {
+
+      await window.HafhassStoreSettings.ready();
+
+    } catch (error) {
+
+      console.error(
+        "Store settings could not be initialised:",
+        error
+      );
+
+    }
+
+  }
+
+
+  if (document.readyState === "loading") {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initialiseStoreSettings
+    );
+
+  } else {
+
+    initialiseStoreSettings();
+
+  }
+
+
+})();
