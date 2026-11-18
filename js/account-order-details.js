@@ -910,29 +910,50 @@
       order.customer_name
     );
 
-
     setText(
       elements.phone,
       order.customer_phone
     );
-
 
     setText(
       elements.deliveryMethod,
       formatLabel(order.fulfillment_method)
     );
 
+    /*
+     * Checkout stores delivery_address as JSONB. Display
+     * the full address hierarchy and optional directions.
+     */
 
-    // DELIVERY ADDRESS IS STORED AS JSONB.
+    let address = order.delivery_address;
 
-    const address = order.delivery_address;
+    if (typeof address === "string") {
 
+      const trimmedAddress = address.trim();
 
-    if (!address) {
+      if (
+        (trimmedAddress.startsWith("{") && trimmedAddress.endsWith("}")) ||
+        (trimmedAddress.startsWith("[") && trimmedAddress.endsWith("]"))
+      ) {
+
+        try {
+          address = JSON.parse(trimmedAddress);
+        } catch (error) {
+          // Preserve the original value if it is not valid JSON.
+        }
+
+      }
+
+    }
+
+    if (
+      String(order.fulfillment_method || "").toLowerCase() === "pickup" &&
+      !address
+    ) {
 
       setText(
         elements.address,
-        "No delivery address provided."
+        "Store pickup — no delivery address required."
       );
 
     } else if (typeof address === "string") {
@@ -942,28 +963,141 @@
         address
       );
 
-    } else if (typeof address === "object") {
+    } else if (
+      address &&
+      typeof address === "object" &&
+      !Array.isArray(address)
+    ) {
 
-      const addressParts = [
+      const firstNonEmpty = (...values) => {
 
-        address.address_line,
-        address.address_line_1,
-        address.address_line_2,
-        address.street,
-        address.city,
-        address.state,
-        address.postal_code,
-        address.country
+        for (const value of values) {
 
+          if (
+            value !== null &&
+            value !== undefined &&
+            String(value).trim() !== ""
+          ) {
+            return String(value).trim();
+          }
+
+        }
+
+        return "";
+
+      };
+
+      const uniqueParts = values => {
+
+        const seen = new Set();
+
+        return values.filter(value => {
+
+          const cleanValue = String(value || "").trim();
+
+          if (!cleanValue) return false;
+
+          const key = cleanValue.toLocaleLowerCase();
+
+          if (seen.has(key)) return false;
+
+          seen.add(key);
+
+          return true;
+
+        });
+
+      };
+
+      const streetLines = uniqueParts([
+
+        firstNonEmpty(
+          address.address_line_1,
+          address.address_line,
+          address.street,
+          address.street_address
+        ),
+
+        firstNonEmpty(
+          address.address_line_2,
+          address.apartment,
+          address.building
+        )
+
+      ]);
+
+      const locationParts = uniqueParts([
+
+        firstNonEmpty(
+          address.specific_location,
+          address.custom_location_text,
+          address.landmark,
+          address.location_name
+        ),
+
+        firstNonEmpty(
+          address.area,
+          address.custom_area,
+          address.neighbourhood,
+          address.neighborhood
+        ),
+
+        firstNonEmpty(
+          address.city,
+          address.custom_city,
+          address.settlement,
+          address.town
+        ),
+
+        firstNonEmpty(
+          address.lga,
+          address.custom_lga,
+          address.local_government
+        ),
+
+        firstNonEmpty(
+          address.state,
+          address.custom_state
+        ),
+
+        firstNonEmpty(
+          address.postal_code,
+          address.zip_code
+        ),
+
+        firstNonEmpty(address.country)
+
+      ]);
+
+      const addressLines = [
+        ...streetLines,
+        locationParts.join(", ")
       ].filter(Boolean);
 
-
-      setText(
-        elements.address,
-        addressParts.length
-          ? addressParts.join(", ")
-          : JSON.stringify(address)
+      const deliveryInstructions = firstNonEmpty(
+        address.delivery_instructions,
+        address.delivery_note,
+        address.instructions
       );
+
+      if (deliveryInstructions) {
+
+        addressLines.push(
+          `Delivery instructions: ${deliveryInstructions}`
+        );
+
+      }
+
+      if (elements.address) {
+
+        elements.address.textContent =
+          addressLines.join("\n") ||
+          "No delivery address details were provided.";
+
+        elements.address.style.whiteSpace = "pre-line";
+        elements.address.style.overflowWrap = "anywhere";
+
+      }
 
     } else {
 
@@ -974,14 +1108,12 @@
 
     }
 
-
     setText(
       elements.notes,
       order.customer_notes || "No additional notes."
     );
 
   }
-
 
 // ====================================================
 // CUSTOMER INFORMATION
