@@ -440,6 +440,15 @@
 
         }
 
+      } else if (
+        element.tagName === "LINK" &&
+        element.rel.toLowerCase().includes("icon")
+      ) {
+
+        if (imageUrl) {
+          element.href = imageUrl;
+        }
+
       } else if (imageUrl) {
 
         element.style.backgroundImage =
