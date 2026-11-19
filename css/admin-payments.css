@@ -1145,3 +1145,39 @@
     width: 100%;
   }
 }
+
+
+/* SUCCESSFUL PAYMENT REVERSAL */
+.admin-payment-reversal {
+  border-color: rgba(189, 62, 62, 0.35);
+  background: var(--surface-soft);
+}
+.admin-payment-reversal h3 {
+  color: #bd3e3e;
+}
+.admin-payment-actions .admin-payment-reopen-button {
+  background: #bd3e3e;
+}
+.admin-payment-actions .admin-payment-reopen-button:hover {
+  background: #a83232;
+  opacity: 1;
+}
+.admin-payment-reversal textarea {
+  min-height: 100px;
+}
+.admin-payment-reversal label span {
+  color: #bd3e3e;
+}
+[data-theme="dark"] .admin-payment-reversal {
+  border-color: rgba(255, 130, 130, 0.3);
+}
+[data-theme="dark"] .admin-payment-reversal h3,
+[data-theme="dark"] .admin-payment-reversal label span {
+  color: #ffaaaa;
+}
+@media (max-width: 480px) {
+  .admin-payment-reversal .admin-payment-review-buttons,
+  .admin-payment-reversal .admin-payment-reopen-button {
+    width: 100%;
+  }
+}
