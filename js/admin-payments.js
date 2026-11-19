@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let paymentRefreshTimer = null;
   let paymentRealtimeChannel = null;
   let receiptPreviewRequestVersion = 0;
+  let receiptThumbnailRequestVersion = 0;
 
 
   /* =====================================================
@@ -730,6 +731,33 @@ document.addEventListener("DOMContentLoaded", () => {
      14. PAYMENT TABLE
   ====================================================== */
 
+  async function loadReceiptThumbnails(pagePayments) {
+    const requestVersion = ++receiptThumbnailRequestVersion;
+
+    await Promise.all(pagePayments.map(async payment => {
+      if (!payment.receipt_url) return;
+
+      const url = await getReceiptUrl(payment.receipt_url);
+      if (requestVersion !== receiptThumbnailRequestVersion) return;
+
+      const button = elements.tableBody?.querySelector(
+        `[data-action="receipt"][data-payment-id="${payment.id}"]`
+      );
+      if (!button) return;
+
+      if (!url) {
+        button.innerHTML = '<span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-file-circle-question" aria-hidden="true"></i></span>';
+        button.setAttribute("aria-label", "Receipt preview unavailable");
+        return;
+      }
+
+      const isPDF = new URL(url).pathname.toLowerCase().endsWith(".pdf");
+      button.innerHTML = isPDF
+        ? '<span class="admin-payment-receipt-thumb-placeholder admin-payment-receipt-pdf"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>'
+        : '<img src="' + escapeHTML(url) + '" alt="Payment receipt thumbnail" loading="lazy">';
+    }));
+  }
+
   function renderPayments() {
 
     hideAllStates();
@@ -786,8 +814,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <td>
               ${payment.receipt_url
-                ? '<button type="button" class="admin-payment-receipt-thumb" data-action="receipt" data-payment-id="${escapeHTML(payment.id)}" aria-label="Preview payment receipt"><i class="fa-solid fa-file-image" aria-hidden="true"></i><span>Preview</span></button>'
-                : '<span class="admin-payment-no-receipt-cell">No receipt</span>'}
+                ? '<button type="button" class="admin-payment-receipt-thumb" data-action="receipt" data-payment-id="${escapeHTML(payment.id)}" aria-label="Preview payment receipt"><span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i></span></button>'
+                : '<span class="admin-payment-no-receipt-cell">—</span>'}
             </td>
 
             <td>
@@ -862,7 +890,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 aria-label="View payment details"
               >
                 <i class="fas fa-eye" aria-hidden="true"></i>
-                View
               </button>
             </td>
 
@@ -870,6 +897,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
       }).join("");
+
+      loadReceiptThumbnails(pagePayments);
 
     }
 
