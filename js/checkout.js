@@ -3880,29 +3880,6 @@
   };
 
 
-  function updateLocationPickerViewport() {
-
-    if (!locationPicker.els || locationPicker.els.modal.hidden) {
-      return;
-    }
-
-    const viewport = window.visualViewport;
-    const height = viewport ? viewport.height : window.innerHeight;
-    const offsetTop = viewport ? viewport.offsetTop : 0;
-
-    document.documentElement.style.setProperty(
-      "--customer-picker-viewport-height",
-      `${Math.max(240, height)}px`
-    );
-
-    document.documentElement.style.setProperty(
-      "--customer-picker-viewport-top",
-      `${Math.max(0, offsetTop)}px`
-    );
-
-  }
-
-
   function normalizePickerText(value) {
 
     return String(value || "")
@@ -4018,11 +3995,6 @@
     document.body.classList.add(
       "customer-location-picker-open"
     );
-
-    // Do not focus the search input automatically. On Android this
-    // opens the keyboard as soon as the modal appears and can shift
-    // the viewport before the customer is ready to type.
-    requestAnimationFrame(updateLocationPickerViewport);
 
   }
 
@@ -4270,26 +4242,6 @@
     }
 
     locationPicker.els = els;
-
-    // Keep the modal within the visible portion of the screen when
-    // Android's keyboard opens after the customer taps the search box.
-    updateLocationPickerViewport();
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener(
-        "resize",
-        updateLocationPickerViewport
-      );
-      window.visualViewport.addEventListener(
-        "scroll",
-        updateLocationPickerViewport
-      );
-    }
-
-    window.addEventListener(
-      "resize",
-      updateLocationPickerViewport
-    );
 
 
     // ONE CONFIGURATION PER SEARCHABLE DROPDOWN
