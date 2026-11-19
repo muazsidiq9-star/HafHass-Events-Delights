@@ -67,6 +67,7 @@
   align-items: center;
   overflow: hidden;
   background:
+    var(--store-background-image, linear-gradient(transparent, transparent)),
     radial-gradient(
       circle at 85% 15%,
       rgba(198, 164, 106, 0.25),
