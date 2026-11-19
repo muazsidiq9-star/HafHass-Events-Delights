@@ -4141,33 +4141,48 @@
       return;
     }
 
+    const field = select.closest(".checkout-field");
+
     select.setAttribute("aria-haspopup", "dialog");
     select.setAttribute("aria-expanded", "false");
 
     /*
-     * Use click as the single pointer activation event.
-     * Opening on pointerdown causes touch-scroll gestures on
-     * Android to be mistaken for taps, making the picker flash
-     * open and then disappear.
+     * Prevent the browser's native select popup from opening.
+     * Pointer interaction is handled by the surrounding field;
+     * the select remains in the tab order for keyboard users.
      */
-    select.addEventListener("click", event => {
+    select.style.pointerEvents = "none";
+    select.setAttribute("aria-haspopup", "dialog");
 
-      if (select.disabled) {
-        return;
-      }
+    if (field) {
+      field.classList.add("has-location-picker");
 
-      event.preventDefault();
-      event.stopPropagation();
+      field.addEventListener("click", event => {
 
-      if (
-        !locationPicker.config ||
-        locationPicker.config.select !== select
-      ) {
-        openLocationPicker(config);
-        select.setAttribute("aria-expanded", "true");
-      }
+        if (select.disabled) {
+          return;
+        }
 
-    });
+        const clickedLabel = event.target.closest("label");
+        const clickedField = event.target === field;
+
+        if (!clickedLabel && !clickedField) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (
+          !locationPicker.config ||
+          locationPicker.config.select !== select
+        ) {
+          openLocationPicker(config);
+          select.setAttribute("aria-expanded", "true");
+        }
+
+      });
+    }
 
     select.addEventListener("keydown", event => {
 
