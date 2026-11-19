@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentDate: document.getElementById("adminCurrentDate"),
 
     totalCount: document.getElementById("paymentsTotalCount"),
+    resultCount: document.getElementById("paymentsResultCount"),
     pendingCount: document.getElementById("paymentsPendingCount"),
     successfulCount: document.getElementById("paymentsSuccessfulCount"),
     failedCount: document.getElementById("paymentsFailedCount"),
@@ -108,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let paymentRealtimeChannel = null;
   let receiptPreviewRequestVersion = 0;
   let receiptThumbnailRequestVersion = 0;
+  const receiptUrlCache = new Map();
   let isReviewingPayment = false;
 
 
@@ -674,9 +676,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const searchTerm = normalize(elements.search?.value);
 
-    const status = elements.statusFilter?.value || "";
+    const status = elements.statusFilter?.value || "all";
 
-    const method = elements.methodFilter?.value || "";
+    const method = elements.methodFilter?.value || "all";
 
     filteredPayments = allPayments.filter(payment => {
 
@@ -723,6 +725,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     currentPage = 1;
 
+    if (elements.resultCount) {
+      elements.resultCount.textContent = filteredPayments.length.toLocaleString("en-NG");
+    }
+
     renderPayments();
 
   }
@@ -734,63 +740,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadReceiptThumbnails(pagePayments) {
     const requestVersion = ++receiptThumbnailRequestVersion;
-
     await Promise.all((pagePayments || []).map(async payment => {
       if (!payment.receipt_url) return;
-
-      const buttonSelector =
-        `[data-action="receipt"][data-payment-id="${payment.id}"]`;
-
+      const cellSelector = `td[data-action="receipt"][data-payment-id="${payment.id}"]`;
       const setUnavailable = () => {
         if (requestVersion !== receiptThumbnailRequestVersion) return;
-        const currentButton = elements.tableBody?.querySelector(buttonSelector);
-        if (!currentButton) return;
-
-        currentButton.innerHTML =
-          '<span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-file-circle-question" aria-hidden="true"></i></span>';
-        currentButton.setAttribute("aria-label", "Receipt preview unavailable");
-        currentButton.title = "Receipt preview unavailable. Open payment details to retry.";
+        const cell = elements.tableBody?.querySelector(cellSelector);
+        const thumb = cell?.querySelector(".admin-payment-receipt-thumb");
+        if (!thumb) return;
+        thumb.innerHTML = '<span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-file-circle-question" aria-hidden="true"></i></span>';
+        cell.setAttribute("aria-label", "Receipt preview unavailable. Activate to retry.");
+        cell.title = "Receipt preview unavailable. Activate to retry.";
       };
-
       try {
         const url = await getReceiptUrl(payment.receipt_url);
         if (requestVersion !== receiptThumbnailRequestVersion) return;
-
-        const button = elements.tableBody?.querySelector(buttonSelector);
-        if (!button) return;
-
-        if (!url) {
-          setUnavailable();
-          return;
-        }
-
-        let isPDF = false;
-        try {
-          isPDF = new URL(url, window.location.href).pathname.toLowerCase().endsWith(".pdf");
-        } catch (urlError) {
-          console.error("Invalid receipt URL:", urlError);
-          setUnavailable();
-          return;
-        }
-
+        const cell = elements.tableBody?.querySelector(cellSelector);
+        const thumb = cell?.querySelector(".admin-payment-receipt-thumb");
+        if (!cell || !thumb) return;
+        if (!url) { setUnavailable(); return; }
+        const isPDF = String(payment.receipt_url).toLowerCase().split("?")[0].endsWith(".pdf") ||
+          new URL(url, window.location.href).pathname.toLowerCase().endsWith(".pdf");
         if (isPDF) {
-          button.innerHTML =
-            '<span class="admin-payment-receipt-thumb-placeholder admin-payment-receipt-pdf"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>';
-          button.setAttribute("aria-label", "Preview PDF payment receipt");
-          button.title = "Preview PDF receipt";
+          thumb.innerHTML = '<span class="admin-payment-receipt-thumb-placeholder admin-payment-receipt-pdf"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>';
+          cell.setAttribute("aria-label", "Preview PDF payment receipt");
+          cell.title = "Preview PDF receipt";
           return;
         }
-
         const image = document.createElement("img");
         image.alt = "Payment receipt thumbnail";
-        image.loading = "lazy";
+        image.decoding = "async";
+        image.loading = "eager";
+        let imageTimeout = window.setTimeout(() => {
+          imageTimeout = null;
+          setUnavailable();
+        }, 12000);
+        const clearImageTimeout = () => {
+          if (imageTimeout !== null) {
+            window.clearTimeout(imageTimeout);
+            imageTimeout = null;
+          }
+        };
+        image.addEventListener("load", clearImageTimeout, { once: true });
+        image.addEventListener("error", () => {
+          clearImageTimeout();
+          setUnavailable();
+        }, { once: true });
+        thumb.replaceChildren(image);
         image.src = url;
-        image.addEventListener("error", setUnavailable, { once: true });
-
-        button.replaceChildren(image);
-        button.setAttribute("aria-label", "Preview payment receipt");
-        button.title = "Preview payment receipt";
-
+        cell.setAttribute("aria-label", "Preview payment receipt");
+        cell.title = "Click to preview payment receipt";
       } catch (error) {
         console.error("Receipt thumbnail failed:", payment.id, error);
         setUnavailable();
@@ -852,9 +851,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return `
           <tr>
 
-            <td>
+            <td
+              class="${payment.receipt_url ? "admin-payment-receipt-cell is-clickable" : "admin-payment-receipt-cell"}"
+              ${payment.receipt_url ? `data-action="receipt" data-payment-id="${escapeHTML(payment.id)}" role="button" tabindex="0" aria-label="Preview payment receipt"` : ""}
+            >
               ${payment.receipt_url
-                ? '<button type="button" class="admin-payment-receipt-thumb" data-action="receipt" data-payment-id="${escapeHTML(payment.id)}" aria-label="Preview payment receipt"><span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i></span></button>'
+                ? '<span class="admin-payment-receipt-thumb"><span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i></span></span>'
                 : '<span class="admin-payment-no-receipt-cell">—</span>'}
             </td>
 
@@ -1010,89 +1012,84 @@ document.addEventListener("DOMContentLoaded", () => {
   ====================================================== */
 
   async function getReceiptUrl(receiptValue) {
-
-    if (!receiptValue) {
-      return null;
-    }
-
+    if (!receiptValue) return null;
     const value = String(receiptValue).trim();
+    if (!value) return null;
 
-    if (!value) {
-      return null;
-    }
-
-    /*
-      If the stored value is an HTTPS URL,
-      allow it as an external receipt URL.
-    */
-
-    if (/^https:\/\//i.test(value)) {
-
+    if (value.toLowerCase().startsWith("https://")) {
       try {
-
         const url = new URL(value);
-
-        if (url.protocol !== "https:") {
-          return null;
-        }
-
-        return url.href;
-
+        return url.protocol === "https:" ? url.href : null;
       } catch (error) {
-
+        console.error("Invalid external receipt URL:", error);
         return null;
-
       }
-
     }
 
-
-    /*
-      Otherwise, treat it as a private
-      payment-receipts storage object path.
-    */
-
-    const storagePath = value
-      .replace(/^\/+/, "")
-      .replace(/^payment-receipts\//, "")
-      .replace(/^storage\/v1\/object\/(?:sign|authenticated|public)\/payment-receipts\//, "");
-
-    if (!storagePath) {
-      return null;
+    let storagePath = value;
+    while (storagePath.startsWith("/")) storagePath = storagePath.slice(1);
+    if (storagePath.startsWith("payment-receipts/")) {
+      storagePath = storagePath.slice("payment-receipts/".length);
     }
+    const storagePrefix = "storage/v1/object/";
+    if (storagePath.startsWith(storagePrefix)) {
+      const afterPrefix = storagePath.slice(storagePrefix.length);
+      const bucketPrefix = ["sign/", "authenticated/", "public/"].find(prefix => afterPrefix.startsWith(prefix));
+      if (bucketPrefix) {
+        const afterMode = afterPrefix.slice(bucketPrefix.length);
+        if (afterMode.startsWith("payment-receipts/")) {
+          storagePath = afterMode.slice("payment-receipts/".length);
+        }
+      }
+    }
+    if (!storagePath) return null;
+    if (receiptUrlCache.has(storagePath)) return receiptUrlCache.get(storagePath);
 
+    // Download through the authenticated Storage client first, using the
+    // existing admin SELECT policy on the private payment-receipts bucket.
     try {
-      const signingRequest = supabase
-        .storage
-        .from(RECEIPT_BUCKET)
-        .createSignedUrl(storagePath, 600);
-
-      const timeoutRequest = new Promise((_, reject) => {
-        window.setTimeout(
-          () => reject(new Error("Receipt storage request timed out.")),
-          15000
-        );
+      const request = supabase.storage.from(RECEIPT_BUCKET).download(storagePath);
+      let timer;
+      const timeout = new Promise((_, reject) => {
+        timer = window.setTimeout(() => reject(new Error("Receipt download timed out after 15 seconds.")), 15000);
       });
-
-      const { data, error } = await Promise.race([
-        signingRequest,
-        timeoutRequest
-      ]);
-
-      if (error) {
-        console.error("Receipt URL error:", error);
-        return null;
+      try {
+        const { data, error } = await Promise.race([request, timeout]);
+        if (error) throw error;
+        if (data instanceof Blob) {
+          const blobUrl = URL.createObjectURL(data);
+          receiptUrlCache.set(storagePath, blobUrl);
+          return blobUrl;
+        }
+        throw new Error("Storage returned an empty receipt file.");
+      } finally {
+        if (timer) window.clearTimeout(timer);
       }
-
-      return data?.signedUrl || null;
-
-    } catch (error) {
-      console.error("Receipt URL request failed:", error);
-      return null;
+    } catch (downloadError) {
+      console.warn("Direct receipt download failed; trying a signed URL:", downloadError);
     }
 
+    // Signed URL fallback.
+    try {
+      const request = supabase.storage.from(RECEIPT_BUCKET).createSignedUrl(storagePath, 600);
+      let timer;
+      const timeout = new Promise((_, reject) => {
+        timer = window.setTimeout(() => reject(new Error("Receipt signing timed out after 15 seconds.")), 15000);
+      });
+      try {
+        const { data, error } = await Promise.race([request, timeout]);
+        if (error) throw error;
+        const signedUrl = data?.signedUrl || null;
+        if (signedUrl) receiptUrlCache.set(storagePath, signedUrl);
+        return signedUrl;
+      } finally {
+        if (timer) window.clearTimeout(timer);
+      }
+    } catch (error) {
+      console.error("Receipt URL generation failed:", error);
+      return null;
+    }
   }
-
 
   /* =====================================================
      17. MODAL HELPERS
@@ -1583,10 +1580,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (elements.tableBody) {
     elements.tableBody.addEventListener("click", event => {
-      const button = event.target.closest("[data-action]");
-      if (!button || !button.dataset.paymentId) return;
-      if (button.dataset.action === "view") openPaymentDetails(button.dataset.paymentId);
-      if (button.dataset.action === "receipt") openReceiptPreview(button.dataset.paymentId);
+      const target = event.target.closest("[data-action]");
+      if (!target || !elements.tableBody.contains(target) || !target.dataset.paymentId) return;
+      if (target.dataset.action === "view") openPaymentDetails(target.dataset.paymentId);
+      else if (target.dataset.action === "receipt") openReceiptPreview(target.dataset.paymentId);
+    });
+    elements.tableBody.addEventListener("keydown", event => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const cell = event.target.closest('td[data-action="receipt"]');
+      if (!cell || !cell.dataset.paymentId) return;
+      event.preventDefault();
+      openReceiptPreview(cell.dataset.paymentId);
     });
   }
   if (elements.modalContent) {
@@ -1653,11 +1657,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (elements.statusFilter) {
-        elements.statusFilter.value = "";
+        elements.statusFilter.value = "all";
       }
 
       if (elements.methodFilter) {
-        elements.methodFilter.value = "";
+        elements.methodFilter.value = "all";
       }
 
       filterPayments();
@@ -1831,6 +1835,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   window.addEventListener("pagehide", () => {
+    receiptUrlCache.forEach(url => {
+      if (typeof url === "string" && url.startsWith("blob:")) URL.revokeObjectURL(url);
+    });
+    receiptUrlCache.clear();
     if (paymentRefreshTimer) clearTimeout(paymentRefreshTimer);
     if (paymentRealtimeChannel && supabase?.removeChannel) {
       supabase.removeChannel(paymentRealtimeChannel);
