@@ -1985,3 +1985,15 @@ html[data-theme="dark"] .checkout-success p + p {
 .customer-location-picker-overlay[hidden] {
   display: none !important;
 }
+
+
+/* Searchable location selects use the custom picker instead of
+   the browser's native dropdown. The field itself remains tappable. */
+.checkout-field.has-location-picker {
+  cursor: pointer;
+}
+
+.checkout-field.has-location-picker select {
+  pointer-events: none !important;
+  cursor: pointer;
+}
