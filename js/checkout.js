@@ -3430,6 +3430,16 @@
 
   function showOrderSuccess(orderId) {
 
+    // The checkout introduction belongs to the form, not the success
+    // state. Hide it once the order has been placed.
+    const checkoutHeading = document.querySelector(".checkout-heading");
+
+    if (checkoutHeading) {
+      checkoutHeading.hidden = true;
+      checkoutHeading.style.display = "none";
+      checkoutHeading.setAttribute("aria-hidden", "true");
+    }
+
     const orderUrl =
       `order-details.html?id=${encodeURIComponent(orderId)}`;
 
