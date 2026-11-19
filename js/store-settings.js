@@ -484,16 +484,30 @@
 
       const imageUrl = normalizeUrl(settings[key]);
 
-      if (imageUrl) {
+      if (!imageUrl) {
+        element.style.removeProperty("--store-background-image");
+        delete element.dataset.storeBackgroundActive;
+        return;
+      }
+
+      // Preload first so an unavailable custom URL never replaces
+      // the original CSS/gradient fallback with a broken background.
+      const preload = new Image();
+
+      preload.onload = () => {
         element.style.setProperty(
           "--store-background-image",
           `url("${imageUrl.replace(/"/g, "%22")}")`
         );
         element.dataset.storeBackgroundActive = "true";
-      } else {
+      };
+
+      preload.onerror = () => {
         element.style.removeProperty("--store-background-image");
         delete element.dataset.storeBackgroundActive;
-      }
+      };
+
+      preload.src = imageUrl;
 
     });
 
