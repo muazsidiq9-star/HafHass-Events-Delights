@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isLoading = false;
   let modalRequestVersion = 0;
+  let receiptPreviewRequestVersion = 0;
 
 
   /* =====================================================
@@ -1030,7 +1031,9 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.modalOverlay.hidden = true;
     }
 
-    document.body.classList.remove("modal-open");
+    if (!elements.receiptOverlay || elements.receiptOverlay.hidden) {
+      document.body.classList.remove("modal-open");
+    }
 
     if (elements.modalContent) {
       elements.modalContent.innerHTML = "";
@@ -1238,11 +1241,12 @@ document.addEventListener("DOMContentLoaded", () => {
   async function openReceiptPreview(paymentId) {
     const payment = allPayments.find(item => item.id === paymentId);
     if (!payment || !payment.receipt_url) { showToast("No payment receipt is available."); return; }
+    const previewRequest = ++receiptPreviewRequestVersion;
     elements.receiptOverlay.hidden = false;
     document.body.classList.add("modal-open");
     elements.receiptPreview.innerHTML = '<div class="admin-payment-receipt-loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading receipt...</div>';
     const url = await getReceiptUrl(payment.receipt_url);
-    if (elements.receiptOverlay.hidden) return;
+    if (previewRequest !== receiptPreviewRequestVersion || elements.receiptOverlay.hidden) return;
     if (!url) { elements.receiptPreview.innerHTML = '<p class="admin-payment-receipt-error">Unable to load this receipt. Please try again.</p>'; return; }
     const pdf = new URL(url).pathname.toLowerCase().endsWith(".pdf");
     elements.receiptPreview.innerHTML = pdf
@@ -1251,6 +1255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function closeReceiptPreview() {
+    receiptPreviewRequestVersion++;
     elements.receiptOverlay.hidden = true;
     elements.receiptPreview.innerHTML = "";
     if (elements.modalOverlay.hidden) document.body.classList.remove("modal-open");
