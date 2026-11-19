@@ -602,7 +602,7 @@ html[data-theme="dark"] .theme-toggle:hover {
       rgba(28, 18, 22, 0.60) 48%,
       rgba(28, 18, 22, 0.13) 100%
     ),
-    url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=2000&q=90")
+    var(--store-background-image, url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=2000&q=90"))
     center/cover no-repeat;
 
   overflow: hidden;
@@ -2261,7 +2261,7 @@ html[data-theme="dark"] .testimonial-avatar {
         rgba(28, 18, 22, 0.84),
         rgba(28, 18, 22, 0.54)
       ),
-      url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=85");
+      var(--store-background-image, url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=85"));
   }
 
   .hero-content {
