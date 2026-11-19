@@ -1114,3 +1114,34 @@
   padding: 0;
   font-size: 14px;
 }
+
+
+/* BANK TRANSFER REVIEW ACTIONS */
+.admin-payment-review-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+.admin-payment-actions .admin-payment-review-approve {
+  background: #278348;
+}
+.admin-payment-actions .admin-payment-review-reject {
+  background: #bd3e3e;
+}
+.admin-payment-actions .admin-payment-review-approve:hover,
+.admin-payment-actions .admin-payment-review-reject:hover {
+  opacity: 0.88;
+}
+.admin-payment-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+@media (max-width: 480px) {
+  .admin-payment-review-buttons {
+    flex-direction: column;
+  }
+  .admin-payment-review-buttons button {
+    width: 100%;
+  }
+}
