@@ -344,72 +344,116 @@
      7. IMAGE SETTINGS
   ======================================================= */
 
+  function getLogoFallback(image) {
+
+    // Prefer an explicitly marked fallback, then support the
+    // existing public-page .brand-mark structure.
+    const container = image.parentElement;
+
+    if (container) {
+
+      const fallback = container.querySelector(
+        "[data-store-logo-fallback], .brand-mark"
+      );
+
+      if (fallback) {
+        return fallback;
+      }
+
+    }
+
+    const brand = image.closest(
+      ".brand, .auth-brand-logo, .auth-mobile-brand, .account-brand, .admin-brand"
+    );
+
+    return brand?.querySelector(
+      "[data-store-logo-fallback], .brand-mark"
+    ) || null;
+
+  }
+
+
+  function setLogoFallback(image, showFallback) {
+
+    const fallback = getLogoFallback(image);
+
+    if (fallback) {
+      fallback.hidden = showFallback ? false : true;
+    }
+
+    image.hidden = showFallback;
+
+  }
+
+
   function applyImageSettings(settings) {
 
-  document.querySelectorAll("[data-store-image]").forEach(element => {
+    document.querySelectorAll("[data-store-image]").forEach(element => {
 
-    const key = element.dataset.storeImage;
+      const key = element.dataset.storeImage;
 
-    if (!key || !(key in settings)) {
-      return;
-    }
+      if (!key || !(key in settings)) {
+        return;
+      }
 
-    const imageUrl = normalizeUrl(settings[key]);
+      const imageUrl = normalizeUrl(settings[key]);
 
-    if (!imageUrl) {
-      return;
-    }
+      if (element.tagName === "IMG") {
 
-    if (element.tagName === "IMG") {
+        if (!imageUrl) {
 
-      element.onload = () => {
+          element.removeAttribute("src");
+          setLogoFallback(element, true);
 
-        element.hidden = false;
-
-        const brand = element.closest(".brand");
-
-        if (brand) {
-
-          const fallback = brand.querySelector(".brand-mark");
-
-          if (fallback) {
-            fallback.hidden = true;
-          }
+          return;
 
         }
 
-      };
-
-      element.onerror = () => {
-
+        // Keep the fallback visible until the requested image has
+        // actually loaded. This prevents a blank logo area or a
+        // lingering fallback when the image is cached.
         element.hidden = true;
 
-        const brand = element.closest(".brand");
+        const fallback = getLogoFallback(element);
 
-        if (brand) {
+        if (fallback) {
+          fallback.hidden = false;
+        }
 
-          const fallback = brand.querySelector(".brand-mark");
+        element.onload = () => {
+          setLogoFallback(element, false);
+        };
 
-          if (fallback) {
-            fallback.hidden = false;
+        element.onerror = () => {
+          setLogoFallback(element, true);
+        };
+
+        if (element.src !== imageUrl) {
+          element.src = imageUrl;
+        } else if (element.complete) {
+
+          if (element.naturalWidth > 0) {
+            setLogoFallback(element, false);
+          } else {
+            setLogoFallback(element, true);
           }
 
         }
 
-      };
+      } else if (imageUrl) {
 
-      element.src = imageUrl;
+        element.style.backgroundImage =
+          `url("${imageUrl.replace(/"/g, "%22")}")`;
 
-    } else {
+      } else {
 
-      element.style.backgroundImage =
-        `url("${imageUrl.replace(/"/g, "%22")}")`;
+        element.style.backgroundImage = "";
 
-    }
+      }
 
-  });
+    });
 
-}
+  }
 
 
   /* =======================================================
