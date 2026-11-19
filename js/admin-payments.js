@@ -1219,6 +1219,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ${detailRow("Created At", formatDate(payment.created_at))}
       ${detailRow("Last Updated", formatDate(payment.updated_at))}
       ${detailRow("Verified At", formatDate(payment.verified_at))}
+      ${payment.reversal_reason ? detailRow("Previous Reversal Reason", payment.reversal_reason) : ""}
     `;
 
 
@@ -1240,6 +1241,8 @@ document.addEventListener("DOMContentLoaded", () => {
       payment.payment_method === "bank_transfer" &&
       ["pending", "processing"].includes(payment.status);
 
+    const canReopenPayment = payment.status === "successful";
+
     const reviewActions = canReviewBankTransfer
       ? `
         <section class="admin-payment-actions" aria-labelledby="paymentReviewHeading">
@@ -1253,6 +1256,22 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
             <button type="button" class="admin-payment-review-reject" data-action="review-reject" data-payment-id="${escapeHTML(payment.id)}">
               <i class="fa-solid fa-xmark" aria-hidden="true"></i> Reject Payment
+            </button>
+          </div>
+        </section>
+      `
+      : "";
+
+    const reopenActions = canReopenPayment
+      ? `
+        <section class="admin-payment-actions admin-payment-reversal" aria-labelledby="paymentReopenHeading">
+          <h3 id="paymentReopenHeading">Reverse Successful Payment</h3>
+          <p>This will reopen the payment as Pending. If its order is currently Payment Confirmed, the order will also return to Awaiting Payment. This does not issue a refund.</p>
+          <label for="paymentReversalReason">Reason for reversal <span aria-hidden="true">*</span></label>
+          <textarea id="paymentReversalReason" rows="3" minlength="10" maxlength="1000" required placeholder="Explain why this successful payment must be reversed (at least 10 characters)..."></textarea>
+          <div class="admin-payment-review-buttons">
+            <button type="button" class="admin-payment-reopen-button" data-action="reopen-payment" data-payment-id="${escapeHTML(payment.id)}">
+              <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reopen Payment
             </button>
           </div>
         </section>
@@ -1283,6 +1302,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ${failureDetails}
 
         ${reviewActions}
+
+        ${reopenActions}
 
       `;
 
@@ -1393,6 +1414,72 @@ document.addEventListener("DOMContentLoaded", () => {
     if (elements.modalOverlay.hidden) document.body.classList.remove("modal-open");
   }
 
+  /* REOPEN A SUCCESSFUL PAYMENT */
+  async function reopenSuccessfulPayment(paymentId) {
+    if (isReviewingPayment) return;
+
+    const payment = allPayments.find(item => item.id === paymentId);
+    if (!payment || payment.status !== "successful") {
+      showToast("This payment is no longer eligible for reversal. Refresh and try again.");
+      await loadPayments();
+      return;
+    }
+
+    const reasonField = elements.modalContent?.querySelector("#paymentReversalReason");
+    const reason = reasonField?.value.trim() || "";
+
+    if (reason.length < 10) {
+      showToast("Please provide a clear reason of at least 10 characters.");
+      reasonField?.focus();
+      return;
+    }
+
+    if (reason.length > 1000) {
+      showToast("The reversal reason cannot exceed 1000 characters.");
+      reasonField?.focus();
+      return;
+    }
+
+    const confirmationMessage =
+      "Reverse this successful payment? It will return to Pending. If the associated order is Payment Confirmed, that order will return to Awaiting Payment. This action does not refund money.";
+
+    if (!window.confirm(confirmationMessage)) return;
+
+    isReviewingPayment = true;
+    const actionButton = elements.modalContent.querySelector('[data-action="reopen-payment"]');
+    if (actionButton) {
+      actionButton.disabled = true;
+      actionButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Reopening...';
+    }
+
+    try {
+      const { data, error } = await supabase.rpc("admin_reopen_payment", {
+        p_payment_id: paymentId,
+        p_reason: reason
+      });
+
+      if (error) throw error;
+      if (!data || data.success !== true) {
+        throw new Error(data?.message || "The payment reversal could not be completed.");
+      }
+
+      showToast("Payment reopened. The reversal reason has been recorded in the audit history.");
+      closePaymentModal();
+      await loadPayments();
+
+    } catch (error) {
+      console.error("Payment reversal error:", error);
+      showToast(error?.message || "Unable to reverse this payment. Please try again.");
+      if (actionButton) {
+        actionButton.disabled = false;
+        actionButton.innerHTML = '<i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reopen Payment';
+      }
+    } finally {
+      isReviewingPayment = false;
+    }
+  }
+
+
   /* =====================================================
      20. EVENT DELEGATION
   ====================================================== */
@@ -1422,6 +1509,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (button.dataset.action === "review-reject" && button.dataset.paymentId) {
         reviewBankTransfer(button.dataset.paymentId, false);
+        return;
+      }
+
+      if (button.dataset.action === "reopen-payment" && button.dataset.paymentId) {
+        reopenSuccessfulPayment(button.dataset.paymentId);
       }
     });
   }
