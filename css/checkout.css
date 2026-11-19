@@ -1978,3 +1978,10 @@ html[data-theme="dark"] .checkout-success p + p {
   }
 }
 
+
+
+/* Keep the closed location picker hidden even though its open
+   overlay uses display:flex in the shared account stylesheet. */
+.customer-location-picker-overlay[hidden] {
+  display: none !important;
+}
