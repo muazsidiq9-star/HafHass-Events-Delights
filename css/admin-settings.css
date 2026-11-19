@@ -904,3 +904,116 @@
   }
 
 }
+
+/* =========================================================
+   PUBLIC STORE IMAGE SETTINGS
+========================================================= */
+
+.store-image-settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.store-image-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+}
+
+.store-image-card-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.store-image-card-heading strong {
+  color: var(--heading);
+  font-size: 12px;
+}
+
+.store-image-card-heading small {
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.store-image-preview {
+  min-height: 135px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px dashed var(--border);
+  border-radius: 7px;
+  background: var(--surface-soft);
+  color: var(--text-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+.store-image-preview img {
+  width: 100%;
+  height: 135px;
+  object-fit: cover;
+}
+
+.store-image-preview img[hidden] {
+  display: none !important;
+}
+
+.store-image-card > input[type="url"] {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-soft);
+  color: var(--heading);
+  font: inherit;
+  font-size: 10px;
+}
+
+.store-image-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.store-image-upload-button,
+.store-image-clear-button {
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-soft);
+  color: var(--heading);
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.store-image-upload-button {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.store-image-upload-button:disabled,
+.store-image-clear-button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+@media (max-width: 650px) {
+  .store-image-settings {
+    grid-template-columns: 1fr;
+  }
+}
