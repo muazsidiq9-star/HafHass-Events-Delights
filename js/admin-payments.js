@@ -735,27 +735,66 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadReceiptThumbnails(pagePayments) {
     const requestVersion = ++receiptThumbnailRequestVersion;
 
-    await Promise.all(pagePayments.map(async payment => {
+    await Promise.all((pagePayments || []).map(async payment => {
       if (!payment.receipt_url) return;
 
-      const url = await getReceiptUrl(payment.receipt_url);
-      if (requestVersion !== receiptThumbnailRequestVersion) return;
+      const buttonSelector =
+        `[data-action="receipt"][data-payment-id="${payment.id}"]`;
 
-      const button = elements.tableBody?.querySelector(
-        `[data-action="receipt"][data-payment-id="${payment.id}"]`
-      );
-      if (!button) return;
+      const setUnavailable = () => {
+        if (requestVersion !== receiptThumbnailRequestVersion) return;
+        const currentButton = elements.tableBody?.querySelector(buttonSelector);
+        if (!currentButton) return;
 
-      if (!url) {
-        button.innerHTML = '<span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-file-circle-question" aria-hidden="true"></i></span>';
-        button.setAttribute("aria-label", "Receipt preview unavailable");
-        return;
+        currentButton.innerHTML =
+          '<span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-file-circle-question" aria-hidden="true"></i></span>';
+        currentButton.setAttribute("aria-label", "Receipt preview unavailable");
+        currentButton.title = "Receipt preview unavailable. Open payment details to retry.";
+      };
+
+      try {
+        const url = await getReceiptUrl(payment.receipt_url);
+        if (requestVersion !== receiptThumbnailRequestVersion) return;
+
+        const button = elements.tableBody?.querySelector(buttonSelector);
+        if (!button) return;
+
+        if (!url) {
+          setUnavailable();
+          return;
+        }
+
+        let isPDF = false;
+        try {
+          isPDF = new URL(url, window.location.href).pathname.toLowerCase().endsWith(".pdf");
+        } catch (urlError) {
+          console.error("Invalid receipt URL:", urlError);
+          setUnavailable();
+          return;
+        }
+
+        if (isPDF) {
+          button.innerHTML =
+            '<span class="admin-payment-receipt-thumb-placeholder admin-payment-receipt-pdf"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>';
+          button.setAttribute("aria-label", "Preview PDF payment receipt");
+          button.title = "Preview PDF receipt";
+          return;
+        }
+
+        const image = document.createElement("img");
+        image.alt = "Payment receipt thumbnail";
+        image.loading = "lazy";
+        image.src = url;
+        image.addEventListener("error", setUnavailable, { once: true });
+
+        button.replaceChildren(image);
+        button.setAttribute("aria-label", "Preview payment receipt");
+        button.title = "Preview payment receipt";
+
+      } catch (error) {
+        console.error("Receipt thumbnail failed:", payment.id, error);
+        setUnavailable();
       }
-
-      const isPDF = new URL(url).pathname.toLowerCase().endsWith(".pdf");
-      button.innerHTML = isPDF
-        ? '<span class="admin-payment-receipt-thumb-placeholder admin-payment-receipt-pdf"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>'
-        : '<img src="' + escapeHTML(url) + '" alt="Payment receipt thumbnail" loading="lazy">';
     }));
   }
 
@@ -1022,17 +1061,35 @@ document.addEventListener("DOMContentLoaded", () => {
       return null;
     }
 
-    const { data, error } = await supabase
-      .storage
-      .from(RECEIPT_BUCKET)
-      .createSignedUrl(storagePath, 600);
+    try {
+      const signingRequest = supabase
+        .storage
+        .from(RECEIPT_BUCKET)
+        .createSignedUrl(storagePath, 600);
 
-    if (error) {
-      console.error("Receipt URL error:", error);
+      const timeoutRequest = new Promise((_, reject) => {
+        window.setTimeout(
+          () => reject(new Error("Receipt storage request timed out.")),
+          15000
+        );
+      });
+
+      const { data, error } = await Promise.race([
+        signingRequest,
+        timeoutRequest
+      ]);
+
+      if (error) {
+        console.error("Receipt URL error:", error);
+        return null;
+      }
+
+      return data?.signedUrl || null;
+
+    } catch (error) {
+      console.error("Receipt URL request failed:", error);
       return null;
     }
-
-    return data?.signedUrl || null;
 
   }
 
@@ -1393,18 +1450,58 @@ document.addEventListener("DOMContentLoaded", () => {
   /* RECEIPT PREVIEW */
   async function openReceiptPreview(paymentId) {
     const payment = allPayments.find(item => item.id === paymentId);
-    if (!payment || !payment.receipt_url) { showToast("No payment receipt is available."); return; }
+
+    if (!payment || !payment.receipt_url) {
+      showToast("No payment receipt is available.");
+      return;
+    }
+
     const previewRequest = ++receiptPreviewRequestVersion;
+
     elements.receiptOverlay.hidden = false;
     document.body.classList.add("modal-open");
-    elements.receiptPreview.innerHTML = '<div class="admin-payment-receipt-loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading receipt...</div>';
-    const url = await getReceiptUrl(payment.receipt_url);
-    if (previewRequest !== receiptPreviewRequestVersion || elements.receiptOverlay.hidden) return;
-    if (!url) { elements.receiptPreview.innerHTML = '<p class="admin-payment-receipt-error">Unable to load this receipt. Please try again.</p>'; return; }
-    const pdf = new URL(url).pathname.toLowerCase().endsWith(".pdf");
-    elements.receiptPreview.innerHTML = pdf
-      ? '<iframe class="admin-payment-receipt-frame" title="Payment receipt PDF" src="' + escapeHTML(url) + '"></iframe>'
-      : '<img class="admin-payment-receipt-image" alt="Customer payment receipt" src="' + escapeHTML(url) + '">';
+    elements.receiptPreview.innerHTML =
+      '<div class="admin-payment-receipt-loading"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Loading receipt...</div>';
+
+    try {
+      const url = await getReceiptUrl(payment.receipt_url);
+
+      if (previewRequest !== receiptPreviewRequestVersion || elements.receiptOverlay.hidden) return;
+
+      if (!url) {
+        elements.receiptPreview.innerHTML =
+          '<p class="admin-payment-receipt-error">Unable to access this receipt. Check the file path and Storage permissions, then try again.</p>';
+        return;
+      }
+
+      const pdf = new URL(url, window.location.href).pathname.toLowerCase().endsWith(".pdf");
+
+      if (pdf) {
+        elements.receiptPreview.innerHTML =
+          '<iframe class="admin-payment-receipt-frame" title="Payment receipt PDF" src="' + escapeHTML(url) + '"></iframe>';
+        return;
+      }
+
+      const image = document.createElement("img");
+      image.className = "admin-payment-receipt-image";
+      image.alt = "Customer payment receipt";
+      image.onerror = () => {
+        if (previewRequest !== receiptPreviewRequestVersion) return;
+        elements.receiptPreview.innerHTML =
+          '<p class="admin-payment-receipt-error">The receipt link was created, but the image could not be displayed. Please check the uploaded file.</p>';
+      };
+      image.src = url;
+
+      elements.receiptPreview.replaceChildren(image);
+
+    } catch (error) {
+      console.error("Receipt preview failed:", error);
+
+      if (previewRequest === receiptPreviewRequestVersion && !elements.receiptOverlay.hidden) {
+        elements.receiptPreview.innerHTML =
+          '<p class="admin-payment-receipt-error">An error occurred while loading this receipt. Please try again.</p>';
+      }
+    }
   }
 
   function closeReceiptPreview() {
