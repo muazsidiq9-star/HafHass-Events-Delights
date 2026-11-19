@@ -6238,3 +6238,461 @@ body.customer-location-picker-open {
   }
 
 }
+
+
+
+/* =========================================================
+   NOTIFICATIONS
+   Header bell, sidebar link and the notifications page.
+   The bell and sidebar link are added to every account page
+   by js/account-notifications.js.
+   ========================================================= */
+
+/* ---------- HEADER BELL ---------- */
+
+.account-notification-bell {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--account-border);
+  border-radius: 50%;
+  background: var(--account-surface);
+  color: var(--account-text);
+  font-size: 17px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--account-transition);
+}
+
+.account-notification-bell:hover,
+.account-notification-bell.is-current {
+  background: var(--account-surface-soft);
+  color: var(--account-primary);
+  border-color: var(--account-accent);
+}
+
+.account-notification-bell:focus-visible {
+  outline: 2px solid var(--account-gold);
+  outline-offset: 2px;
+}
+
+.account-notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--account-bg);
+  border-radius: 20px;
+  background: var(--account-primary);
+  color: var(--account-surface);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.account-notification-badge[hidden] {
+  display: none;
+}
+
+.account-notification-badge.is-new {
+  animation: accountBadgePop 0.5s ease;
+}
+
+@keyframes accountBadgePop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+
+/* ---------- SIDEBAR LINK COUNT ---------- */
+
+.account-nav-badge {
+  min-width: 20px;
+  height: 20px;
+  margin-left: auto;
+  padding: 0 7px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 20px;
+  background: var(--account-primary);
+  color: var(--account-surface);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.account-nav-badge[hidden] {
+  display: none;
+}
+
+
+/* ---------- PAGE TOOLBAR ---------- */
+
+.notifications-toolbar {
+  width: 100%;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.notifications-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--account-border);
+  border-radius: 30px;
+  background: var(--account-surface);
+}
+
+.notifications-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 30px;
+  background: transparent;
+  color: var(--account-muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--account-transition);
+}
+
+.notifications-tab:hover {
+  color: var(--account-primary);
+}
+
+.notifications-tab.active {
+  background: var(--account-primary);
+  color: var(--account-surface);
+  font-weight: 600;
+}
+
+.notifications-tab:focus-visible,
+.notifications-mark-all:focus-visible,
+.notifications-more-button:focus-visible,
+.notification-item:focus-visible {
+  outline: 2px solid var(--account-gold);
+  outline-offset: 2px;
+}
+
+.notifications-mark-all,
+.notifications-more-button {
+  padding: 10px 18px;
+  border: 1px solid var(--account-border);
+  border-radius: 8px;
+  background: var(--account-surface);
+  color: var(--account-primary);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--account-transition);
+}
+
+.notifications-mark-all:hover:not(:disabled),
+.notifications-more-button:hover:not(:disabled) {
+  background: var(--account-surface-soft);
+  border-color: var(--account-accent);
+}
+
+.notifications-mark-all:disabled,
+.notifications-more-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.notifications-notice {
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border: 1px solid #e3b4b4;
+  border-radius: 10px;
+  background: #fff1f1;
+  color: #a52d2d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.notifications-notice[hidden] {
+  display: none;
+}
+
+[data-theme="dark"] .notifications-notice {
+  border-color: #6b3a3a;
+  background: rgba(179, 59, 59, 0.14);
+  color: #ffaaaa;
+}
+
+
+/* ---------- NOTIFICATION LIST ---------- */
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notifications-list[hidden] {
+  display: none;
+}
+
+.notification-item {
+  position: relative;
+  width: 100%;
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  border: 1px solid var(--account-border);
+  border-radius: 14px;
+  background: var(--account-surface);
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: default;
+  transition: var(--account-transition);
+}
+
+.notification-item.is-unread {
+  border-color: var(--account-accent);
+  background: var(--account-surface-soft);
+  cursor: pointer;
+}
+
+.notification-item.is-link {
+  cursor: pointer;
+}
+
+.notification-item.is-unread:hover,
+.notification-item.is-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--account-accent);
+}
+
+.notification-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--account-surface-soft);
+  color: var(--account-primary);
+  font-size: 16px;
+}
+
+.notification-item.is-unread .notification-icon {
+  background: var(--account-primary);
+  color: var(--account-surface);
+}
+
+.notification-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.notification-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.notification-title {
+  margin: 0 0 5px;
+  color: var(--account-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.notification-item.is-unread .notification-title::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  background: var(--account-gold);
+}
+
+.notification-time {
+  flex-shrink: 0;
+  color: var(--account-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.notification-message {
+  margin: 0;
+  color: var(--account-muted);
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.notification-chevron {
+  align-self: center;
+  flex-shrink: 0;
+  color: var(--account-muted);
+  font-size: 12px;
+}
+
+.notifications-more {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.notifications-more[hidden] {
+  display: none;
+}
+
+@media (max-width: 650px) {
+
+  .notification-item {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .notification-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .notification-title-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .notifications-tabs {
+    width: 100%;
+  }
+
+  .notifications-tab {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .notifications-mark-all {
+    width: 100%;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .account-notification-badge.is-new {
+    animation: none;
+  }
+
+  .notification-item.is-unread:hover,
+  .notification-item.is-link:hover {
+    transform: none;
+  }
+
+}
+
+
+
+
+/* =========================================================
+   ACCOUNT HEADER: FIT THE BELL ON SMALL SCREENS
+   The "Continue Shopping" link was re-shown on phones by an
+   earlier rule (ACCOUNT HEADER: SHOW SHOPPING LINK), which
+   leaves no room for the bell. On narrow screens it becomes
+   a round shopping-bag button like the others. The words stay
+   in the page for screen readers.
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .account-notification-bell {
+    width: 39px;
+    height: 39px;
+    font-size: 16px;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  .account-header {
+    gap: 10px;
+  }
+
+  .account-brand {
+    min-width: 0;
+  }
+
+  .account-header-actions {
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .account-shop-link {
+    width: 39px;
+    height: 39px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--account-surface);
+    color: var(--account-text);
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+  }
+
+  .account-shop-link::before {
+    content: "\f290";
+    font-family: "Font Awesome 6 Free";
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .account-shop-link:hover {
+    background: var(--account-surface-soft);
+    border-color: var(--account-accent);
+    color: var(--account-primary);
+  }
+
+}
+
+@media (max-width: 400px) {
+
+  .account-header-actions {
+    gap: 6px;
+  }
+
+  .account-shop-link,
+  .account-notification-bell,
+  .account-theme-toggle,
+  .account-mobile-menu {
+    width: 36px;
+    height: 36px;
+  }
+
+  .account-brand-name {
+    font-size: 19px;
+  }
+
+  .account-brand-subtitle {
+    letter-spacing: 2px;
+  }
+
+}
