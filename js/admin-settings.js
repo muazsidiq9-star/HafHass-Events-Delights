@@ -571,6 +571,176 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     updateLogoPreview();
+    populateStoreImageSettings(settings);
+  }
+
+
+  const STORE_IMAGE_FIELDS = [
+    ["home_hero_image_url", "Homepage Hero", "Large landscape image behind the homepage headline."],
+    ["shop_hero_image_url", "Shop Hero", "Hero image at the top of the Shop page."],
+    ["services_hero_image_url", "Services Hero", "Hero image at the top of the Services page."],
+    ["gallery_hero_image_url", "Gallery Hero", "Hero image at the top of the Gallery page."],
+    ["founder_hero_image_url", "Founder Hero", "Hero image at the top of the Founder page."],
+    ["about_section_image_url", "Homepage About Image", "Image beside the homepage brand story."],
+    ["home_founder_image_url", "Homepage Founder Image", "Image in the homepage Meet the Founder section."],
+    ["founder_portrait_image_url", "Founder Portrait", "Main portrait on the Founder page."],
+    ["founder_story_image_url", "Founder Story Image", "Image in the Founder page beginning/story section."]
+  ];
+
+
+  function populateStoreImageSettings(settings) {
+
+    const container = getElement("storeImageSettings");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    STORE_IMAGE_FIELDS.forEach(([key, label, description]) => {
+
+      const card = document.createElement("div");
+      card.className = "store-image-card";
+
+      const heading = document.createElement("div");
+      heading.className = "store-image-card-heading";
+
+      const title = document.createElement("strong");
+      title.textContent = label;
+
+      const help = document.createElement("small");
+      help.textContent = description;
+
+      heading.append(title, help);
+
+      const preview = document.createElement("div");
+      preview.className = "store-image-preview";
+
+      const image = document.createElement("img");
+      image.alt = label + " preview";
+      image.hidden = true;
+
+      const empty = document.createElement("span");
+      empty.textContent = "Using original page image";
+
+      preview.append(image, empty);
+
+      const url = document.createElement("input");
+      url.type = "url";
+      url.id = "storeImageUrl_" + key;
+      url.value = settings[key] || "";
+      url.placeholder = "Optional image URL";
+      url.setAttribute("aria-label", label + " URL");
+
+      const controls = document.createElement("div");
+      controls.className = "store-image-controls";
+
+      const file = document.createElement("input");
+      file.type = "file";
+      file.accept = "image/jpeg,image/png,image/webp";
+      file.id = "storeImageFile_" + key;
+      file.hidden = true;
+
+      const upload = document.createElement("button");
+      upload.type = "button";
+      upload.className = "store-image-upload-button";
+      upload.innerHTML = '<i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Upload image';
+      upload.addEventListener("click", () => file.click());
+
+      const clear = document.createElement("button");
+      clear.type = "button";
+      clear.className = "store-image-clear-button";
+      clear.textContent = "Clear";
+      clear.addEventListener("click", () => {
+        url.value = "";
+        image.removeAttribute("src");
+        image.hidden = true;
+        empty.hidden = false;
+      });
+
+      url.addEventListener("input", () => {
+        const value = url.value.trim();
+        if (value && isValidUrl(value)) {
+          image.onload = () => { image.hidden = false; empty.hidden = true; };
+          image.onerror = () => { image.hidden = true; empty.hidden = false; };
+          image.src = normalizeUrl(value);
+        } else {
+          image.removeAttribute("src");
+          image.hidden = true;
+          empty.hidden = false;
+        }
+      });
+
+      file.addEventListener("change", () => uploadStoreImage(file, url, image, empty, key, label));
+
+      if (url.value && isValidUrl(url.value)) {
+        image.onload = () => { image.hidden = false; empty.hidden = true; };
+        image.onerror = () => { image.hidden = true; empty.hidden = false; };
+        image.src = normalizeUrl(url.value);
+      }
+
+      controls.append(upload, clear, file);
+      card.append(heading, preview, url, controls);
+      container.appendChild(card);
+
+    });
+
+  }
+
+
+  async function uploadStoreImage(fileInput, urlInput, preview, emptyState, key, label) {
+
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      setMessage("businessBrandingMessage", "Please choose a JPG, PNG or WebP image.", "error");
+      fileInput.value = "";
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setMessage("businessBrandingMessage", "Each image must be 10 MB or smaller.", "error");
+      fileInput.value = "";
+      return;
+    }
+
+    const extension = file.type === "image/jpeg" ? "jpg" : file.type.split("/")[1];
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-").slice(0, 70);
+    const path = `store/${key}/${Date.now()}-${safeName || "image." + extension}`;
+
+    try {
+
+      const { error } = await supabase.storage
+        .from("store-assets")
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type
+        });
+
+      if (error) throw error;
+
+      const { data } = supabase.storage
+        .from("store-assets")
+        .getPublicUrl(path);
+
+      if (!data || !data.publicUrl) throw new Error("The uploaded image URL could not be created.");
+
+      urlInput.value = data.publicUrl;
+      preview.onload = () => { preview.hidden = false; emptyState.hidden = true; };
+      preview.onerror = () => { preview.hidden = true; emptyState.hidden = false; };
+      preview.src = data.publicUrl;
+
+      setMessage("businessBrandingMessage", label + " uploaded. Remember to save Branding to publish it.", "success");
+
+    } catch (error) {
+
+      console.error("Store image upload failed:", error);
+      setMessage("businessBrandingMessage", "Image upload failed: " + getErrorMessage(error), "error");
+
+    } finally {
+      fileInput.value = "";
+    }
+
   }
 
 
@@ -794,6 +964,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       favicon_url:
         normalizeUrl(faviconUrl),
+
+      ...Object.fromEntries(
+        STORE_IMAGE_FIELDS.map(([key]) => [
+          key,
+          normalizeUrl(getValue("storeImageUrl_" + key)) || null
+        ])
+      ),
 
       brand_primary_color:
         primaryColor,
