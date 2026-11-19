@@ -217,6 +217,34 @@ body[data-theme="dark"],
   object-fit: contain;
 }
 
+/* Store Settings logo and fallback */
+.auth-brand-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.auth-brand-logo img[hidden] {
+  display: none !important;
+}
+
+.auth-brand-logo [data-store-logo-fallback] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+  font-weight: 700;
+  color: inherit;
+}
+
+.auth-brand-logo [data-store-logo-fallback][hidden] {
+  display: none !important;
+}
+
 .auth-brand-name {
   font-family: "Playfair Display", serif;
 
