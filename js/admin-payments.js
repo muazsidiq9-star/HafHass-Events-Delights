@@ -81,8 +81,9 @@ document.addEventListener("DOMContentLoaded", () => {
     closeModal: document.getElementById("closePaymentModal"),
     modalContent: document.getElementById("paymentModalContent"),
 
-    adminActions: document.getElementById("paymentAdminActions"),
-    actionMessage: document.getElementById("paymentActionMessage")
+    receiptOverlay: document.getElementById("paymentReceiptOverlay"),
+    receiptPreview: document.getElementById("paymentReceiptPreview"),
+    closeReceipt: document.getElementById("closePaymentReceipt")
 
   };
 
@@ -102,9 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedPaymentId = null;
 
   let isLoading = false;
-  let isReviewingPayment = false;
-
   let modalRequestVersion = 0;
+  let paymentRefreshTimer = null;
+  let paymentRealtimeChannel = null;
+  let receiptPreviewRequestVersion = 0;
+  let receiptThumbnailRequestVersion = 0;
+  let isReviewingPayment = false;
 
 
   /* =====================================================
@@ -704,10 +708,14 @@ document.addEventListener("DOMContentLoaded", () => {
         transferReference.includes(searchTerm);
 
       const matchesStatus =
-        !status || payment.status === status;
+        !status ||
+        status === "all" ||
+        payment.status === status;
 
       const matchesMethod =
-        !method || payment.payment_method === method;
+        !method ||
+        method === "all" ||
+        payment.payment_method === method;
 
       return matchesSearch && matchesStatus && matchesMethod;
 
@@ -723,6 +731,33 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =====================================================
      14. PAYMENT TABLE
   ====================================================== */
+
+  async function loadReceiptThumbnails(pagePayments) {
+    const requestVersion = ++receiptThumbnailRequestVersion;
+
+    await Promise.all(pagePayments.map(async payment => {
+      if (!payment.receipt_url) return;
+
+      const url = await getReceiptUrl(payment.receipt_url);
+      if (requestVersion !== receiptThumbnailRequestVersion) return;
+
+      const button = elements.tableBody?.querySelector(
+        `[data-action="receipt"][data-payment-id="${payment.id}"]`
+      );
+      if (!button) return;
+
+      if (!url) {
+        button.innerHTML = '<span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-file-circle-question" aria-hidden="true"></i></span>';
+        button.setAttribute("aria-label", "Receipt preview unavailable");
+        return;
+      }
+
+      const isPDF = new URL(url).pathname.toLowerCase().endsWith(".pdf");
+      button.innerHTML = isPDF
+        ? '<span class="admin-payment-receipt-thumb-placeholder admin-payment-receipt-pdf"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>'
+        : '<img src="' + escapeHTML(url) + '" alt="Payment receipt thumbnail" loading="lazy">';
+    }));
+  }
 
   function renderPayments() {
 
@@ -777,6 +812,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return `
           <tr>
+
+            <td>
+              ${payment.receipt_url
+                ? '<button type="button" class="admin-payment-receipt-thumb" data-action="receipt" data-payment-id="${escapeHTML(payment.id)}" aria-label="Preview payment receipt"><span class="admin-payment-receipt-thumb-placeholder"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i></span></button>'
+                : '<span class="admin-payment-no-receipt-cell">—</span>'}
+            </td>
 
             <td>
               <div class="admin-payment-transaction">
@@ -850,7 +891,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 aria-label="View payment details"
               >
                 <i class="fas fa-eye" aria-hidden="true"></i>
-                View
               </button>
             </td>
 
@@ -858,6 +898,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
       }).join("");
+
+      loadReceiptThumbnails(pagePayments);
 
     }
 
@@ -1016,25 +1058,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     selectedPaymentId = null;
 
-    isReviewingPayment = false;
 
     if (elements.modalOverlay) {
       elements.modalOverlay.hidden = true;
     }
 
-    document.body.classList.remove("modal-open");
+    if (!elements.receiptOverlay || elements.receiptOverlay.hidden) {
+      document.body.classList.remove("modal-open");
+    }
 
     if (elements.modalContent) {
       elements.modalContent.innerHTML = "";
-    }
-
-    if (elements.adminActions) {
-      elements.adminActions.innerHTML = "";
-    }
-
-    if (elements.actionMessage) {
-      elements.actionMessage.textContent = "";
-      elements.actionMessage.hidden = true;
     }
 
   }
@@ -1122,14 +1156,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    if (elements.adminActions) {
-      elements.adminActions.innerHTML = "";
-    }
-
-    if (elements.actionMessage) {
-      elements.actionMessage.hidden = true;
-    }
-
     showModal();
 
 
@@ -1140,12 +1166,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const customerPhone = getCustomerPhone(payment);
 
     const orderNumber = getOrderNumber(payment);
-
-    const isBankTransfer = payment.payment_method === "bank_transfer";
-
-    const canReview =
-      isBankTransfer &&
-      ["pending", "processing"].includes(payment.status);
 
 
     let receiptUrl = null;
@@ -1165,22 +1185,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const receiptHTML = receiptUrl
       ? `
-          <a
-            href="${escapeHTML(receiptUrl)}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="admin-payment-receipt-link"
-          >
-            <i class="fas fa-file-image" aria-hidden="true"></i>
-            View Payment Receipt
-            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-          </a>
+          <button type="button" class="admin-payment-receipt-link" data-action="preview-receipt" data-payment-id="${escapeHTML(payment.id)}">
+            <i class="fa-solid fa-eye" aria-hidden="true"></i> Preview Payment Receipt
+          </button>
         `
-      : `
-          <p class="admin-payment-no-receipt">
-            No receipt available.
-          </p>
-        `;
+      : `<p class="admin-payment-no-receipt">No receipt available.</p>`;
 
 
     const customerDetails = `
@@ -1227,6 +1236,29 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       : "";
 
+    const canReviewBankTransfer =
+      payment.payment_method === "bank_transfer" &&
+      ["pending", "processing"].includes(payment.status);
+
+    const reviewActions = canReviewBankTransfer
+      ? `
+        <section class="admin-payment-actions" aria-labelledby="paymentReviewHeading">
+          <h3 id="paymentReviewHeading">Review Bank Transfer</h3>
+          <p>Check the uploaded receipt and transfer details before approving or rejecting this payment. Approval will also confirm the associated order.</p>
+          <label for="paymentReviewReason">Rejection reason (optional)</label>
+          <textarea id="paymentReviewReason" rows="3" maxlength="500" placeholder="Enter a reason if the transfer cannot be verified..."></textarea>
+          <div class="admin-payment-review-buttons">
+            <button type="button" class="admin-payment-review-approve" data-action="review-approve" data-payment-id="${escapeHTML(payment.id)}">
+              <i class="fa-solid fa-check" aria-hidden="true"></i> Approve Payment
+            </button>
+            <button type="button" class="admin-payment-review-reject" data-action="review-reject" data-payment-id="${escapeHTML(payment.id)}">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i> Reject Payment
+            </button>
+          </div>
+        </section>
+      `
+      : "";
+
 
     if (elements.modalContent) {
 
@@ -1250,348 +1282,153 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ${failureDetails}
 
+        ${reviewActions}
+
       `;
 
     }
 
 
-    if (elements.adminActions) {
 
-      if (canReview) {
-
-        elements.adminActions.innerHTML = `
-
-          <div class="admin-payment-review-notice">
-
-            <i class="fas fa-info-circle" aria-hidden="true"></i>
-
-            This is a bank transfer awaiting administrator review.
-
-          </div>
-
-
-          <div class="admin-payment-review-buttons">
-
-            <button
-              type="button"
-              class="admin-payment-approve-button"
-              data-action="approve"
-              data-payment-id="${escapeHTML(payment.id)}"
-            >
-              <i class="fas fa-check" aria-hidden="true"></i>
-              Confirm Payment
-            </button>
-
-
-            <button
-              type="button"
-              class="admin-payment-reject-button"
-              data-action="reject"
-              data-payment-id="${escapeHTML(payment.id)}"
-            >
-              <i class="fas fa-times" aria-hidden="true"></i>
-              Reject Payment
-            </button>
-
-          </div>
-
-        `;
-
-      } else if (isBankTransfer) {
-
-        elements.adminActions.innerHTML = `
-
-          <div class="admin-payment-review-notice">
-
-            <i class="fas fa-lock" aria-hidden="true"></i>
-
-            This bank transfer has already been reviewed.
-            Further manual review is unavailable.
-
-          </div>
-
-        `;
-
-      } else if (payment.payment_method === "paystack") {
-
-        elements.adminActions.innerHTML = `
-
-          <div class="admin-payment-review-notice">
-
-            <i class="fas fa-shield-alt" aria-hidden="true"></i>
-
-            Paystack transactions cannot be manually approved
-            or rejected from this page.
-
-          </div>
-
-        `;
-
-      }
-
-    }
 
   }
 
 
-  /* =====================================================
-     19. BANK TRANSFER REVIEW
-  ====================================================== */
-
+  /* BANK TRANSFER REVIEW */
   async function reviewBankTransfer(paymentId, approve) {
-
-    if (isReviewingPayment) {
-      return;
-    }
+    if (isReviewingPayment) return;
 
     const payment = allPayments.find(item => item.id === paymentId);
-
     if (!payment) {
-      showActionMessage("Payment record not found.", "error");
+      showToast("Payment record could not be found. Please refresh and try again.");
       return;
     }
 
-    if (payment.payment_method !== "bank_transfer") {
-
-      showActionMessage(
-        "Only bank transfers can be reviewed manually.",
-        "error"
-      );
-
+    if (
+      payment.payment_method !== "bank_transfer" ||
+      !["pending", "processing"].includes(payment.status)
+    ) {
+      showToast("This payment is no longer available for review.");
+      await loadPayments();
       return;
-
     }
 
-    if (!["pending", "processing"].includes(payment.status)) {
+    const reasonField = elements.modalContent?.querySelector("#paymentReviewReason");
+    const reason = reasonField?.value.trim() || "";
 
-      showActionMessage(
-        "This payment has already been reviewed.",
-        "error"
-      );
+    const confirmationMessage = approve
+      ? "Approve this bank transfer? The payment will be marked successful and its order will be marked Payment Confirmed."
+      : "Reject this bank transfer? The payment will be marked Failed. The order will remain Awaiting Payment.";
 
-      return;
-
-    }
-
-
-    let reason = null;
-
-    if (approve) {
-
-      const confirmed = window.confirm(
-        "Are you sure you have confirmed receipt of this bank transfer?"
-      );
-
-      if (!confirmed) {
-        return;
-      }
-
-    } else {
-
-      reason = window.prompt(
-        "Enter the reason for rejecting this bank transfer:"
-      );
-
-      if (reason === null) {
-        return;
-      }
-
-      reason = reason.trim();
-
-      if (!reason) {
-
-        showActionMessage(
-          "Please provide a reason before rejecting this payment.",
-          "error"
-        );
-
-        return;
-
-      }
-
-      const confirmed = window.confirm(
-        "Are you sure you want to reject this bank transfer?"
-      );
-
-      if (!confirmed) {
-        return;
-      }
-
-    }
-
+    if (!window.confirm(confirmationMessage)) return;
 
     isReviewingPayment = true;
-
-    const buttons = elements.adminActions?.querySelectorAll("button") || [];
-
-    buttons.forEach(button => {
+    const actionButtons = elements.modalContent.querySelectorAll(
+      '[data-action="review-approve"], [data-action="review-reject"]'
+    );
+    actionButtons.forEach(button => {
       button.disabled = true;
+      button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Processing...';
     });
 
-    showActionMessage(
-      approve
-        ? "Confirming bank transfer..."
-        : "Rejecting bank transfer...",
-      "info"
-    );
-
-
     try {
+      const { data, error } = await supabase.rpc("admin_review_bank_transfer", {
+        p_payment_id: paymentId,
+        p_approve: approve,
+        p_reason: reason || null
+      });
 
-      /*
-        IMPORTANT:
-
-        This calls the existing protected Supabase RPC.
-
-        It does not directly update the payments table.
-
-        The database function checks administrator access,
-        payment method, current status and order status.
-      */
-
-      const { data, error } = await supabase.rpc(
-        "admin_review_bank_transfer",
-        {
-          p_payment_id: paymentId,
-          p_approve: approve,
-          p_reason: reason
-        }
-      );
-
-
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       if (!data || data.success !== true) {
-
-        throw new Error(
-          "The database did not confirm the payment review."
-        );
-
+        throw new Error(data?.message || "The payment review could not be completed.");
       }
-
-
-      showActionMessage(
-        approve
-          ? "Bank transfer successfully confirmed."
-          : "Bank transfer successfully rejected.",
-        "success"
-      );
-
 
       showToast(
         approve
-          ? "Bank transfer confirmed successfully."
-          : "Bank transfer rejected successfully."
+          ? "Payment approved and the associated order confirmed."
+          : "Payment rejected. The order remains awaiting payment."
       );
 
-
-      /*
-        Reload payment records so that the table,
-        statistics and modal reflect the database.
-      */
-
-      await fetchPayments();
-
-      updateStatistics();
-
-      filterPayments();
-
-
-      /*
-        Refresh the modal with the latest payment record.
-      */
-
-      if (selectedPaymentId === paymentId) {
-
-        await openPaymentDetails(paymentId);
-
-        showActionMessage(
-          approve
-            ? "Bank transfer successfully confirmed."
-            : "Bank transfer successfully rejected.",
-          "success"
-        );
-
-      }
+      closePaymentModal();
+      await loadPayments();
 
     } catch (error) {
-
-      console.error("Bank transfer review error:", error);
-
-      showActionMessage(
-        error?.message || "Unable to process this payment review.",
-        "error"
-      );
-
-      showToast("Payment review failed.");
-
-    } finally {
-
-      isReviewingPayment = false;
-
-      const currentButtons =
-        elements.adminActions?.querySelectorAll("button") || [];
-
-      currentButtons.forEach(button => {
+      console.error("Payment review error:", error);
+      showToast(error?.message || "Unable to review this payment. Please try again.");
+      actionButtons.forEach((button, index) => {
         button.disabled = false;
+        if (index === 0) {
+          button.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Approve Payment';
+        } else {
+          button.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i> Reject Payment';
+        }
       });
-
+    } finally {
+      isReviewingPayment = false;
     }
-
   }
 
+  /* RECEIPT PREVIEW */
+  async function openReceiptPreview(paymentId) {
+    const payment = allPayments.find(item => item.id === paymentId);
+    if (!payment || !payment.receipt_url) { showToast("No payment receipt is available."); return; }
+    const previewRequest = ++receiptPreviewRequestVersion;
+    elements.receiptOverlay.hidden = false;
+    document.body.classList.add("modal-open");
+    elements.receiptPreview.innerHTML = '<div class="admin-payment-receipt-loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading receipt...</div>';
+    const url = await getReceiptUrl(payment.receipt_url);
+    if (previewRequest !== receiptPreviewRequestVersion || elements.receiptOverlay.hidden) return;
+    if (!url) { elements.receiptPreview.innerHTML = '<p class="admin-payment-receipt-error">Unable to load this receipt. Please try again.</p>'; return; }
+    const pdf = new URL(url).pathname.toLowerCase().endsWith(".pdf");
+    elements.receiptPreview.innerHTML = pdf
+      ? '<iframe class="admin-payment-receipt-frame" title="Payment receipt PDF" src="' + escapeHTML(url) + '"></iframe>'
+      : '<img class="admin-payment-receipt-image" alt="Customer payment receipt" src="' + escapeHTML(url) + '">';
+  }
+
+  function closeReceiptPreview() {
+    receiptPreviewRequestVersion++;
+    elements.receiptOverlay.hidden = true;
+    elements.receiptPreview.innerHTML = "";
+    if (elements.modalOverlay.hidden) document.body.classList.remove("modal-open");
+  }
 
   /* =====================================================
      20. EVENT DELEGATION
   ====================================================== */
 
   if (elements.tableBody) {
-
     elements.tableBody.addEventListener("click", event => {
-
-      const button = event.target.closest("[data-action='view']");
-
-      if (!button) return;
-
-      const paymentId = button.dataset.paymentId;
-
-      if (paymentId) {
-        openPaymentDetails(paymentId);
-      }
-
-    });
-
-  }
-
-
-  if (elements.adminActions) {
-
-    elements.adminActions.addEventListener("click", event => {
-
       const button = event.target.closest("[data-action]");
-
+      if (!button || !button.dataset.paymentId) return;
+      if (button.dataset.action === "view") openPaymentDetails(button.dataset.paymentId);
+      if (button.dataset.action === "receipt") openReceiptPreview(button.dataset.paymentId);
+    });
+  }
+  if (elements.modalContent) {
+    elements.modalContent.addEventListener("click", event => {
+      const button = event.target.closest("[data-action]");
       if (!button) return;
 
-      const action = button.dataset.action;
-
-      const paymentId = button.dataset.paymentId;
-
-      if (!paymentId) return;
-
-      if (action === "approve") {
-        reviewBankTransfer(paymentId, true);
+      if (button.dataset.action === "preview-receipt" && button.dataset.paymentId) {
+        openReceiptPreview(button.dataset.paymentId);
+        return;
       }
 
-      if (action === "reject") {
-        reviewBankTransfer(paymentId, false);
+      if (button.dataset.action === "review-approve" && button.dataset.paymentId) {
+        reviewBankTransfer(button.dataset.paymentId, true);
+        return;
       }
 
+      if (button.dataset.action === "review-reject" && button.dataset.paymentId) {
+        reviewBankTransfer(button.dataset.paymentId, false);
+      }
     });
-
   }
-
+  elements.closeReceipt.addEventListener("click", closeReceiptPreview);
+  elements.receiptOverlay.addEventListener("click", event => {
+    if (event.target === elements.receiptOverlay) closeReceiptPreview();
+  });
 
   /* =====================================================
      21. FILTER EVENTS
@@ -1704,14 +1541,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", event => {
 
+    if (event.key === "Escape" && !elements.receiptOverlay.hidden) {
+      closeReceiptPreview();
+      return;
+    }
+
     if (
       event.key === "Escape" &&
       elements.modalOverlay &&
       !elements.modalOverlay.hidden
     ) {
-
       closePaymentModal();
-
     }
 
   });
@@ -1764,12 +1604,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================================
-     26. INITIALIZATION
+     26. LIVE PAYMENT UPDATES
+  ====================================================== */
+
+  function schedulePaymentRefresh() {
+    if (paymentRefreshTimer) clearTimeout(paymentRefreshTimer);
+
+    paymentRefreshTimer = setTimeout(() => {
+      paymentRefreshTimer = null;
+
+      if (document.hidden) return;
+
+      if (isLoading) {
+        schedulePaymentRefresh();
+        return;
+      }
+
+      loadPayments();
+    }, 500);
+  }
+
+  function subscribeToPaymentChanges() {
+    if (!supabase || typeof supabase.channel !== "function") return;
+
+    paymentRealtimeChannel = supabase
+      .channel("admin-payments-live")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "payments" },
+        () => schedulePaymentRefresh()
+      )
+      .subscribe();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) schedulePaymentRefresh();
+  });
+
+  window.addEventListener("pagehide", () => {
+    if (paymentRefreshTimer) clearTimeout(paymentRefreshTimer);
+    if (paymentRealtimeChannel && supabase?.removeChannel) {
+      supabase.removeChannel(paymentRealtimeChannel);
+    }
+  });
+
+  /* =====================================================
+     27. INITIALIZATION
   ====================================================== */
 
   setCurrentDate();
 
   loadPayments();
+  subscribeToPaymentChanges();
 
 
 });

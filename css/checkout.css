@@ -1997,7 +1997,3 @@ html[data-theme="dark"] .checkout-success p + p {
   pointer-events: none !important;
   cursor: pointer;
 }
-
-/* =========================================================
-   END OF CHECKOUT STYLESHEET
-========================================================= */

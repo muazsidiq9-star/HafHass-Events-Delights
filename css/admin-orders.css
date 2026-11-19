@@ -1460,3 +1460,305 @@
   }
 
 }
+
+/* =========================================================
+   ORDER ITEMS CARD — COMPLETE CONTENT LAYOUT
+========================================================= */
+
+.admin-order-item-card {
+  display: block;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-soft);
+}
+
+.admin-order-item-card + .admin-order-item-card {
+  margin-top: 2px;
+}
+
+.admin-order-item-main {
+  display: grid;
+  grid-template-columns: 65px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.admin-order-item-card .admin-order-item-image,
+.admin-order-item-card .admin-order-item-image-placeholder {
+  width: 65px;
+  height: 65px;
+  min-width: 65px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.admin-order-item-card .admin-order-item-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background: var(--surface);
+  font-size: 20px;
+}
+
+.admin-order-item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-order-item-info strong {
+  display: block;
+  color: var(--heading);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.admin-order-item-info span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.admin-order-item-pricing {
+  min-width: 95px;
+  text-align: right;
+  white-space: normal;
+}
+
+.admin-order-item-pricing strong {
+  display: block;
+  color: var(--heading);
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.admin-order-item-pricing span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.admin-order-item-card > .admin-order-text-block {
+  margin-top: 13px;
+}
+
+.admin-order-item-card .admin-order-reference-image {
+  margin-top: 13px;
+}
+
+.admin-order-item-card .admin-order-reference-image a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   PAYMENT RECEIPT VIEWER MODAL
+========================================================= */
+
+.admin-receipt-viewer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(16, 12, 14, 0.78);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.admin-receipt-viewer-overlay[hidden] {
+  display: none !important;
+}
+
+.admin-receipt-viewer {
+  width: min(920px, 100%);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--surface);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+}
+
+.admin-receipt-viewer-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.admin-receipt-viewer-header .admin-eyebrow {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.admin-receipt-viewer-header h2 {
+  margin: 0;
+  color: var(--heading);
+  font-family: var(--heading-font);
+  font-size: 19px;
+}
+
+.admin-receipt-viewer-close {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--heading);
+  cursor: pointer;
+}
+
+.admin-receipt-viewer-media {
+  min-height: 180px;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 16px;
+  background: #211d20;
+}
+
+.admin-receipt-viewer-image {
+  display: block;
+  max-width: 100%;
+  max-height: 68vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.admin-receipt-viewer-frame {
+  display: block;
+  width: 100%;
+  height: min(68vh, 760px);
+  border: 0;
+  background: #fff;
+}
+
+.admin-receipt-viewer-error {
+  max-width: 440px;
+  margin: auto;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.admin-receipt-viewer-footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.admin-receipt-open-original {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .admin-order-item-card {
+    padding: 12px;
+  }
+
+  .admin-order-item-main {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .admin-order-item-card .admin-order-item-image,
+  .admin-order-item-card .admin-order-item-image-placeholder {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+  }
+
+  .admin-order-item-pricing {
+    grid-column: 2;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 7px;
+    text-align: left;
+  }
+
+  .admin-order-item-pricing span {
+    margin-top: 0;
+  }
+
+  .admin-receipt-viewer-overlay {
+    padding: 8px;
+  }
+
+  .admin-receipt-viewer {
+    max-height: 96vh;
+    border-radius: 10px;
+  }
+
+  .admin-receipt-viewer-header {
+    padding: 13px 14px;
+  }
+
+  .admin-receipt-viewer-media {
+    padding: 8px;
+  }
+
+  .admin-receipt-viewer-image {
+    max-height: 76vh;
+  }
+
+  .admin-receipt-viewer-frame {
+    height: 76vh;
+  }
+}
+

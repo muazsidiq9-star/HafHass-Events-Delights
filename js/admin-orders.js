@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const PROFILE_BATCH_SIZE = 100;
 
+  // All statuses remain available for filtering and displaying existing orders.
   const ORDER_STATUSES = [
     "pending",
     "awaiting_payment",
@@ -1386,7 +1387,159 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================================
-     22. RENDER PAYMENT INFORMATION
+     22. PAYMENT RECEIPT VIEWER
+  ====================================================== */
+
+  let receiptViewer = null;
+  let receiptViewerPreviousOverflow = "";
+
+  function closePaymentReceiptViewer() {
+
+    if (!receiptViewer) return;
+
+    receiptViewer.hidden = true;
+
+    const media = receiptViewer.querySelector(
+      ".admin-receipt-viewer-media"
+    );
+
+    if (media) {
+      media.replaceChildren();
+    }
+
+    document.body.style.overflow =
+      receiptViewerPreviousOverflow;
+
+  }
+
+
+  function openPaymentReceiptViewer(receiptUrl) {
+
+    let safeUrl;
+
+    try {
+      safeUrl = new URL(receiptUrl, window.location.href);
+    } catch (error) {
+      console.error("Invalid payment receipt URL:", error);
+      return;
+    }
+
+    if (safeUrl.protocol !== "https:") {
+      console.error("Payment receipt URL must use HTTPS.");
+      return;
+    }
+
+    if (!receiptViewer) {
+
+      receiptViewer = document.createElement("div");
+      receiptViewer.className = "admin-receipt-viewer-overlay";
+      receiptViewer.hidden = true;
+      receiptViewer.innerHTML = `
+        <section
+          class="admin-receipt-viewer"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="adminReceiptViewerTitle"
+        >
+          <header class="admin-receipt-viewer-header">
+            <div>
+              <span class="admin-eyebrow">PAYMENT VERIFICATION</span>
+              <h2 id="adminReceiptViewerTitle">Payment Receipt</h2>
+            </div>
+            <button
+              type="button"
+              class="admin-receipt-viewer-close"
+              aria-label="Close payment receipt"
+            >
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </header>
+          <div class="admin-receipt-viewer-media"></div>
+          <footer class="admin-receipt-viewer-footer">
+            <a
+              class="admin-receipt-open-original"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              Open original file
+            </a>
+          </footer>
+        </section>
+      `;
+
+      receiptViewer.addEventListener("click", event => {
+        if (
+          event.target === receiptViewer ||
+          event.target.closest(".admin-receipt-viewer-close")
+        ) {
+          closePaymentReceiptViewer();
+        }
+      });
+
+      document.body.appendChild(receiptViewer);
+
+    }
+
+    const media = receiptViewer.querySelector(
+      ".admin-receipt-viewer-media"
+    );
+
+    const originalLink = receiptViewer.querySelector(
+      ".admin-receipt-open-original"
+    );
+
+    media.replaceChildren();
+
+    const extension = safeUrl.pathname
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+    if (extension === "pdf") {
+
+      const frame = document.createElement("iframe");
+      frame.className = "admin-receipt-viewer-frame";
+      frame.src = safeUrl.href;
+      frame.title = "Payment receipt PDF";
+      frame.loading = "eager";
+      media.appendChild(frame);
+
+    } else {
+
+      const image = document.createElement("img");
+      image.className = "admin-receipt-viewer-image";
+      image.src = safeUrl.href;
+      image.alt = "Customer payment receipt";
+      image.addEventListener("error", () => {
+        media.innerHTML = `
+          <p class="admin-receipt-viewer-error">
+            This receipt could not be displayed here.
+            You can use the button below to open the original file.
+          </p>
+        `;
+      }, { once: true });
+      media.appendChild(image);
+
+    }
+
+    originalLink.href = safeUrl.href;
+
+    receiptViewerPreviousOverflow = document.body.style.overflow;
+    receiptViewer.hidden = false;
+    document.body.style.overflow = "hidden";
+
+    const closeButton = receiptViewer.querySelector(
+      ".admin-receipt-viewer-close"
+    );
+
+    closeButton.focus();
+
+  }
+
+
+  /* =====================================================
+     23. RENDER PAYMENT INFORMATION
   ====================================================== */
 
   async function renderPaymentInformation(order) {
@@ -1485,15 +1638,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             ${receiptUrl
               ? `
-                <a
-                  href="${escapeHTML(receiptUrl)}"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
                   class="admin-order-receipt-link"
+                  data-payment-receipt="${escapeHTML(receiptUrl)}"
                 >
                   <i class="fa-solid fa-file-image" aria-hidden="true"></i>
                   View Payment Receipt
-                </a>
+                </button>
               `
               : payment.receipt_url
                 ? `
@@ -2046,6 +2198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newStatus = elements.updateStatus.value;
 
     if (!ORDER_STATUSES.includes(newStatus)) {
+      setStatusMessage("Please select a valid order status.", "error");
       return;
     }
 
@@ -2300,6 +2453,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* PAYMENT RECEIPT VIEWER */
+
+  if (elements.modalContent) {
+
+    elements.modalContent.addEventListener("click", event => {
+
+      const receiptButton = event.target.closest(
+        "[data-payment-receipt]"
+      );
+
+      if (!receiptButton) return;
+
+      event.preventDefault();
+
+      openPaymentReceiptViewer(
+        receiptButton.dataset.paymentReceipt
+      );
+
+    });
+
+  }
+
+
   /* MODAL */
 
   if (elements.closeModal) {
@@ -2327,14 +2503,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", event => {
 
+    if (event.key !== "Escape") {
+      return;
+    }
+
+    if (receiptViewer && !receiptViewer.hidden) {
+      closePaymentReceiptViewer();
+      return;
+    }
+
     if (
-      event.key === "Escape" &&
       elements.modalOverlay &&
       !elements.modalOverlay.hidden
     ) {
-
       closeOrderModal();
-
     }
 
   });
@@ -2352,12 +2534,70 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+
   /* =====================================================
-     31. INITIALIZE
+     31. LIVE PAYMENT STATUS UPDATES
+  ====================================================== */
+
+  let orderPaymentRefreshTimer = null;
+  let orderPaymentRealtimeChannel = null;
+  let orderPaymentRefreshInProgress = false;
+
+  async function refreshOrderPaymentStatuses() {
+    if (orderPaymentRefreshInProgress) {
+      scheduleOrderPaymentRefresh();
+      return;
+    }
+
+    orderPaymentRefreshInProgress = true;
+    try {
+      await loadOrderPayments();
+      applyFilters();
+    } catch (error) {
+      console.error("Live order payment refresh failed:", error);
+    } finally {
+      orderPaymentRefreshInProgress = false;
+    }
+  }
+
+  function scheduleOrderPaymentRefresh() {
+    if (orderPaymentRefreshTimer) clearTimeout(orderPaymentRefreshTimer);
+    orderPaymentRefreshTimer = setTimeout(() => {
+      orderPaymentRefreshTimer = null;
+      if (!document.hidden) refreshOrderPaymentStatuses();
+    }, 350);
+  }
+
+  function subscribeToOrderPaymentChanges() {
+    if (!supabase || typeof supabase.channel !== "function") return;
+    orderPaymentRealtimeChannel = supabase
+      .channel("admin-orders-payment-live")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "payments" },
+        () => scheduleOrderPaymentRefresh()
+      )
+      .subscribe();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) scheduleOrderPaymentRefresh();
+  });
+
+  window.addEventListener("pagehide", () => {
+    if (orderPaymentRefreshTimer) clearTimeout(orderPaymentRefreshTimer);
+    if (orderPaymentRealtimeChannel && supabase?.removeChannel) {
+      supabase.removeChannel(orderPaymentRealtimeChannel);
+    }
+  });
+
+  /* =====================================================
+     32. INITIALIZE
   ====================================================== */
 
   renderDate();
 
   loadOrders();
+  subscribeToOrderPaymentChanges();
 
 });
