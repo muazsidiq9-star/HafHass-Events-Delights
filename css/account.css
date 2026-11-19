@@ -131,8 +131,46 @@ body.account-page {
   
 .account-brand {  
   display: flex;  
-  flex-direction: column;  
+  flex-direction: row;  
+  align-items: center;
+  gap: 11px;
   line-height: 1.2;  
+}
+
+.account-brand-logo {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--account-border);
+  border-radius: 10px;
+  background: var(--account-surface-soft);
+  color: var(--account-primary);
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.account-brand-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.account-brand-logo img[hidden],
+.account-brand-logo [data-store-logo-fallback][hidden] {
+  display: none !important;
+}
+
+.account-brand-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
 }  
   
 .account-brand-name {  
