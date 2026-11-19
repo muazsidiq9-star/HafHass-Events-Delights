@@ -4009,6 +4009,10 @@
 
     els.modal.hidden = true;
 
+    if (locationPicker.previousFocus) {
+      locationPicker.previousFocus.setAttribute("aria-expanded", "false");
+    }
+
     document.body.classList.remove(
       "customer-location-picker-open"
     );
@@ -4138,25 +4142,14 @@
     }
 
     select.setAttribute("aria-haspopup", "dialog");
+    select.setAttribute("aria-expanded", "false");
 
-    select.addEventListener("pointerdown", event => {
-
-      if (select.disabled) {
-        return;
-      }
-
-      if (event.pointerType === "mouse" && event.button !== 0) {
-        return;
-      }
-
-      event.preventDefault();
-
-      openLocationPicker(config);
-
-    });
-
-    // Fallback for assistive technology that only sends "click".
-
+    /*
+     * Use click as the single pointer activation event.
+     * Opening on pointerdown causes touch-scroll gestures on
+     * Android to be mistaken for taps, making the picker flash
+     * open and then disappear.
+     */
     select.addEventListener("click", event => {
 
       if (select.disabled) {
@@ -4164,9 +4157,14 @@
       }
 
       event.preventDefault();
+      event.stopPropagation();
 
-      if (!locationPicker.config) {
+      if (
+        !locationPicker.config ||
+        locationPicker.config.select !== select
+      ) {
         openLocationPicker(config);
+        select.setAttribute("aria-expanded", "true");
       }
 
     });
@@ -4186,13 +4184,13 @@
         event.preventDefault();
 
         openLocationPicker(config);
+        select.setAttribute("aria-expanded", "true");
 
       }
 
     });
 
   }
-
 
   function initializeLocationPickers() {
 
