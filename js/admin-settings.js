@@ -581,6 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["services_hero_image_url", "Services Hero", "Hero image at the top of the Services page."],
     ["gallery_hero_image_url", "Gallery Hero", "Hero image at the top of the Gallery page."],
     ["founder_hero_image_url", "Founder Hero", "Hero image at the top of the Founder page."],
+    ["custom_orders_hero_image_url", "Custom Orders Hero", "Optional photographic background for the Custom Orders page."],
     ["about_section_image_url", "Homepage About Image", "Image beside the homepage brand story."],
     ["home_founder_image_url", "Homepage Founder Image", "Image in the homepage Meet the Founder section."],
     ["founder_portrait_image_url", "Founder Portrait", "Main portrait on the Founder page."],
@@ -682,6 +683,47 @@ document.addEventListener("DOMContentLoaded", () => {
       container.appendChild(card);
 
     });
+
+  }
+
+
+  async function uploadBrandLogo() {
+
+    const fileInput = getElement("businessLogoFile");
+    const file = fileInput?.files?.[0];
+    if (!file) return;
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 10 * 1024 * 1024) {
+      setMessage("businessBrandingMessage", "Choose a JPG, PNG or WebP logo no larger than 10 MB.", "error");
+      fileInput.value = "";
+      return;
+    }
+
+    const extension = file.type === "image/jpeg" ? "jpg" : file.type.split("/")[1];
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-").slice(0, 70);
+    const path = `store/logo_url/${Date.now()}-${safeName || "logo." + extension}`;
+
+    try {
+      const { error } = await supabase.storage.from("store-assets").upload(path, file, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: file.type
+      });
+      if (error) throw error;
+
+      const { data } = supabase.storage.from("store-assets").getPublicUrl(path);
+      if (!data?.publicUrl) throw new Error("The uploaded logo URL could not be created.");
+
+      setValue("businessLogoUrl", data.publicUrl);
+      updateLogoPreview();
+      setMessage("businessBrandingMessage", "Logo uploaded. Remember to save Branding to publish it.", "success");
+
+    } catch (error) {
+      console.error("Logo upload failed:", error);
+      setMessage("businessBrandingMessage", "Logo upload failed: " + getErrorMessage(error), "error");
+    } finally {
+      fileInput.value = "";
+    }
 
   }
 
@@ -2038,6 +2080,12 @@ document.addEventListener("DOMContentLoaded", () => {
       "businessBrandingForm",
       saveBranding
     );
+
+    getElement("businessLogoUploadButton")?.addEventListener("click", () => {
+      getElement("businessLogoFile")?.click();
+    });
+
+    getElement("businessLogoFile")?.addEventListener("change", uploadBrandLogo);
 
 
     /* General preferences */
