@@ -363,6 +363,10 @@ html[data-theme="dark"] .button-outline:hover {
   flex-shrink: 0;
 }
 
+.brand-mark[hidden] {
+  display: none !important;
+}
+
 .brand-mark {
   width: 43px;
   height: 43px;
