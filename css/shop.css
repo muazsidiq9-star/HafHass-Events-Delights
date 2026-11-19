@@ -53,7 +53,7 @@
   min-height: 520px;
 
   background:
-    url("https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2000&q=90")
+    var(--store-background-image, url("https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2000&q=90"))
     center 55% / cover no-repeat;
 }
 
