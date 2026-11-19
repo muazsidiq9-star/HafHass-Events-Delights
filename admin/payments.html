@@ -760,6 +760,8 @@
 
               <tr>
 
+                <th>Receipt</th>
+
                 <th>Transaction</th>
 
                 <th>Order</th>
@@ -926,26 +928,6 @@
 
 
 
-      <!-- PAYMENT VERIFICATION / ADMIN ACTIONS -->
-
-      <div
-        class="admin-payment-actions"
-        id="paymentAdminActions"
-        hidden
-      >
-
-        <!-- VERIFICATION CONTROLS WILL BE RENDERED HERE -->
-
-      </div>
-
-
-      <!-- ACTION MESSAGE -->
-
-      <p
-        id="paymentActionMessage"
-        class="admin-payment-action-message"
-        aria-live="polite"
-      ></p>
 
 
     </div>
@@ -954,6 +936,15 @@
 
 
 
+  <div class="admin-payment-receipt-overlay" id="paymentReceiptOverlay" hidden>
+    <section class="admin-payment-receipt-modal" role="dialog" aria-modal="true" aria-labelledby="paymentReceiptTitle">
+      <header class="admin-payment-receipt-header">
+        <div><span class="admin-eyebrow">PAYMENT DOCUMENT</span><h2 id="paymentReceiptTitle">Payment Receipt</h2></div>
+        <button type="button" id="closePaymentReceipt" class="admin-payment-modal-close" aria-label="Close receipt preview"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      </header>
+      <div class="admin-payment-receipt-preview" id="paymentReceiptPreview"></div>
+    </section>
+  </div>
   <!-- =====================================================
        ADMIN FOOTER
   ====================================================== -->
