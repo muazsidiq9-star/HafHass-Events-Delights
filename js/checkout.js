@@ -1378,65 +1378,80 @@
 
   async function loadDeliveryDirectory() {
 
+    /*
+     * PostgREST/Supabase can cap one response at 1,000 rows.
+     * The delivery directory contains more than 1,000 location
+     * nodes, so requesting range(0, 4999) once does NOT guarantee
+     * that all rows are returned. Missing later nodes also break
+     * their parent chains, which makes valid approved zones appear
+     * unavailable and matching saved addresses look custom.
+     * Fetch the directory in stable 1,000-row pages instead.
+     */
+    async function fetchAllActiveRows(tableName) {
+
+      const PAGE_SIZE = 1000;
+      const rows = [];
+      let start = 0;
+
+      while (true) {
+
+        const end = start + PAGE_SIZE - 1;
+
+        const { data, error } = await supabase
+          .from(tableName)
+          .select("*")
+          .eq("is_active", true)
+          .order("sort_order", { ascending: true })
+          .order("name", { ascending: true })
+          .order("id", { ascending: true })
+          .range(start, end);
+
+        if (error) throw error;
+
+        const batch = data || [];
+        rows.push(...batch);
+
+        if (batch.length < PAGE_SIZE) {
+          break;
+        }
+
+        start += PAGE_SIZE;
+
+      }
+
+      return rows;
+
+    }
+
     const [
-      statesResult,
-      lgasResult,
-      citiesResult,
-      areasResult,
-      nodesResult
+      states,
+      lgas,
+      cities,
+      areas,
+      nodes
     ] = await Promise.all([
 
-      supabase
-        .from("delivery_states")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order")
-        .order("name"),
-
-      supabase
-        .from("delivery_lgas")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order")
-        .order("name"),
-
-      supabase
-        .from("delivery_cities")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order")
-        .order("name")
-        .range(0, 4999),
-
-      supabase
-        .from("delivery_areas")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order")
-        .order("name")
-        .range(0, 4999),
-
-      supabase
-        .from("delivery_location_nodes")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order")
-        .order("name")
-        .range(0, 4999)
+      fetchAllActiveRows("delivery_states"),
+      fetchAllActiveRows("delivery_lgas"),
+      fetchAllActiveRows("delivery_cities"),
+      fetchAllActiveRows("delivery_areas"),
+      fetchAllActiveRows("delivery_location_nodes")
 
     ]);
 
-    if (statesResult.error) throw statesResult.error;
-    if (lgasResult.error) throw lgasResult.error;
-    if (citiesResult.error) throw citiesResult.error;
-    if (areasResult.error) throw areasResult.error;
-    if (nodesResult.error) throw nodesResult.error;
+    deliveryStates = states;
+    deliveryLgas = lgas;
+    deliveryCities = cities;
+    deliveryAreas = areas;
+    deliveryLocationNodes = nodes;
 
-    deliveryStates = statesResult.data || [];
-    deliveryLgas = lgasResult.data || [];
-    deliveryCities = citiesResult.data || [];
-    deliveryAreas = areasResult.data || [];
-    deliveryLocationNodes = nodesResult.data || [];
+    console.info("[CHECKOUT] Delivery directory loaded:", {
+      states: deliveryStates.length,
+      lgas: deliveryLgas.length,
+      settlements: deliveryCities.length,
+      areas: deliveryAreas.length,
+      specificLocations: deliveryLocationNodes.length
+    });
 
     populateStateOptions();
 
@@ -2078,9 +2093,32 @@
      20. BUILD DELIVERY DATA
   ======================================================= */
 
+  function getCurrentSavedAddressSelection() {
+
+    const selectedId = String(
+      elements.savedAddressSelect?.value || ""
+    ).trim();
+
+    if (!selectedId) {
+      selectedSavedAddress = null;
+      return null;
+    }
+
+    const address = savedAddresses.find(
+      item => String(item.id) === selectedId
+    ) || null;
+
+    // Keep controller state synchronized with the actual select value.
+    selectedSavedAddress = address;
+
+    return address;
+
+  }
+
+
   function buildSavedDeliveryAddress() {
 
-    const address = selectedSavedAddress;
+    const address = getCurrentSavedAddressSelection();
 
     if (!address) return null;
 
@@ -2403,6 +2441,38 @@
 
   function validateLocationBeforeFeeCheck(address) {
 
+    const source = getSelectedDeliverySource();
+
+    // Validate the selected source first. In particular, resolve the
+    // saved-address select value directly instead of trusting possibly
+    // stale controller state from an earlier selection.
+    if (source === "saved" && !getCurrentSavedAddressSelection()) {
+
+      return {
+        valid: false,
+        message: "Please select one of your saved addresses."
+      };
+
+    }
+
+    if (source === "system" && !selectedApprovedLocation) {
+
+      return {
+        valid: false,
+        message: "Please select an approved HAFHASS delivery location."
+      };
+
+    }
+
+    if (source === "new" && !address) {
+
+      return {
+        valid: false,
+        message: "Please provide your delivery location."
+      };
+
+    }
+
     if (!address) {
 
       return {
@@ -2412,49 +2482,16 @@
 
     }
 
-    if (!address.state || !address.city) {
+    // State and settlement are required by the order record, but
+    // Address Line 1 is deliberately optional for every source.
+    if (!String(address.state || "").trim() ||
+        !String(address.city || "").trim()) {
 
       return {
         valid: false,
-        message:
-          "Please provide your state and settlement."
-      };
-
-    }
-
-    if (
-      getSelectedDeliverySource() === "saved" &&
-      !selectedSavedAddress
-    ) {
-
-      return {
-        valid: false,
-        message: "Please select one of your saved addresses."
-      };
-
-    }
-
-    if (
-      getSelectedDeliverySource() === "system" &&
-      !selectedApprovedLocation
-    ) {
-
-      return {
-        valid: false,
-        message: "Please select an approved HAFHASS delivery location."
-      };
-
-    }
-
-    if (
-      getSelectedDeliverySource() === "new" &&
-      (!address.state || !address.city)
-    ) {
-
-      return {
-        valid: false,
-        message:
-          "Please select or enter your state and settlement."
+        message: source === "new"
+          ? "Please select or enter your state and settlement."
+          : "The selected address is missing its state or settlement. Please update it in My Addresses and try again."
       };
 
     }
@@ -2464,7 +2501,6 @@
     };
 
   }
-
 
   async function checkDeliveryFee() {
 
