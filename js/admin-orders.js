@@ -2534,12 +2534,70 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+
   /* =====================================================
-     31. INITIALIZE
+     31. LIVE PAYMENT STATUS UPDATES
+  ====================================================== */
+
+  let orderPaymentRefreshTimer = null;
+  let orderPaymentRealtimeChannel = null;
+  let orderPaymentRefreshInProgress = false;
+
+  async function refreshOrderPaymentStatuses() {
+    if (orderPaymentRefreshInProgress) {
+      scheduleOrderPaymentRefresh();
+      return;
+    }
+
+    orderPaymentRefreshInProgress = true;
+    try {
+      await loadOrderPayments();
+      applyFilters();
+    } catch (error) {
+      console.error("Live order payment refresh failed:", error);
+    } finally {
+      orderPaymentRefreshInProgress = false;
+    }
+  }
+
+  function scheduleOrderPaymentRefresh() {
+    if (orderPaymentRefreshTimer) clearTimeout(orderPaymentRefreshTimer);
+    orderPaymentRefreshTimer = setTimeout(() => {
+      orderPaymentRefreshTimer = null;
+      if (!document.hidden) refreshOrderPaymentStatuses();
+    }, 350);
+  }
+
+  function subscribeToOrderPaymentChanges() {
+    if (!supabase || typeof supabase.channel !== "function") return;
+    orderPaymentRealtimeChannel = supabase
+      .channel("admin-orders-payment-live")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "payments" },
+        () => scheduleOrderPaymentRefresh()
+      )
+      .subscribe();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) scheduleOrderPaymentRefresh();
+  });
+
+  window.addEventListener("pagehide", () => {
+    if (orderPaymentRefreshTimer) clearTimeout(orderPaymentRefreshTimer);
+    if (orderPaymentRealtimeChannel && supabase?.removeChannel) {
+      supabase.removeChannel(orderPaymentRealtimeChannel);
+    }
+  });
+
+  /* =====================================================
+     32. INITIALIZE
   ====================================================== */
 
   renderDate();
 
   loadOrders();
+  subscribeToOrderPaymentChanges();
 
 });
