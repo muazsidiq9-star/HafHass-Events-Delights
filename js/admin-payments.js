@@ -704,10 +704,14 @@ document.addEventListener("DOMContentLoaded", () => {
         transferReference.includes(searchTerm);
 
       const matchesStatus =
-        !status || payment.status === status;
+        !status ||
+        status === "all" ||
+        payment.status === status;
 
       const matchesMethod =
-        !method || payment.payment_method === method;
+        !method ||
+        method === "all" ||
+        payment.payment_method === method;
 
       return matchesSearch && matchesStatus && matchesMethod;
 
