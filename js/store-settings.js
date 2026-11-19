@@ -400,44 +400,54 @@
 
       if (element.tagName === "IMG") {
 
-        if (!imageUrl) {
-
-          element.removeAttribute("src");
-          setLogoFallback(element, true);
-
-          return;
-
+        // Preserve the original page image as the fallback for all
+        // configurable content images.
+        if (!element.dataset.storeFallbackSrc) {
+          element.dataset.storeFallbackSrc =
+            element.getAttribute("src") || "";
         }
 
-        // Keep the fallback visible until the requested image has
-        // actually loaded. This prevents a blank logo area or a
-        // lingering fallback when the image is cached.
+        const fallbackSrc = element.dataset.storeFallbackSrc;
+
+        if (key !== "logo_url") {
+
+          if (!imageUrl) {
+            if (fallbackSrc && element.getAttribute("src") !== fallbackSrc) {
+              element.src = fallbackSrc;
+            }
+            return;
+          }
+
+          element.onerror = () => {
+            if (fallbackSrc) {
+              element.onerror = null;
+              element.src = fallbackSrc;
+            }
+          };
+
+          element.src = imageUrl;
+          return;
+        }
+
+        if (!imageUrl) {
+          element.removeAttribute("src");
+          setLogoFallback(element, true);
+          return;
+        }
+
+        // Keep the H fallback visible until the logo has loaded.
         element.hidden = true;
 
         const fallback = getLogoFallback(element);
+        if (fallback) fallback.hidden = false;
 
-        if (fallback) {
-          fallback.hidden = false;
-        }
-
-        element.onload = () => {
-          setLogoFallback(element, false);
-        };
-
-        element.onerror = () => {
-          setLogoFallback(element, true);
-        };
+        element.onload = () => setLogoFallback(element, false);
+        element.onerror = () => setLogoFallback(element, true);
 
         if (element.src !== imageUrl) {
           element.src = imageUrl;
         } else if (element.complete) {
-
-          if (element.naturalWidth > 0) {
-            setLogoFallback(element, false);
-          } else {
-            setLogoFallback(element, true);
-          }
-
+          setLogoFallback(element, element.naturalWidth <= 0);
         }
 
       } else if (
@@ -458,6 +468,31 @@
 
         element.style.backgroundImage = "";
 
+      }
+
+    });
+
+  }
+
+
+  function applyBackgroundImageSettings(settings) {
+
+    document.querySelectorAll("[data-store-background]").forEach(element => {
+
+      const key = element.dataset.storeBackground;
+      if (!key || !(key in settings)) return;
+
+      const imageUrl = normalizeUrl(settings[key]);
+
+      if (imageUrl) {
+        element.style.setProperty(
+          "--store-background-image",
+          `url("${imageUrl.replace(/"/g, "%22")}")`
+        );
+        element.dataset.storeBackgroundActive = "true";
+      } else {
+        element.style.removeProperty("--store-background-image");
+        delete element.dataset.storeBackgroundActive;
       }
 
     });
@@ -755,6 +790,8 @@ function applyBrandColours(settings) {
   applyTextSettings(settings);
 
   applyImageSettings(settings);
+
+  applyBackgroundImageSettings(settings);
 
   applyFavicon(settings);
 
