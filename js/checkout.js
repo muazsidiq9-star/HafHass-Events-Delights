@@ -321,6 +321,8 @@
 
   let uploadedReceiptPath = null;
   let receiptUploadInProgress = false;
+  let receiptPreviewObjectUrl = null;
+  let receiptPreviewElements = null;
 
 
   /* =======================================================
@@ -3053,6 +3055,117 @@
   }
 
 
+  function initializeReceiptPreview() {
+
+    const input = elements.receiptFile;
+
+    if (!input || receiptPreviewElements) {
+      return;
+    }
+
+    const preview = document.createElement("div");
+    preview.className = "checkout-receipt-preview";
+    preview.id = "checkoutReceiptPreview";
+    preview.hidden = true;
+
+    const image = document.createElement("img");
+    image.className = "checkout-receipt-preview-image";
+    image.alt = "Selected payment receipt preview";
+    image.hidden = true;
+
+    const fileDetails = document.createElement("div");
+    fileDetails.className = "checkout-receipt-preview-file";
+    fileDetails.hidden = true;
+
+    const fileIcon = document.createElement("i");
+    fileIcon.className = "fa-solid fa-file-pdf";
+    fileIcon.setAttribute("aria-hidden", "true");
+
+    const fileText = document.createElement("div");
+
+    const fileName = document.createElement("strong");
+    fileName.className = "checkout-receipt-preview-name";
+
+    const fileNote = document.createElement("small");
+    fileNote.className = "checkout-receipt-preview-note";
+
+    fileText.append(fileName, fileNote);
+    fileDetails.append(fileIcon, fileText);
+    preview.append(image, fileDetails);
+
+    input.insertAdjacentElement("afterend", preview);
+
+    receiptPreviewElements = {
+      preview,
+      image,
+      fileDetails,
+      fileName,
+      fileNote
+    };
+
+  }
+
+
+  function clearReceiptPreview() {
+
+    if (receiptPreviewObjectUrl) {
+      URL.revokeObjectURL(receiptPreviewObjectUrl);
+      receiptPreviewObjectUrl = null;
+    }
+
+    if (!receiptPreviewElements) {
+      return;
+    }
+
+    receiptPreviewElements.preview.hidden = true;
+    receiptPreviewElements.image.hidden = true;
+    receiptPreviewElements.image.removeAttribute("src");
+    receiptPreviewElements.fileDetails.hidden = true;
+    receiptPreviewElements.fileName.textContent = "";
+    receiptPreviewElements.fileNote.textContent = "";
+
+  }
+
+
+  function renderReceiptPreview(file) {
+
+    initializeReceiptPreview();
+
+    if (!file || !receiptPreviewElements) {
+      clearReceiptPreview();
+      return;
+    }
+
+    clearReceiptPreview();
+
+    const {
+      preview,
+      image,
+      fileDetails,
+      fileName,
+      fileNote
+    } = receiptPreviewElements;
+
+    preview.hidden = false;
+    fileName.textContent = file.name;
+
+    if (file.type && file.type.startsWith("image/")) {
+
+      receiptPreviewObjectUrl = URL.createObjectURL(file);
+      image.src = receiptPreviewObjectUrl;
+      image.hidden = false;
+      fileNote.textContent = "Check that this is the correct payment receipt.";
+
+    } else {
+
+      fileDetails.hidden = false;
+      fileNote.textContent = "PDF selected. Image preview is not available for PDF files.";
+
+    }
+
+  }
+
+
   /* =======================================================
      27. RECEIPT UPLOAD
   ======================================================= */
@@ -3115,6 +3228,8 @@
 
     if (!file) {
 
+      clearReceiptPreview();
+
       setReceiptStatus(
         "No receipt uploaded yet.",
         "info"
@@ -3129,6 +3244,7 @@
     if (!validation.valid) {
 
       elements.receiptFile.value = "";
+      clearReceiptPreview();
 
       setReceiptStatus(
         validation.message,
@@ -3138,6 +3254,10 @@
       return;
 
     }
+
+    // Show the selected image immediately so the customer can
+    // confirm it is the correct receipt before placing the order.
+    renderReceiptPreview(file);
 
     receiptUploadInProgress = true;
 
@@ -3181,7 +3301,6 @@
     }
 
   }
-
 
   /* =======================================================
      28. CHECKOUT VALIDATION
@@ -3565,6 +3684,8 @@
 
   function initializeEventListeners() {
 
+    initializeReceiptPreview();
+
     // FULFILMENT
 
     elements.pickup.addEventListener(
@@ -3749,6 +3870,29 @@
   };
 
 
+  function updateLocationPickerViewport() {
+
+    if (!locationPicker.els || locationPicker.els.modal.hidden) {
+      return;
+    }
+
+    const viewport = window.visualViewport;
+    const height = viewport ? viewport.height : window.innerHeight;
+    const offsetTop = viewport ? viewport.offsetTop : 0;
+
+    document.documentElement.style.setProperty(
+      "--customer-picker-viewport-height",
+      `${Math.max(240, height)}px`
+    );
+
+    document.documentElement.style.setProperty(
+      "--customer-picker-viewport-top",
+      `${Math.max(0, offsetTop)}px`
+    );
+
+  }
+
+
   function normalizePickerText(value) {
 
     return String(value || "")
@@ -3865,17 +4009,10 @@
       "customer-location-picker-open"
     );
 
-    requestAnimationFrame(() => {
-
-      els.search.focus();
-
-      const selected = els.results.querySelector(".selected");
-
-      if (selected) {
-        selected.scrollIntoView({ block: "nearest" });
-      }
-
-    });
+    // Do not focus the search input automatically. On Android this
+    // opens the keyboard as soon as the modal appears and can shift
+    // the viewport before the customer is ready to type.
+    requestAnimationFrame(updateLocationPickerViewport);
 
   }
 
@@ -4036,14 +4173,6 @@
 
     });
 
-    select.addEventListener("mousedown", event => {
-
-      if (!select.disabled) {
-        event.preventDefault();
-      }
-
-    });
-
     // Fallback for assistive technology that only sends "click".
 
     select.addEventListener("click", event => {
@@ -4131,6 +4260,26 @@
     }
 
     locationPicker.els = els;
+
+    // Keep the modal within the visible portion of the screen when
+    // Android's keyboard opens after the customer taps the search box.
+    updateLocationPickerViewport();
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener(
+        "resize",
+        updateLocationPickerViewport
+      );
+      window.visualViewport.addEventListener(
+        "scroll",
+        updateLocationPickerViewport
+      );
+    }
+
+    window.addEventListener(
+      "resize",
+      updateLocationPickerViewport
+    );
 
 
     // ONE CONFIGURATION PER SEARCHABLE DROPDOWN
