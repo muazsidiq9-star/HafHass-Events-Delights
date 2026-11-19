@@ -42,17 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "cancelled"
   ];
 
-  // Payment confirmation is controlled exclusively from the Payments page.
-  const EDITABLE_ORDER_STATUSES = [
-    "pending",
-    "awaiting_payment",
-    "processing",
-    "ready_for_pickup",
-    "out_for_delivery",
-    "completed",
-    "cancelled"
-  ];
-
   const PAYMENT_STATUSES = [
     "pending",
     "processing",
@@ -1996,30 +1985,18 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
 
-    const statusOptions = EDITABLE_ORDER_STATUSES.map(status => `
+    elements.updateStatus.innerHTML =
+      ORDER_STATUSES.map(status => `
 
-      <option value="${status}">
-        ${escapeHTML(formatStatus(status))}
-      </option>
-
-    `);
-
-    // Preserve the current state for older/manually confirmed orders,
-    // but do not allow Payment Confirmed to be selected as a new status.
-    if (order.status === "payment_confirmed") {
-      statusOptions.splice(2, 0, `
-        <option value="payment_confirmed" disabled>
-          Payment Confirmed (managed in Payments)
+        <option value="${status}">
+          ${escapeHTML(formatStatus(status))}
         </option>
-      `);
-    }
 
-    elements.updateStatus.innerHTML = statusOptions.join("");
+      `).join("");
 
 
     elements.updateStatus.value =
-      order.status === "payment_confirmed" ||
-      EDITABLE_ORDER_STATUSES.includes(order.status)
+      ORDER_STATUSES.includes(order.status)
         ? order.status
         : "pending";
 
@@ -2220,11 +2197,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const newStatus = elements.updateStatus.value;
 
-    if (!EDITABLE_ORDER_STATUSES.includes(newStatus)) {
-      setStatusMessage(
-        "Payment confirmation can only be managed from the Payments page.",
-        "error"
-      );
+    if (!ORDER_STATUSES.includes(newStatus)) {
+      setStatusMessage("Please select a valid order status.", "error");
       return;
     }
 
