@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Your HAFHASS EVENTS & DELIGHTS notifications."
+  >
+
+  <title>Notifications | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+
+  <!-- SHARED STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/auth.css">
+
+  <link rel="stylesheet" href="../css/account.css">
+
+</head>
+
+
+<body class="account-page">
+
+
+  <!-- ==================================================
+       ACCOUNT HEADER
+       ================================================== -->
+
+  <header class="account-header">
+
+    <a href="../index.html" class="account-brand">
+
+      <span class="account-brand-name" data-store="business_name">
+        HAFHASS
+      </span>
+
+      <span class="account-brand-subtitle" data-store="business_subtitle">
+        EVENTS & DELIGHTS
+      </span>
+
+    </a>
+
+
+    <div class="account-header-actions">
+
+      <a href="../shop.html" class="account-shop-link">
+        Continue Shopping
+      </a>
+
+
+      <button
+        type="button"
+        class="account-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+
+        <i class="fa-regular fa-moon theme-icon" aria-hidden="true"></i>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="account-mobile-menu"
+        id="accountMenuToggle"
+        aria-label="Open account menu"
+        aria-expanded="false"
+        aria-controls="accountSidebar"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==================================================
+       ACCOUNT LAYOUT
+       ================================================== -->
+
+  <div class="account-layout">
+
+
+    <!-- ================================================
+         SIDEBAR
+         ================================================ -->
+
+    <aside
+      class="account-sidebar"
+      id="accountSidebar"
+    >
+
+
+      <!-- CUSTOMER INFORMATION -->
+
+      <div class="account-user-summary">
+
+        <div class="account-avatar">
+
+          <span id="avatarInitials">C</span>
+
+        </div>
+
+
+        <div class="account-user-details">
+
+          <p class="account-user-label">
+            Welcome back
+          </p>
+
+          <h2 id="sidebarUserName">
+            Customer
+          </h2>
+
+          <p id="sidebarUserEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="account-navigation">
+
+
+        <p class="account-nav-heading">
+          ACCOUNT
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </span>
+
+          Dashboard
+
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-receipt" aria-hidden="true"></i>
+          </span>
+
+          My Orders
+
+        </a>
+
+        <a
+          href="notification.html"
+          class="account-nav-link active"
+          aria-current="page"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-bell" aria-hidden="true"></i>
+          </span>
+
+          Notification
+
+        </a>
+
+
+
+        <a
+          href="favourites.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+          </span>
+
+          My Favourites
+
+        </a>
+
+
+        <a
+          href="addresses.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </span>
+
+          Saved Addresses
+
+        </a>
+
+
+        <a
+          href="profile.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-regular fa-user" aria-hidden="true"></i>
+          </span>
+
+          My Profile
+
+        </a>
+
+
+
+        <p class="account-nav-heading">
+          SHOPPING
+        </p>
+
+
+        <a
+          href="../shop.html"
+          class="account-nav-link"
+        >
+
+          <span class="account-nav-icon">
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+          </span>
+
+          Browse Shop
+
+        </a>
+
+
+        <a href="cart.html" class="account-nav-link">
+  <span class="account-nav-icon">
+    <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+  </span>
+
+  My Shopping Bag
+
+  <span
+    id="accountCartCount"
+    class="account-cart-count"
+    aria-label="0 items in cart"
+  >0</span>
+</a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR BOTTOM -->
+
+      <div class="account-sidebar-bottom">
+
+        <a
+          href="../index.html"
+          class="account-back-home"
+        >
+
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+
+          Back to Homepage
+
+        </a>
+
+
+        <button
+          type="button"
+          class="account-logout-button"
+          id="logoutButton"
+        >
+
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+
+          Sign Out
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="account-sidebar-overlay"
+      id="accountSidebarOverlay"
+    ></div>
+
+
+
+    <!-- ================================================
+         MAIN CONTENT
+         ================================================ -->
+
+    <main class="account-main">
+
+      <section class="orders-page notifications-page">
+
+        <!-- PAGE HEADING -->
+
+        <div class="orders-heading">
+
+          <div>
+
+            <p class="account-eyebrow">
+              STAY IN THE LOOP
+            </p>
+
+            <h1>
+              Notifications
+            </h1>
+
+            <p>
+              Updates about your orders, payments and requests.
+            </p>
+
+          </div>
+
+          <span
+            class="orders-count"
+            id="notificationsCount"
+            aria-live="polite"
+          >
+            Loading...
+          </span>
+
+        </div>
+
+
+        <!-- TABS AND ACTIONS -->
+
+        <div class="notifications-toolbar">
+
+          <div
+            class="notifications-tabs"
+            role="group"
+            aria-label="Filter notifications"
+          >
+
+            <button
+              type="button"
+              class="notifications-tab active"
+              id="notificationsTabAll"
+              aria-pressed="true"
+            >
+              All
+            </button>
+
+            <button
+              type="button"
+              class="notifications-tab"
+              id="notificationsTabUnread"
+              aria-pressed="false"
+            >
+              Unread
+              <span id="notificationsTabUnreadCount" hidden>0</span>
+            </button>
+
+          </div>
+
+          <button
+            type="button"
+            class="notifications-mark-all"
+            id="markAllNotificationsRead"
+            disabled
+          >
+            Mark all as read
+          </button>
+
+        </div>
+
+
+        <!-- NOTICE -->
+
+        <div
+          class="notifications-notice"
+          id="notificationsNotice"
+          role="status"
+          hidden
+        ></div>
+
+
+        <!-- LOADING STATE -->
+
+        <div
+          class="orders-loading"
+          id="notificationsLoading"
+        >
+
+          <span class="account-spinner"></span>
+
+          <p>
+            Loading your notifications...
+          </p>
+
+        </div>
+
+
+        <!-- ERROR STATE -->
+
+        <div
+          class="orders-error"
+          id="notificationsError"
+          hidden
+        >
+
+          <h3>
+            Unable to Load Notifications
+          </h3>
+
+          <p id="notificationsErrorMessage">
+            Something went wrong while loading your notifications.
+          </p>
+
+          <button
+            type="button"
+            id="retryNotificationsButton"
+          >
+            Try Again
+          </button>
+
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+          class="orders-empty"
+          id="notificationsEmpty"
+          hidden
+        >
+
+          <div class="orders-empty-icon">
+            <i class="fa-regular fa-bell" aria-hidden="true"></i>
+          </div>
+
+          <h3 id="notificationsEmptyTitle">
+            No notifications yet
+          </h3>
+
+          <p id="notificationsEmptyMessage">
+            Updates about your orders, payments and requests will appear here.
+          </p>
+
+          <a
+            href="orders.html"
+            class="account-primary-button"
+          >
+            View My Orders
+          </a>
+
+        </div>
+
+
+        <!-- NOTIFICATION LIST -->
+
+        <div
+          class="notifications-list"
+          id="notificationsList"
+          hidden
+        ></div>
+
+        <div
+          class="notifications-more"
+          id="notificationsMore"
+          hidden
+        >
+
+          <button
+            type="button"
+            class="notifications-more-button"
+            id="notificationsMoreButton"
+          >
+            Show older notifications
+          </button>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- FOOTER -->
+
+  <footer class="account-footer">
+
+    <p>
+
+      © <span id="accountYear"></span>
+
+      <span data-store="business_name">HAFHASS</span>
+
+      <span data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>.
+
+      All rights reserved.
+
+    </p>
+
+    <p data-store="tagline">
+      Where Taste Meets Creativity.
+    </p>
+
+  </footer>
+
+
+
+  <!-- ==================================================
+       JAVASCRIPT
+       ================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/account-layout.js"></script>
+
+  <script src="../js/account-notifications-page.js"></script>
+
+
+</body>
+
+</html>

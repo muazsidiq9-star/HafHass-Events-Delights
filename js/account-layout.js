@@ -4,6 +4,451 @@
 // Shared interface functionality
 // ======================================================
 
+// ======================================================
+// CUSTOMER NOTIFICATIONS: BELL, SIDEBAR LINK, UNREAD COUNT
+//
+// Adds the bell to the header on every account page and gives
+// the sidebar "Notification" link (added by hand in each page)
+// its unread count. It sits before the layout code below on
+// purpose, so the bell exists before the layout starts.
+// ======================================================
+
+(() => {
+  "use strict";
+
+  if (window.HafhassNotifications) {
+    return;
+  }
+
+  // ====================================================
+  // DEPENDENCIES
+  // ====================================================
+
+  const supabase = window.hafhassSupabase;
+
+  if (!supabase) {
+
+    console.warn(
+      "HAFHASS Notifications: The Supabase client is unavailable."
+    );
+
+    return;
+
+  }
+
+
+  // ====================================================
+  // SETTINGS
+  // ====================================================
+
+  const NOTIFICATIONS_PAGE = "notification.html";
+  const FALLBACK_REFRESH_MS = 60000;
+
+
+  // ====================================================
+  // STATE
+  // ====================================================
+
+  let userId = null;
+  let unreadCount = 0;
+  let channel = null;
+  let refreshTimer = null;
+
+  const elements = {
+    bell: null,
+    bellBadge: null,
+    navLink: null,
+    navBadge: null
+  };
+
+
+  // ====================================================
+  // HELPERS
+  // ====================================================
+
+  function isNotificationsPage() {
+
+    return window.location.pathname.endsWith(
+      `/${NOTIFICATIONS_PAGE}`
+    );
+
+  }
+
+
+  function createIcon(classes) {
+
+    const icon = document.createElement("i");
+
+    icon.className = classes;
+    icon.setAttribute("aria-hidden", "true");
+
+    return icon;
+
+  }
+
+
+  // ====================================================
+  // BELL AND SIDEBAR LINK
+  // ====================================================
+
+  function injectBell() {
+
+    if (document.getElementById("accountNotificationBell")) {
+
+      elements.bell = document.getElementById(
+        "accountNotificationBell"
+      );
+
+      elements.bellBadge = document.getElementById(
+        "accountNotificationBadge"
+      );
+
+      return;
+
+    }
+
+    const actions = document.querySelector(
+      ".account-header-actions"
+    );
+
+    if (!actions) {
+      return;
+    }
+
+    const bell = document.createElement("a");
+
+    bell.href = NOTIFICATIONS_PAGE;
+    bell.id = "accountNotificationBell";
+    bell.className = "account-notification-bell";
+    bell.setAttribute("aria-label", "Notifications");
+
+    if (isNotificationsPage()) {
+      bell.classList.add("is-current");
+      bell.setAttribute("aria-current", "page");
+    }
+
+    bell.appendChild(createIcon("fa-regular fa-bell"));
+
+    const badge = document.createElement("span");
+
+    badge.id = "accountNotificationBadge";
+    badge.className = "account-notification-badge";
+    badge.setAttribute("aria-hidden", "true");
+    badge.hidden = true;
+
+    bell.appendChild(badge);
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (themeToggle && themeToggle.parentNode === actions) {
+      actions.insertBefore(bell, themeToggle);
+    } else {
+      actions.prepend(bell);
+    }
+
+    elements.bell = bell;
+    elements.bellBadge = badge;
+
+  }
+
+
+  // The sidebar link is added by hand in each page, so it matches
+  // the other links. This only gives that link its unread count and
+  // marks it active on the notification page.
+
+  function setUpNavLink() {
+
+    const navigation = document.querySelector(
+      ".account-navigation"
+    );
+
+    if (!navigation) {
+      return;
+    }
+
+    const link = navigation.querySelector(
+      `a[href$="${NOTIFICATIONS_PAGE}"]`
+    );
+
+    if (!link) {
+      return;
+    }
+
+    if (isNotificationsPage()) {
+      link.classList.add("active");
+      link.setAttribute("aria-current", "page");
+    }
+
+    let badge = link.querySelector(".account-nav-badge");
+
+    if (!badge) {
+
+      badge = document.createElement("span");
+
+      badge.className = "account-nav-badge";
+      badge.hidden = true;
+
+      link.appendChild(badge);
+
+    }
+
+    elements.navLink = link;
+    elements.navBadge = badge;
+
+  }
+
+
+  // ====================================================
+  // UNREAD COUNT
+  // ====================================================
+
+  function renderCount(count, animate = false) {
+
+    unreadCount = count;
+
+    const label = count > 99 ? "99+" : String(count);
+
+    [elements.bellBadge, elements.navBadge].forEach(badge => {
+
+      if (!badge) {
+        return;
+      }
+
+      badge.hidden = count <= 0;
+      badge.textContent = count > 0 ? label : "";
+
+    });
+
+    if (elements.bell) {
+
+      elements.bell.setAttribute(
+        "aria-label",
+        count > 0
+          ? `Notifications, ${count} unread`
+          : "Notifications"
+      );
+
+    }
+
+    if (animate && elements.bellBadge && count > 0) {
+
+      elements.bellBadge.classList.remove("is-new");
+
+      // Restart the animation.
+      void elements.bellBadge.offsetWidth;
+
+      elements.bellBadge.classList.add("is-new");
+
+    }
+
+  }
+
+
+  async function refresh() {
+
+    if (!userId) {
+      return;
+    }
+
+    try {
+
+      // Always filter by user: admins can read every
+      // customer's notifications.
+
+      const { count, error } = await supabase
+        .from("notifications")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .eq("is_read", false);
+
+      if (error) {
+        throw error;
+      }
+
+      const newCount = count || 0;
+
+      renderCount(newCount, newCount > unreadCount);
+
+    } catch (error) {
+
+      console.warn(
+        "HAFHASS Notifications: Could not load the unread count.",
+        error?.message || error
+      );
+
+    }
+
+  }
+
+
+  function scheduleRefresh() {
+
+    clearTimeout(refreshTimer);
+
+    refreshTimer = setTimeout(refresh, 150);
+
+  }
+
+
+  // ====================================================
+  // LIVE UPDATES
+  // ====================================================
+
+  function unsubscribe() {
+
+    if (channel) {
+
+      supabase.removeChannel(channel);
+
+      channel = null;
+
+    }
+
+  }
+
+
+  function subscribe() {
+
+    unsubscribe();
+
+    if (!userId) {
+      return;
+    }
+
+    try {
+
+      channel = supabase
+        .channel(`account-notification-badge-${userId}`)
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "notifications",
+            filter: `user_id=eq.${userId}`
+          },
+          scheduleRefresh
+        )
+        .subscribe();
+
+    } catch (error) {
+
+      console.warn(
+        "HAFHASS Notifications: Live updates are unavailable.",
+        error?.message || error
+      );
+
+    }
+
+  }
+
+
+  function setUser(newUserId) {
+
+    if (newUserId === userId) {
+      return;
+    }
+
+    userId = newUserId;
+
+    if (!userId) {
+
+      unsubscribe();
+      renderCount(0);
+
+      return;
+
+    }
+
+    subscribe();
+    refresh();
+
+  }
+
+
+  // ====================================================
+  // START
+  // ====================================================
+
+  async function start() {
+
+    injectBell();
+    setUpNavLink();
+
+    try {
+
+      const { data } = await supabase.auth.getSession();
+
+      setUser(data?.session?.user?.id || null);
+
+    } catch (error) {
+
+      console.warn(
+        "HAFHASS Notifications: Could not read the session.",
+        error?.message || error
+      );
+
+    }
+
+    // Never call Supabase directly inside this callback.
+
+    supabase.auth.onAuthStateChange((event, session) => {
+
+      setTimeout(() => {
+        setUser(session?.user?.id || null);
+      }, 0);
+
+    });
+
+    // The notifications page tells us when something is read.
+
+    window.addEventListener(
+      "hafhass:notifications-changed",
+      scheduleRefresh
+    );
+
+    // Catch up when the customer returns to this tab.
+
+    document.addEventListener("visibilitychange", () => {
+
+      if (document.visibilityState === "visible") {
+        scheduleRefresh();
+      }
+
+    });
+
+    // Safety net in case live updates are not connected.
+
+    setInterval(() => {
+
+      if (document.visibilityState === "visible") {
+        refresh();
+      }
+
+    }, FALLBACK_REFRESH_MS);
+
+  }
+
+
+  window.HafhassNotifications = {
+    refresh,
+    getUnreadCount: () => unreadCount
+  };
+
+
+  if (document.readyState === "loading") {
+
+    document.addEventListener("DOMContentLoaded", start);
+
+  } else {
+
+    start();
+
+  }
+
+})();
+
+
 (() => {
   "use strict";
 

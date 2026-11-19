@@ -19,15 +19,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const elements = {
 
-    sidebar: document.getElementById("accountSidebar"),
-    menuToggle: document.getElementById("accountMenuToggle"),
-    overlay: document.getElementById("accountSidebarOverlay"),
-
-    themeToggle: document.getElementById("themeToggle"),
-    themeIcon: document.querySelector("#themeToggle .theme-icon"),
-
-    logoutButton: document.getElementById("logoutButton"),
-
     avatarInitials: document.getElementById("avatarInitials"),
     accountAvatar: document.getElementById("accountAvatar"),
 
@@ -41,11 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     recentOrdersLoading: document.getElementById("recentOrdersLoading"),
     recentOrdersList: document.getElementById("recentOrdersList"),
-    recentOrdersEmpty: document.getElementById("recentOrdersEmpty"),
-
-    cartCount: document.getElementById("accountCartCount"),
-
-    year: document.getElementById("accountYear")
+    recentOrdersEmpty: document.getElementById("recentOrdersEmpty")
 
   };
 
@@ -168,298 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     3. THEME MANAGEMENT
-  ======================================= */
-
-  function applyTheme(theme) {
-
-    const selectedTheme =
-      theme === "dark" ? "dark" : "light";
-
-
-    document.documentElement.setAttribute(
-      "data-theme",
-      selectedTheme
-    );
-
-
-    document.body.setAttribute(
-      "data-theme",
-      selectedTheme
-    );
-
-
-    if (elements.themeIcon) {
-
-  elements.themeIcon.className =
-    selectedTheme === "dark"
-      ? "fa-solid fa-sun theme-icon"
-      : "fa-regular fa-moon theme-icon";
-
-}
-
-
-    if (elements.themeToggle) {
-
-      const label =
-        selectedTheme === "dark"
-          ? "Switch to light theme"
-          : "Switch to dark theme";
-
-
-      elements.themeToggle.setAttribute(
-        "aria-label",
-        label
-      );
-
-
-      elements.themeToggle.setAttribute(
-        "title",
-        label
-      );
-
-    }
-
-
-    try {
-
-      localStorage.setItem(
-        "hafhass-theme",
-        selectedTheme
-      );
-
-    } catch (error) {
-
-      console.warn(
-        "Theme preference could not be saved."
-      );
-
-    }
-
-  }
-
-
-  function initialiseTheme() {
-
-    let savedTheme = null;
-
-
-    try {
-
-      savedTheme = localStorage.getItem(
-        "hafhass-theme"
-      );
-
-    } catch (error) {
-
-      console.warn(
-        "Theme preference is unavailable."
-      );
-
-    }
-
-
-    if (
-      savedTheme !== "dark" &&
-      savedTheme !== "light"
-    ) {
-
-      savedTheme =
-        window.matchMedia &&
-        window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches
-          ? "dark"
-          : "light";
-
-    }
-
-
-    applyTheme(savedTheme);
-
-  }
-
-
-  elements.themeToggle?.addEventListener("click", () => {
-
-    const currentTheme =
-      document.documentElement.getAttribute("data-theme");
-
-
-    applyTheme(
-      currentTheme === "dark" ? "light" : "dark"
-    );
-
-  });
-
-
-  /* =======================================
-     4. MOBILE SIDEBAR
-  ======================================= */
-
-  function openSidebar() {
-
-    elements.sidebar?.classList.add("is-open");
-
-    elements.menuToggle?.classList.add("is-active");
-
-    elements.overlay?.classList.add("is-visible");
-
-
-    elements.menuToggle?.setAttribute(
-      "aria-expanded",
-      "true"
-    );
-
-
-    document.body.style.overflow = "hidden";
-
-  }
-
-
-  function closeSidebar() {
-
-    elements.sidebar?.classList.remove("is-open");
-
-    elements.menuToggle?.classList.remove("is-active");
-
-    elements.overlay?.classList.remove("is-visible");
-
-
-    elements.menuToggle?.setAttribute(
-      "aria-expanded",
-      "false"
-    );
-
-
-    document.body.style.overflow = "";
-
-  }
-
-
-  elements.menuToggle?.addEventListener("click", () => {
-
-    const isOpen =
-      elements.sidebar?.classList.contains("is-open");
-
-
-    if (isOpen) {
-
-      closeSidebar();
-
-    } else {
-
-      openSidebar();
-
-    }
-
-  });
-
-
-  elements.overlay?.addEventListener(
-    "click",
-    closeSidebar
-  );
-
-
-  elements.sidebar?.querySelectorAll("a").forEach(link => {
-
-    link.addEventListener("click", closeSidebar);
-
-  });
-
-
-  document.addEventListener("keydown", event => {
-
-    if (event.key === "Escape") {
-      closeSidebar();
-    }
-
-  });
-
-
-  window.addEventListener("resize", () => {
-
-    if (window.innerWidth > 800) {
-      closeSidebar();
-    }
-
-  });
-
-
-  /* =======================================
-     5. SIGN OUT
-  ======================================= */
-
-  elements.logoutButton?.addEventListener(
-    "click",
-    async () => {
-
-      const confirmed = window.confirm(
-        "Are you sure you want to sign out?"
-      );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      elements.logoutButton.disabled = true;
-
-      elements.logoutButton.textContent =
-        "Signing out...";
-
-
-      try {
-
-        const result = await auth.logout();
-
-
-        if (
-          result?.success === false ||
-          result?.error
-        ) {
-
-          throw result.error ||
-            new Error(
-              result.message || "Sign out failed."
-            );
-
-        }
-
-
-        window.location.replace("../login.html");
-
-
-      } catch (error) {
-
-        console.error("Sign out error:", error);
-
-
-        showNotification(
-
-          error.message ||
-          "Unable to sign out. Please try again.",
-
-          "error"
-
-        );
-
-
-        elements.logoutButton.disabled = false;
-
-        elements.logoutButton.innerHTML =
-          "<span>↪</span> Sign Out";
-
-      }
-
-    }
-  );
-
-
-  /* =======================================
-     6. LOAD CUSTOMER PROFILE
+     3. LOAD CUSTOMER PROFILE
   ======================================= */
 
   async function loadCustomerProfile(user, verifiedProfile = null) {
@@ -596,7 +292,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     7. LOAD ORDER STATISTICS
+     4. LOAD ORDER STATISTICS
   ======================================= */
 
   async function loadOrderStatistics(userId) {
@@ -670,7 +366,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     8. LOAD FAVOURITES COUNT
+     5. LOAD FAVOURITES COUNT
   ======================================= */
 
   async function loadFavourites(userId) {
@@ -703,7 +399,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     9. ORDER STATUS DISPLAY
+     6. ORDER STATUS DISPLAY
   ======================================= */
 
   function getStatusLabel(status) {
@@ -763,7 +459,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     10. RENDER RECENT ORDERS
+     7. RENDER RECENT ORDERS
   ======================================= */
 
   function renderRecentOrders(orders) {
@@ -901,7 +597,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     11. LOAD RECENT ORDERS
+     8. LOAD RECENT ORDERS
   ======================================= */
 
   async function loadRecentOrders(userId) {
@@ -936,107 +632,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     12. LOAD ACTIVE CART COUNT
-  ======================================= */
-
-  async function loadCartCount(userId) {
-
-    try {
-
-      // Find the customer's latest active cart.
-
-      const { data: carts, error: cartError } =
-
-        await supabase
-
-          .from("carts")
-
-          .select("id")
-
-          .eq("user_id", userId)
-
-          .eq("status", "active")
-
-          .order("created_at", {
-
-            ascending: false
-
-          })
-
-          .limit(1);
-
-
-      if (cartError) {
-        throw cartError;
-      }
-
-
-      // No active cart.
-
-      if (!carts || carts.length === 0) {
-
-        setText(elements.cartCount, 0);
-
-        return;
-
-      }
-
-
-      // Retrieve product quantities.
-
-      const { data: items, error: itemsError } =
-
-        await supabase
-
-          .from("cart_items")
-
-          .select("quantity")
-
-          .eq("cart_id", carts[0].id);
-
-
-      if (itemsError) {
-        throw itemsError;
-      }
-
-
-      // Calculate total product quantity.
-
-      const totalQuantity = (items || []).reduce(
-
-        (total, item) => {
-
-          return total + Number(item.quantity || 0);
-
-        },
-
-        0
-
-      );
-
-
-      setText(
-        elements.cartCount,
-        totalQuantity
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "Cart count could not be loaded:",
-        error
-      );
-
-      setText(elements.cartCount, 0);
-
-    }
-
-  }
-
-
-  /* =======================================
-     13. NORMALISE CURRENT CUSTOMER
+     9. NORMALISE CURRENT CUSTOMER
   ======================================= */
 
   async function getCurrentCustomer() {
@@ -1091,23 +687,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     14. INITIALISE DASHBOARD
+     10. INITIALISE DASHBOARD
   ======================================= */
 
   async function initialiseDashboard() {
-
-    initialiseTheme();
-
-
-    setText(
-
-      elements.year,
-
-      new Date().getFullYear()
-
-    );
-
-
     // Check required dependencies.
 
     if (!supabase || !auth || !guards) {
@@ -1208,14 +791,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           run: () => loadRecentOrders(user.id)
 
-        },
-
-        {
-
-          name: "Shopping cart",
-
-          run: () => loadCartCount(user.id)
-
         }
 
       ];
@@ -1296,7 +871,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================
-     15. START DASHBOARD
+     11. START DASHBOARD
   ======================================= */
 
   await initialiseDashboard();

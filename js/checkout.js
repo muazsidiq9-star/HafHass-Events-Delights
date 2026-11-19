@@ -321,6 +321,8 @@
 
   let uploadedReceiptPath = null;
   let receiptUploadInProgress = false;
+  let receiptPreviewObjectUrl = null;
+  let receiptPreviewElements = null;
 
 
   /* =======================================================
@@ -3053,6 +3055,117 @@
   }
 
 
+  function initializeReceiptPreview() {
+
+    const input = elements.receiptFile;
+
+    if (!input || receiptPreviewElements) {
+      return;
+    }
+
+    const preview = document.createElement("div");
+    preview.className = "checkout-receipt-preview";
+    preview.id = "checkoutReceiptPreview";
+    preview.hidden = true;
+
+    const image = document.createElement("img");
+    image.className = "checkout-receipt-preview-image";
+    image.alt = "Selected payment receipt preview";
+    image.hidden = true;
+
+    const fileDetails = document.createElement("div");
+    fileDetails.className = "checkout-receipt-preview-file";
+    fileDetails.hidden = true;
+
+    const fileIcon = document.createElement("i");
+    fileIcon.className = "fa-solid fa-file-pdf";
+    fileIcon.setAttribute("aria-hidden", "true");
+
+    const fileText = document.createElement("div");
+
+    const fileName = document.createElement("strong");
+    fileName.className = "checkout-receipt-preview-name";
+
+    const fileNote = document.createElement("small");
+    fileNote.className = "checkout-receipt-preview-note";
+
+    fileText.append(fileName, fileNote);
+    fileDetails.append(fileIcon, fileText);
+    preview.append(image, fileDetails);
+
+    input.insertAdjacentElement("afterend", preview);
+
+    receiptPreviewElements = {
+      preview,
+      image,
+      fileDetails,
+      fileName,
+      fileNote
+    };
+
+  }
+
+
+  function clearReceiptPreview() {
+
+    if (receiptPreviewObjectUrl) {
+      URL.revokeObjectURL(receiptPreviewObjectUrl);
+      receiptPreviewObjectUrl = null;
+    }
+
+    if (!receiptPreviewElements) {
+      return;
+    }
+
+    receiptPreviewElements.preview.hidden = true;
+    receiptPreviewElements.image.hidden = true;
+    receiptPreviewElements.image.removeAttribute("src");
+    receiptPreviewElements.fileDetails.hidden = true;
+    receiptPreviewElements.fileName.textContent = "";
+    receiptPreviewElements.fileNote.textContent = "";
+
+  }
+
+
+  function renderReceiptPreview(file) {
+
+    initializeReceiptPreview();
+
+    if (!file || !receiptPreviewElements) {
+      clearReceiptPreview();
+      return;
+    }
+
+    clearReceiptPreview();
+
+    const {
+      preview,
+      image,
+      fileDetails,
+      fileName,
+      fileNote
+    } = receiptPreviewElements;
+
+    preview.hidden = false;
+    fileName.textContent = file.name;
+
+    if (file.type && file.type.startsWith("image/")) {
+
+      receiptPreviewObjectUrl = URL.createObjectURL(file);
+      image.src = receiptPreviewObjectUrl;
+      image.hidden = false;
+      fileNote.textContent = "Check that this is the correct payment receipt.";
+
+    } else {
+
+      fileDetails.hidden = false;
+      fileNote.textContent = "PDF selected. Image preview is not available for PDF files.";
+
+    }
+
+  }
+
+
   /* =======================================================
      27. RECEIPT UPLOAD
   ======================================================= */
@@ -3115,6 +3228,8 @@
 
     if (!file) {
 
+      clearReceiptPreview();
+
       setReceiptStatus(
         "No receipt uploaded yet.",
         "info"
@@ -3129,6 +3244,7 @@
     if (!validation.valid) {
 
       elements.receiptFile.value = "";
+      clearReceiptPreview();
 
       setReceiptStatus(
         validation.message,
@@ -3138,6 +3254,10 @@
       return;
 
     }
+
+    // Show the selected image immediately so the customer can
+    // confirm it is the correct receipt before placing the order.
+    renderReceiptPreview(file);
 
     receiptUploadInProgress = true;
 
@@ -3181,7 +3301,6 @@
     }
 
   }
-
 
   /* =======================================================
      28. CHECKOUT VALIDATION
@@ -3310,6 +3429,16 @@
   ======================================================= */
 
   function showOrderSuccess(orderId) {
+
+    // The checkout introduction belongs to the form, not the success
+    // state. Hide it once the order has been placed.
+    const checkoutHeading = document.querySelector(".checkout-heading");
+
+    if (checkoutHeading) {
+      checkoutHeading.hidden = true;
+      checkoutHeading.style.display = "none";
+      checkoutHeading.setAttribute("aria-hidden", "true");
+    }
 
     const orderUrl =
       `order-details.html?id=${encodeURIComponent(orderId)}`;
@@ -3564,6 +3693,8 @@
   ======================================================= */
 
   function initializeEventListeners() {
+
+    initializeReceiptPreview();
 
     // FULFILMENT
 
@@ -3865,18 +3996,6 @@
       "customer-location-picker-open"
     );
 
-    requestAnimationFrame(() => {
-
-      els.search.focus();
-
-      const selected = els.results.querySelector(".selected");
-
-      if (selected) {
-        selected.scrollIntoView({ block: "nearest" });
-      }
-
-    });
-
   }
 
 
@@ -3889,6 +4008,10 @@
     }
 
     els.modal.hidden = true;
+
+    if (locationPicker.previousFocus) {
+      locationPicker.previousFocus.setAttribute("aria-expanded", "false");
+    }
 
     document.body.classList.remove(
       "customer-location-picker-open"
@@ -4018,47 +4141,48 @@
       return;
     }
 
+    const field = select.closest(".checkout-field");
+
+    select.setAttribute("aria-haspopup", "dialog");
+    select.setAttribute("aria-expanded", "false");
+
+    /*
+     * Prevent the browser's native select popup from opening.
+     * Pointer interaction is handled by the surrounding field;
+     * the select remains in the tab order for keyboard users.
+     */
+    select.style.pointerEvents = "none";
     select.setAttribute("aria-haspopup", "dialog");
 
-    select.addEventListener("pointerdown", event => {
+    if (field) {
+      field.classList.add("has-location-picker");
 
-      if (select.disabled) {
-        return;
-      }
+      field.addEventListener("click", event => {
 
-      if (event.pointerType === "mouse" && event.button !== 0) {
-        return;
-      }
+        if (select.disabled) {
+          return;
+        }
 
-      event.preventDefault();
+        const clickedLabel = event.target.closest("label");
+        const clickedField = event.target === field;
 
-      openLocationPicker(config);
+        if (!clickedLabel && !clickedField) {
+          return;
+        }
 
-    });
-
-    select.addEventListener("mousedown", event => {
-
-      if (!select.disabled) {
         event.preventDefault();
-      }
+        event.stopPropagation();
 
-    });
+        if (
+          !locationPicker.config ||
+          locationPicker.config.select !== select
+        ) {
+          openLocationPicker(config);
+          select.setAttribute("aria-expanded", "true");
+        }
 
-    // Fallback for assistive technology that only sends "click".
-
-    select.addEventListener("click", event => {
-
-      if (select.disabled) {
-        return;
-      }
-
-      event.preventDefault();
-
-      if (!locationPicker.config) {
-        openLocationPicker(config);
-      }
-
-    });
+      });
+    }
 
     select.addEventListener("keydown", event => {
 
@@ -4075,13 +4199,13 @@
         event.preventDefault();
 
         openLocationPicker(config);
+        select.setAttribute("aria-expanded", "true");
 
       }
 
     });
 
   }
-
 
   function initializeLocationPickers() {
 
