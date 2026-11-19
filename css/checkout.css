@@ -1751,3 +1751,138 @@ html[data-theme="dark"] .checkout-field select:focus {
 /* =========================================================
    END OF CHECKOUT STYLESHEET
 ========================================================= */
+
+
+/* =========================================================
+   CHECKOUT RECEIPT PREVIEW
+========================================================= */
+
+.checkout-receipt-preview {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+}
+
+.checkout-receipt-preview[hidden] {
+  display: none !important;
+}
+
+.checkout-receipt-preview-image {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  max-height: 360px;
+  margin: 0 auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.checkout-receipt-preview-image[hidden] {
+  display: none !important;
+}
+
+.checkout-receipt-preview-file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: var(--text);
+}
+
+.checkout-receipt-preview-file[hidden] {
+  display: none !important;
+}
+
+.checkout-receipt-preview-file > i {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 25px;
+}
+
+.checkout-receipt-preview-file > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checkout-receipt-preview-name {
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+
+.checkout-receipt-preview-note {
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   CHECKOUT LOCATION PICKER: VIEWPORT AND SCROLL FIX
+========================================================= */
+
+.customer-location-picker-overlay {
+  top: var(--customer-picker-viewport-top, 0px);
+  height: var(--customer-picker-viewport-height, 100vh);
+  max-height: var(--customer-picker-viewport-height, 100vh);
+  box-sizing: border-box;
+}
+
+.customer-location-picker-modal {
+  min-height: 0;
+  max-height: min(640px, calc(var(--customer-picker-viewport-height, 100vh) - 40px));
+}
+
+.customer-location-picker-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.customer-location-picker-results {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+@media (max-width: 600px) {
+
+  .customer-location-picker-overlay {
+    align-items: flex-end;
+    padding: 10px 10px 0;
+  }
+
+  .customer-location-picker-modal {
+    width: 100%;
+    max-width: none;
+    max-height: calc(var(--customer-picker-viewport-height, 100vh) - 10px);
+    border-radius: 16px 16px 0 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .customer-location-picker-header {
+    padding: 17px 18px 14px;
+  }
+
+  .customer-location-picker-body {
+    padding: 0 18px;
+  }
+
+  .customer-location-picker-results {
+    max-height: none;
+  }
+
+  .customer-location-picker-footer {
+    flex: 0 0 auto;
+    padding-bottom: 12px;
+  }
+
+}
