@@ -104,6 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isLoading = false;
   let modalRequestVersion = 0;
+  let paymentRefreshTimer = null;
+  let paymentRealtimeChannel = null;
   let receiptPreviewRequestVersion = 0;
 
 
@@ -1458,12 +1460,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================================
-     26. INITIALIZATION
+     26. LIVE PAYMENT UPDATES
+  ====================================================== */
+
+  function schedulePaymentRefresh() {
+    if (paymentRefreshTimer) clearTimeout(paymentRefreshTimer);
+
+    paymentRefreshTimer = setTimeout(() => {
+      paymentRefreshTimer = null;
+
+      if (document.hidden) return;
+
+      if (isLoading) {
+        schedulePaymentRefresh();
+        return;
+      }
+
+      loadPayments();
+    }, 500);
+  }
+
+  function subscribeToPaymentChanges() {
+    if (!supabase || typeof supabase.channel !== "function") return;
+
+    paymentRealtimeChannel = supabase
+      .channel("admin-payments-live")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "payments" },
+        () => schedulePaymentRefresh()
+      )
+      .subscribe();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) schedulePaymentRefresh();
+  });
+
+  window.addEventListener("pagehide", () => {
+    if (paymentRefreshTimer) clearTimeout(paymentRefreshTimer);
+    if (paymentRealtimeChannel && supabase?.removeChannel) {
+      supabase.removeChannel(paymentRealtimeChannel);
+    }
+  });
+
+  /* =====================================================
+     27. INITIALIZATION
   ====================================================== */
 
   setCurrentDate();
 
   loadPayments();
+  subscribeToPaymentChanges();
 
 
 });
