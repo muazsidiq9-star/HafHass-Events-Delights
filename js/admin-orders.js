@@ -30,10 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const PROFILE_BATCH_SIZE = 100;
 
+  // All statuses remain available for filtering and displaying existing orders.
   const ORDER_STATUSES = [
     "pending",
     "awaiting_payment",
     "payment_confirmed",
+    "processing",
+    "ready_for_pickup",
+    "out_for_delivery",
+    "completed",
+    "cancelled"
+  ];
+
+  // Payment confirmation is controlled exclusively from the Payments page.
+  const EDITABLE_ORDER_STATUSES = [
+    "pending",
+    "awaiting_payment",
     "processing",
     "ready_for_pickup",
     "out_for_delivery",
@@ -1984,18 +1996,30 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
 
-    elements.updateStatus.innerHTML =
-      ORDER_STATUSES.map(status => `
+    const statusOptions = EDITABLE_ORDER_STATUSES.map(status => `
 
-        <option value="${status}">
-          ${escapeHTML(formatStatus(status))}
+      <option value="${status}">
+        ${escapeHTML(formatStatus(status))}
+      </option>
+
+    `);
+
+    // Preserve the current state for older/manually confirmed orders,
+    // but do not allow Payment Confirmed to be selected as a new status.
+    if (order.status === "payment_confirmed") {
+      statusOptions.splice(2, 0, `
+        <option value="payment_confirmed" disabled>
+          Payment Confirmed (managed in Payments)
         </option>
+      `);
+    }
 
-      `).join("");
+    elements.updateStatus.innerHTML = statusOptions.join("");
 
 
     elements.updateStatus.value =
-      ORDER_STATUSES.includes(order.status)
+      order.status === "payment_confirmed" ||
+      EDITABLE_ORDER_STATUSES.includes(order.status)
         ? order.status
         : "pending";
 
@@ -2196,7 +2220,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const newStatus = elements.updateStatus.value;
 
-    if (!ORDER_STATUSES.includes(newStatus)) {
+    if (!EDITABLE_ORDER_STATUSES.includes(newStatus)) {
+      setStatusMessage(
+        "Payment confirmation can only be managed from the Payments page.",
+        "error"
+      );
       return;
     }
 
