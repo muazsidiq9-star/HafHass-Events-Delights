@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let paymentRealtimeChannel = null;
   let receiptPreviewRequestVersion = 0;
   let receiptThumbnailRequestVersion = 0;
+  let isReviewingPayment = false;
 
 
   /* =====================================================
@@ -1235,6 +1236,29 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       : "";
 
+    const canReviewBankTransfer =
+      payment.payment_method === "bank_transfer" &&
+      ["pending", "processing"].includes(payment.status);
+
+    const reviewActions = canReviewBankTransfer
+      ? `
+        <section class="admin-payment-actions" aria-labelledby="paymentReviewHeading">
+          <h3 id="paymentReviewHeading">Review Bank Transfer</h3>
+          <p>Check the uploaded receipt and transfer details before approving or rejecting this payment. Approval will also confirm the associated order.</p>
+          <label for="paymentReviewReason">Rejection reason (optional)</label>
+          <textarea id="paymentReviewReason" rows="3" maxlength="500" placeholder="Enter a reason if the transfer cannot be verified..."></textarea>
+          <div class="admin-payment-review-buttons">
+            <button type="button" class="admin-payment-review-approve" data-action="review-approve" data-payment-id="${escapeHTML(payment.id)}">
+              <i class="fa-solid fa-check" aria-hidden="true"></i> Approve Payment
+            </button>
+            <button type="button" class="admin-payment-review-reject" data-action="review-reject" data-payment-id="${escapeHTML(payment.id)}">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i> Reject Payment
+            </button>
+          </div>
+        </section>
+      `
+      : "";
+
 
     if (elements.modalContent) {
 
@@ -1258,6 +1282,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ${failureDetails}
 
+        ${reviewActions}
+
       `;
 
     }
@@ -1267,6 +1293,81 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
+
+  /* BANK TRANSFER REVIEW */
+  async function reviewBankTransfer(paymentId, approve) {
+    if (isReviewingPayment) return;
+
+    const payment = allPayments.find(item => item.id === paymentId);
+    if (!payment) {
+      showToast("Payment record could not be found. Please refresh and try again.");
+      return;
+    }
+
+    if (
+      payment.payment_method !== "bank_transfer" ||
+      !["pending", "processing"].includes(payment.status)
+    ) {
+      showToast("This payment is no longer available for review.");
+      await loadPayments();
+      return;
+    }
+
+    const reasonField = elements.modalContent?.querySelector("#paymentReviewReason");
+    const reason = reasonField?.value.trim() || "";
+
+    const confirmationMessage = approve
+      ? "Approve this bank transfer? The payment will be marked successful and its order will be marked Payment Confirmed."
+      : "Reject this bank transfer? The payment will be marked Failed. The order will remain Awaiting Payment.";
+
+    if (!window.confirm(confirmationMessage)) return;
+
+    isReviewingPayment = true;
+    const actionButtons = elements.modalContent.querySelectorAll(
+      '[data-action="review-approve"], [data-action="review-reject"]'
+    );
+    actionButtons.forEach(button => {
+      button.disabled = true;
+      button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Processing...';
+    });
+
+    try {
+      const { data, error } = await supabase.rpc("admin_review_bank_transfer", {
+        p_payment_id: paymentId,
+        p_approve: approve,
+        p_reason: reason || null
+      });
+
+      if (error) throw error;
+
+      if (!data || data.success !== true) {
+        throw new Error(data?.message || "The payment review could not be completed.");
+      }
+
+      showToast(
+        approve
+          ? "Payment approved and the associated order confirmed."
+          : "Payment rejected. The order remains awaiting payment."
+      );
+
+      closePaymentModal();
+      await loadPayments();
+
+    } catch (error) {
+      console.error("Payment review error:", error);
+      showToast(error?.message || "Unable to review this payment. Please try again.");
+      actionButtons.forEach((button, index) => {
+        button.disabled = false;
+        if (index === 0) {
+          button.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Approve Payment';
+        } else {
+          button.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i> Reject Payment';
+        }
+      });
+    } finally {
+      isReviewingPayment = false;
+    }
+  }
 
   /* RECEIPT PREVIEW */
   async function openReceiptPreview(paymentId) {
@@ -1306,8 +1407,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (elements.modalContent) {
     elements.modalContent.addEventListener("click", event => {
-      const button = event.target.closest("[data-action='preview-receipt']");
-      if (button && button.dataset.paymentId) openReceiptPreview(button.dataset.paymentId);
+      const button = event.target.closest("[data-action]");
+      if (!button) return;
+
+      if (button.dataset.action === "preview-receipt" && button.dataset.paymentId) {
+        openReceiptPreview(button.dataset.paymentId);
+        return;
+      }
+
+      if (button.dataset.action === "review-approve" && button.dataset.paymentId) {
+        reviewBankTransfer(button.dataset.paymentId, true);
+        return;
+      }
+
+      if (button.dataset.action === "review-reject" && button.dataset.paymentId) {
+        reviewBankTransfer(button.dataset.paymentId, false);
+      }
     });
   }
   elements.closeReceipt.addEventListener("click", closeReceiptPreview);
