@@ -54,7 +54,54 @@ body.admin-page {
   align-items: center;
   gap: 8px;
   position: relative;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+
+.admin-brand-logo {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-soft);
+  color: var(--accent);
+  font-family: var(--font-heading);
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.admin-brand-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.admin-brand-logo img[hidden],
+.admin-brand-logo [data-store-logo-fallback][hidden] {
+  display: none !important;
+}
+
+.admin-brand-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.15;
+}
+
+.admin-brand-name,
+.admin-brand-subtitle {
+  display: block;
+}
+
+.admin-brand-badge {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .admin-brand-subtitle {
