@@ -756,7 +756,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const { error } = await supabase.storage
         .from("store-assets")
         .upload(path, file, {
-          cacheControl: "3600",
+          cacheControl: window.HafhassMedia.cacheControl,
           upsert: false,
           contentType: file.type
         });
