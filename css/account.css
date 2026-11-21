@@ -6869,6 +6869,7 @@ body.customer-location-picker-open {
   flex: 0 0 auto;
   margin-top: auto;
   padding-top: 18px;
+  border-top: 1px solid var(--account-border);
 }
 
 /* Desktop sidebar stays below the sticky account header. */
