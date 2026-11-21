@@ -1977,10 +1977,12 @@
     const storagePath =
       `${currentUser.id}/${currentProduct.id}/${uniqueName}`;
 
+    const optimizedFile = await window.HafhassMedia.compress(file, "reference");
+
     const { error } = await supabase.storage
       .from(REFERENCE_IMAGE_BUCKET)
-      .upload(storagePath, file, {
-        cacheControl: "3600",
+      .upload(storagePath, optimizedFile, {
+        cacheControl: window.HafhassMedia.cacheControl,
 
         upsert: false,
 
