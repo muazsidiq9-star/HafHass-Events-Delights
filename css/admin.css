@@ -1301,3 +1301,62 @@ html[data-theme="dark"] .admin-logout-button:hover {
 }
 
 .admin-avatar .avatar-initials[hidden] { display: none !important; }
+
+
+/* =========================================================
+   ADMIN SIDEBAR - VIEWPORT-LOCKED LAYOUT
+   Keep the profile header and footer within the viewport.
+   Only the navigation section is allowed to scroll.
+========================================================= */
+@media (min-width: 801px) {
+  .admin-sidebar {
+    position: sticky;
+    top: 76px;
+    align-self: flex-start;
+    height: calc(100vh - 76px);
+    height: calc(100dvh - 76px);
+    min-height: 0;
+    max-height: calc(100vh - 76px);
+    max-height: calc(100dvh - 76px);
+    overflow: hidden;
+  }
+}
+
+.admin-sidebar-profile {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.admin-navigation {
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+.admin-sidebar-bottom,
+.admin-sidebar-footer {
+  flex: 0 0 auto;
+  min-height: 0;
+  margin-top: auto;
+}
+
+@media (max-width: 800px) {
+  .admin-sidebar {
+    top: 68px;
+    bottom: 0;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .admin-navigation {
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
+}
