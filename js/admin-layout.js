@@ -174,13 +174,14 @@ if (
     }
 
     if (elements.avatar) {
-      elements.avatar.textContent = initials || "A";
-      elements.avatar.style.backgroundImage = profile?.avatar_url
-        ? `url("${profile.avatar_url.replace(/["\\\\]/g, "")}")`
-        : "";
-      elements.avatar.style.backgroundSize = profile?.avatar_url ? "cover" : "";
-      elements.avatar.style.backgroundPosition = profile?.avatar_url ? "center" : "";
-      elements.avatar.style.backgroundRepeat = profile?.avatar_url ? "no-repeat" : "";
+      const photo = elements.avatar.querySelector(".avatar-photo");
+      const initialsLabel = elements.avatar.querySelector(".avatar-initials");
+      if (initialsLabel) initialsLabel.textContent = initials || "A";
+      if (photo) {
+        photo.hidden = !profile?.avatar_url;
+        if (profile?.avatar_url) photo.src = profile.avatar_url;
+        else photo.removeAttribute("src");
+      }
     }
 
     if (elements.role) {
