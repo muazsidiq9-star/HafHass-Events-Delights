@@ -472,6 +472,93 @@
 
 
     // ==================================================
+    // SHARED CUSTOMER PROFILE AVATAR
+    // ==================================================
+
+    async function loadSidebarProfile() {
+
+      const avatar = document.getElementById("avatarInitials");
+
+      if (!avatar) return;
+
+      try {
+
+        const auth = window.HafhassAuth;
+
+        if (!auth || typeof auth.getProfile !== "function") {
+          return;
+        }
+
+        const result = await auth.getProfile();
+
+        if (!result?.success || !result.profile) {
+          return;
+        }
+
+        const profile = result.profile;
+
+        const name =
+          profile.full_name ||
+          profile.name ||
+          document.getElementById("sidebarUserName")?.textContent ||
+          "Customer";
+
+        const initials = name.trim()
+          .split(/\\s+/)
+          .slice(0, 2)
+          .map(part => part.charAt(0).toUpperCase())
+          .join("") || "C";
+
+        // Always reset first so removing a photo restores initials.
+        avatar.style.backgroundImage = "";
+        avatar.style.backgroundSize = "";
+        avatar.style.backgroundPosition = "";
+        avatar.style.backgroundRepeat = "";
+
+        if (profile.avatar_url) {
+
+          const imageUrl = new URL(
+            profile.avatar_url,
+            window.location.origin
+          );
+
+          if (
+            imageUrl.protocol === "https:" ||
+            imageUrl.protocol === "http:"
+          ) {
+
+            avatar.style.backgroundImage =
+              `url("${imageUrl.href.replace(/["\\\\]/g, "")}")`;
+
+            avatar.style.backgroundSize = "cover";
+            avatar.style.backgroundPosition = "center";
+            avatar.style.backgroundRepeat = "no-repeat";
+            avatar.textContent = "";
+
+            return;
+
+          }
+
+        }
+
+        avatar.textContent = initials;
+
+      } catch (error) {
+
+        console.warn(
+          "HAFHASS: Unable to load the sidebar profile photo.",
+          error?.message || error
+        );
+
+      }
+
+    }
+
+
+    loadSidebarProfile();
+
+
+    // ==================================================
     // THEME MANAGEMENT
     // ==================================================
 
