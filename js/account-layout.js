@@ -476,82 +476,32 @@
     // ==================================================
 
     async function loadSidebarProfile() {
-
-      const avatar = document.getElementById("avatarInitials");
-
-      if (!avatar) return;
+      const avatar = document.getElementById("accountAvatar");
+      const initialsLabel = document.getElementById("avatarInitials");
+      const photo = avatar?.querySelector(".avatar-photo");
+      if (!avatar || !initialsLabel || !photo) return;
 
       try {
-
         const auth = window.HafhassAuth;
-
-        if (!auth || typeof auth.getProfile !== "function") {
-          return;
-        }
-
+        if (!auth || typeof auth.getProfile !== "function") return;
         const result = await auth.getProfile();
-
-        if (!result?.success || !result.profile) {
-          return;
-        }
+        if (!result?.success || !result.profile) return;
 
         const profile = result.profile;
-
-        const name =
-          profile.full_name ||
+        const name = profile.full_name ||
           profile.name ||
           document.getElementById("sidebarUserName")?.textContent ||
           "Customer";
+        const initials = name.trim().split(/\\s+/).slice(0, 2)
+          .map(part => part.charAt(0).toUpperCase()).join("") || "C";
 
-        const initials = name.trim()
-          .split(/\\s+/)
-          .slice(0, 2)
-          .map(part => part.charAt(0).toUpperCase())
-          .join("") || "C";
-
-        // Always reset first so removing a photo restores initials.
-        avatar.style.backgroundImage = "";
-        avatar.style.backgroundSize = "";
-        avatar.style.backgroundPosition = "";
-        avatar.style.backgroundRepeat = "";
-
-        if (profile.avatar_url) {
-
-          const imageUrl = new URL(
-            profile.avatar_url,
-            window.location.origin
-          );
-
-          if (
-            imageUrl.protocol === "https:" ||
-            imageUrl.protocol === "http:"
-          ) {
-
-            avatar.style.backgroundImage =
-              `url("${imageUrl.href.replace(/["\\\\]/g, "")}")`;
-
-            avatar.style.backgroundSize = "cover";
-            avatar.style.backgroundPosition = "center";
-            avatar.style.backgroundRepeat = "no-repeat";
-            avatar.textContent = "";
-
-            return;
-
-          }
-
-        }
-
-        avatar.textContent = initials;
-
+        initialsLabel.textContent = initials;
+        photo.hidden = !profile.avatar_url;
+        if (profile.avatar_url) photo.src = profile.avatar_url;
+        else photo.removeAttribute("src");
       } catch (error) {
-
-        console.warn(
-          "HAFHASS: Unable to load the sidebar profile photo.",
-          error?.message || error
-        );
-
+        console.warn("HAFHASS: Unable to load the sidebar profile photo.", error?.message || error);
       }
-
     }
 
 
