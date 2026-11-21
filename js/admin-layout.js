@@ -176,7 +176,10 @@ if (
     if (elements.avatar) {
       const photo = elements.avatar.querySelector(".avatar-photo");
       const initialsLabel = elements.avatar.querySelector(".avatar-initials");
-      if (initialsLabel) initialsLabel.textContent = initials || "A";
+      if (initialsLabel) {
+        initialsLabel.textContent = initials || "A";
+        initialsLabel.hidden = !!profile?.avatar_url;
+      }
       if (photo) {
         photo.hidden = !profile?.avatar_url;
         if (profile?.avatar_url) photo.src = profile.avatar_url;
