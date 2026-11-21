@@ -33,6 +33,9 @@
     const sidebarInitials = document.getElementById("avatarInitials");
     const sidebarPhoto = document.querySelector("#accountAvatar .avatar-photo");
 
+    if (sidebarInitials) {
+      sidebarInitials.hidden = !!url;
+    }
     if (sidebarPhoto) {
       sidebarPhoto.hidden = !url;
       if (url) sidebarPhoto.src = url;
