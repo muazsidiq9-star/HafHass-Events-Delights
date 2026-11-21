@@ -116,6 +116,7 @@ if (
       };
 
       populateAdminInformation(user, profile);
+      ensureAdminProfileNavigation();
 
       document.body.classList.add("admin-authenticated");
 
@@ -175,11 +176,41 @@ if (
 
     if (elements.avatar) {
       elements.avatar.textContent = initials || "A";
+      elements.avatar.style.backgroundImage = profile?.avatar_url
+        ? `url("${profile.avatar_url.replace(/["\\\\]/g, "")}")`
+        : "";
+      elements.avatar.style.backgroundSize = profile?.avatar_url ? "cover" : "";
+      elements.avatar.style.backgroundPosition = profile?.avatar_url ? "center" : "";
+      elements.avatar.style.backgroundRepeat = profile?.avatar_url ? "no-repeat" : "";
     }
 
     if (elements.role) {
       elements.role.textContent = "Administrator";
     }
+  }
+
+
+  /* =======================================================
+     ADMIN PROFILE NAVIGATION
+  ======================================================= */
+  function ensureAdminProfileNavigation() {
+    const navigation = document.querySelector(".admin-navigation");
+    if (!navigation || navigation.querySelector('a[href="profile.html"]')) return;
+
+    const settingsLink = navigation.querySelector('a[href="settings.html"]');
+    if (!settingsLink) return;
+
+    const link = document.createElement("a");
+    link.href = "profile.html";
+    link.className = "admin-nav-link";
+    link.innerHTML = '<span class="admin-nav-icon"><i class="fa-solid fa-user-gear" aria-hidden="true"></i></span><span>My Profile</span>';
+
+    const currentFile = window.location.pathname.split("/").pop();
+    if (currentFile === "profile.html") {
+      link.classList.add("active");
+      link.setAttribute("aria-current", "page");
+    }
+    settingsLink.parentNode.insertBefore(link, settingsLink);
   }
 
 
