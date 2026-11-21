@@ -699,13 +699,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const extension = file.type === "image/jpeg" ? "jpg" : file.type.split("/")[1];
+    const optimizedFile = await window.HafhassMedia.compress(file, "branding");
+    const extension = optimizedFile.type === "image/jpeg" ? "jpg" : optimizedFile.type.split("/")[1];
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-").slice(0, 70);
     const path = `store/logo_url/${Date.now()}-${safeName || "logo." + extension}`;
 
     try {
-      const { error } = await supabase.storage.from("store-assets").upload(path, file, {
-        cacheControl: "3600",
+      const { error } = await supabase.storage.from("store-assets").upload(path, optimizedFile, {
+        cacheControl: window.HafhassMedia.cacheControl,
         upsert: false,
         contentType: file.type
       });
@@ -745,7 +746,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const extension = file.type === "image/jpeg" ? "jpg" : file.type.split("/")[1];
+    const optimizedFile = await window.HafhassMedia.compress(file, "branding");
+    const extension = optimizedFile.type === "image/jpeg" ? "jpg" : optimizedFile.type.split("/")[1];
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-").slice(0, 70);
     const path = `store/${key}/${Date.now()}-${safeName || "image." + extension}`;
 
