@@ -338,8 +338,22 @@
             <div class="profile-identity">
 
 
-              <div class="profile-avatar-large" id="profileAvatar">
-                C
+              <div class="profile-avatar-control">
+                <div class="profile-avatar-large" id="profileAvatar" aria-label="Profile photo">
+                  C
+                </div>
+                <div class="profile-avatar-actions">
+                  <button type="button" class="profile-avatar-button" id="chooseAvatarButton">
+                    <i class="fa-solid fa-camera" aria-hidden="true"></i>
+                    Change Photo
+                  </button>
+                  <button type="button" class="profile-avatar-remove" id="removeAvatarButton" hidden>
+                    Remove
+                  </button>
+                  <input type="file" id="profileAvatarFile" accept="image/jpeg,image/png,image/webp" hidden>
+                  <small>JPG, PNG or WebP · Maximum 5 MB</small>
+                  <p id="avatarMessage" class="profile-avatar-message" role="status" aria-live="polite" hidden></p>
+                </div>
               </div>
 
 
@@ -576,6 +590,10 @@
   <script src="../js/store-settings.js"></script>
 
   <script src="../js/account-layout.js"></script>
+
+  <script src="../js/media-manager.js"></script>
+
+  <script src="../js/account-avatar.js"></script>
 
   <script src="../js/account-profile.js"></script>
 
