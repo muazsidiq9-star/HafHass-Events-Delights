@@ -1561,7 +1561,7 @@
         const { error: uploadError } = await supabase.storage
           .from(STORAGE_BUCKET)
           .upload(filePath, file, {
-            cacheControl: "3600",
+            cacheControl: window.HafhassMedia.cacheControl,
             upsert: false,
             contentType: file.type
           });
