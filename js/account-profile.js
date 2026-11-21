@@ -169,6 +169,17 @@
 
     const initials = getInitials(name);
 
+    if (element.id === "avatarInitials") {
+      element.textContent = initials;
+      const photo = element.closest("#accountAvatar")?.querySelector(".avatar-photo");
+      if (photo) {
+        photo.hidden = !avatarUrl;
+        if (avatarUrl) photo.src = avatarUrl;
+        else photo.removeAttribute("src");
+      }
+      return;
+    }
+
     // Reset previous image.
 
     element.style.backgroundImage = "";
