@@ -6796,7 +6796,7 @@ body.customer-location-picker-open {
 
 /* =========================================================
    SHARED CUSTOMER SIDEBAR AVATAR
-   Consistent circular photo with initials overlay
+   Consistent circular profile photo with initials fallback
 ========================================================= */
 .account-avatar {
   position: relative;
@@ -6833,7 +6833,9 @@ body.customer-location-picker-open {
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
-  text-shadow: 0 1px 4px rgba(0,0,0,.85);
-  background: rgba(0,0,0,.18);
+  text-shadow: none;
+  background: transparent;
   pointer-events: none;
 }
+
+.account-avatar .avatar-initials[hidden] { display: none !important; }
