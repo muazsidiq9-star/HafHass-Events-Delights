@@ -171,6 +171,7 @@
 
     if (element.id === "avatarInitials") {
       element.textContent = initials;
+      element.hidden = !!avatarUrl;
       const photo = element.closest("#accountAvatar")?.querySelector(".avatar-photo");
       if (photo) {
         photo.hidden = !avatarUrl;
