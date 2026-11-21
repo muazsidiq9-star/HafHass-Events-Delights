@@ -6839,3 +6839,159 @@ body.customer-location-picker-open {
 }
 
 .account-avatar .avatar-initials[hidden] { display: none !important; }
+
+
+/* =========================================================
+   ACCOUNT SIDEBAR - FIXED HEADER & FOOTER
+   Keep identity and actions in place while navigation scrolls.
+========================================================= */
+.account-sidebar {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.account-user-summary {
+  flex: 0 0 auto;
+}
+
+.account-navigation {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--account-border) transparent;
+}
+
+.account-sidebar-bottom {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+/* Desktop sidebar stays below the sticky account header. */
+@media (min-width: 801px) {
+  .account-sidebar {
+    position: sticky;
+    top: 78px;
+    align-self: flex-start;
+    height: calc(100vh - 78px);
+  }
+}
+
+/* Mobile sidebar uses the same fixed header/footer arrangement. */
+@media (max-width: 800px) {
+  .account-sidebar {
+    height: calc(100dvh - 70px);
+    overflow: hidden;
+  }
+
+  .account-user-summary {
+    padding-bottom: 20px;
+  }
+
+  .account-navigation {
+    padding-top: 20px;
+  }
+
+  .account-sidebar-bottom {
+    padding-top: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .account-sidebar {
+    height: calc(100dvh - 66px);
+  }
+}
+
+
+/* =========================================================
+   PROFILE CARD - RESPONSIVE IDENTITY ARRANGEMENT
+   Keep avatar controls and identity details from competing
+   for a narrow two-column layout on phones.
+========================================================= */
+.profile-identity {
+  min-width: 0;
+}
+
+.profile-avatar-control {
+  min-width: 0;
+}
+
+.profile-avatar-actions {
+  min-width: 0;
+}
+
+.profile-identity-details {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+  .profile-identity {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .profile-avatar-control {
+    width: 100%;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: 15px;
+  }
+
+  .profile-avatar-large {
+    width: 76px;
+    height: 76px;
+    flex: 0 0 76px;
+  }
+
+  .profile-avatar-actions {
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .profile-avatar-actions small,
+  .profile-avatar-message {
+    flex-basis: 100%;
+  }
+
+  .profile-identity-details {
+    width: 100%;
+    padding-top: 2px;
+  }
+
+  .profile-identity-details h3,
+  .profile-identity-details p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 380px) {
+  .profile-avatar-control {
+    align-items: flex-start !important;
+  }
+
+  .profile-avatar-large {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+  }
+
+  .profile-avatar-actions {
+    gap: 7px;
+  }
+
+  .profile-avatar-button,
+  .profile-avatar-remove {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+}
