@@ -492,7 +492,7 @@
           profile.name ||
           document.getElementById("sidebarUserName")?.textContent ||
           "Customer";
-        const initials = name.trim().split(/\\s+/).slice(0, 2)
+        const initials = name.trim().split(/\s+/).slice(0, 2)
           .map(part => part.charAt(0).toUpperCase()).join("") || "C";
 
         initialsLabel.textContent = initials;
