@@ -139,10 +139,9 @@
 
       <div class="account-user-summary">
 
-        <div class="account-avatar">
-
-          <span id="avatarInitials">C</span>
-
+        <div class="account-avatar" id="accountAvatar">
+          <img class="avatar-photo" alt="" aria-hidden="true" hidden>
+          <span class="avatar-initials" id="avatarInitials">C</span>
         </div>
 
 
@@ -168,117 +167,43 @@
 
       <!-- NAVIGATION -->
 
-      <nav class="account-navigation">
-
-
-        <p class="account-nav-heading">
-          ACCOUNT
-        </p>
-
-
+      <nav class="account-navigation" aria-label="Account navigation">
+        <p class="account-nav-heading">MY ACCOUNT</p>
         <a href="dashboard.html" class="account-nav-link">
-
-          <span class="account-nav-icon">
-            <i class="fa-solid fa-house" aria-hidden="true"></i>
-          </span>
-
+          <span class="account-nav-icon"><i class="fa-solid fa-house" aria-hidden="true"></i></span>
           <span>Dashboard</span>
-
         </a>
-
-
         <a href="orders.html" class="account-nav-link">
-
-          <span class="account-nav-icon">
-            <i class="fa-solid fa-box" aria-hidden="true"></i>
-          </span>
-
+          <span class="account-nav-icon"><i class="fa-solid fa-receipt" aria-hidden="true"></i></span>
           <span>My Orders</span>
-
         </a>
-
-
         <a href="favourites.html" class="account-nav-link">
-
-          <span class="account-nav-icon">
-            <i class="fa-regular fa-heart" aria-hidden="true"></i>
-          </span>
-
+          <span class="account-nav-icon"><i class="fa-regular fa-heart" aria-hidden="true"></i></span>
           <span>My Favourites</span>
-
         </a>
-        
-        
         <a href="notification.html" class="account-nav-link">
-          <span class="account-nav-icon">
-            <i class="fa-regular fa-bell" aria-hidden="true"></i>
-          </span>
+          <span class="account-nav-icon"><i class="fa-regular fa-bell" aria-hidden="true"></i></span>
           <span>Notifications</span>
         </a>
-
-
+        <p class="account-nav-heading">PERSONAL DETAILS</p>
         <a href="addresses.html" class="account-nav-link">
-
-          <span class="account-nav-icon">
-            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-          </span>
-
+          <span class="account-nav-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></span>
           <span>My Addresses</span>
-
         </a>
-
-
         <a href="profile.html" class="account-nav-link">
-
-          <span class="account-nav-icon">
-            <i class="fa-regular fa-user" aria-hidden="true"></i>
-          </span>
-
+          <span class="account-nav-icon"><i class="fa-regular fa-user" aria-hidden="true"></i></span>
           <span>My Profile</span>
-
         </a>
-
-
-
-        <!-- SHOPPING LINKS -->
-
-        <p class="account-nav-heading">
-          SHOPPING
-        </p>
-
-
+        <p class="account-nav-heading">SHOPPING</p>
         <a href="../shop.html" class="account-nav-link">
-
-          <span class="account-nav-icon">
-            <i class="fa-solid fa-store" aria-hidden="true"></i>
-          </span>
-
+          <span class="account-nav-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></span>
           <span>Browse Shop</span>
-
         </a>
-
-
-        <a
-          href="cart.html"
-          class="account-nav-link active"
-          aria-current="page"
-        >
-
-          <span class="account-nav-icon">
-            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
-          </span>
-
+        <a href="cart.html" class="account-nav-link active" aria-current="page">
+          <span class="account-nav-icon"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></span>
           <span>My Shopping Bag</span>
-
-          <span
-            id="accountCartCount"
-            class="account-cart-count"
-            aria-label="Items in cart"
-          >0</span>
-
+          <span class="account-cart-count" id="accountCartCount">0</span>
         </a>
-
-
       </nav>
 
 
