@@ -30,14 +30,26 @@
 
   function renderAvatar(url) {
     currentAvatarUrl = url || null;
+    const sidebarInitials = document.getElementById("avatarInitials");
+    const sidebarPhoto = document.querySelector("#accountAvatar .avatar-photo");
+
+    if (sidebarPhoto) {
+      sidebarPhoto.hidden = !url;
+      if (url) sidebarPhoto.src = url;
+      else sidebarPhoto.removeAttribute("src");
+    }
+
     avatarElements.forEach(element => {
+      if (element.id === "avatarInitials") return;
       element.style.backgroundImage = url ? `url("${url.replace(/["\\\\]/g, "")}")` : "";
       element.style.backgroundSize = url ? "cover" : "";
       element.style.backgroundPosition = url ? "center" : "";
       element.style.backgroundRepeat = url ? "no-repeat" : "";
-      if (url) element.textContent = "";
-      else if (!element.textContent.trim()) element.textContent = "C";
     });
+
+    if (sidebarInitials && !sidebarInitials.textContent.trim()) {
+      sidebarInitials.textContent = "C";
+    }
     if (removeButton) removeButton.hidden = !url;
   }
 
