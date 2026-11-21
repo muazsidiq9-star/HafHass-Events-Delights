@@ -1455,7 +1455,7 @@
 
       for (const item of newImages) {
 
-        const file = item.file;
+        const file = await window.HafhassMedia.compress(item.file, "product");
         const extension = file.name.split(".").pop().toLowerCase();
 
         const safeName = file.name
@@ -1471,7 +1471,7 @@
         const { error: uploadError } = await supabase.storage
           .from(STORAGE_BUCKET)
           .upload(filePath, file, {
-            cacheControl: "3600",
+            cacheControl: window.HafhassMedia.cacheControl,
             upsert: false,
             contentType: file.type
           });
@@ -1545,7 +1545,7 @@
 
       for (const item of [...replacementItems, ...addedItems]) {
 
-        const file = item.file;
+        const file = await window.HafhassMedia.compress(item.file, "product");
         const extension = file.name.split(".").pop().toLowerCase();
 
         const safeName = file.name
