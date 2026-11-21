@@ -3200,14 +3200,16 @@
 
     const filePath = `${currentUser.id}/${uniqueName}.${extension}`;
 
+    const optimizedFile = await window.HafhassMedia.compress(file, "receipt");
+
     const { data, error } = await supabase
       .storage
       .from(RECEIPT_BUCKET)
       .upload(
         filePath,
-        file,
+        optimizedFile,
         {
-          cacheControl: "3600",
+          cacheControl: window.HafhassMedia.cacheControl,
           contentType: file.type,
           upsert: false
         }
