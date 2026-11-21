@@ -496,6 +496,7 @@
           .map(part => part.charAt(0).toUpperCase()).join("") || "C";
 
         initialsLabel.textContent = initials;
+        initialsLabel.hidden = !!profile.avatar_url;
         photo.hidden = !profile.avatar_url;
         if (profile.avatar_url) photo.src = profile.avatar_url;
         else photo.removeAttribute("src");
