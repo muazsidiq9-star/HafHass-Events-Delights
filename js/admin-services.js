@@ -527,12 +527,14 @@ document.addEventListener("DOMContentLoaded", () => {
       createImageFilePath(file, slug);
 
 
+    const optimizedFile = await window.HafhassMedia.compress(file, "service");
+
     const { data, error } = await supabase
       .storage
       .from(STORAGE_BUCKET)
-      .upload(filePath, file, {
+      .upload(filePath, optimizedFile, {
 
-        cacheControl: "3600",
+        cacheControl: window.HafhassMedia.cacheControl,
 
         contentType: file.type,
 
