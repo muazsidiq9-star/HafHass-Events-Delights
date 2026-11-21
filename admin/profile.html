@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- BASIC PAGE INFORMATION -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Manage your HAFHASS administrator profile."
+  >
+
+  <title>My Admin Profile | HAFHASS EVENTS & DELIGHTS</title>
+
+  <!-- SOCIAL SHARING / OPEN GRAPH METADATA -->
+  <link rel="canonical" href="https://hafhass.netlify.app/admin/profile.html">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HAFHASS Events &amp; Delights">
+  <meta property="og:url" content="https://hafhass.netlify.app/admin/dashboard.html">
+  <meta property="og:title" content="Administrator Profile | HAFHASS Events & Delights">
+  <meta property="og:description" content="Manage your HAFHASS administrator profile.">
+  <meta property="og:image" content="https://hafhass.netlify.app/images/og-admin.jpg">
+  <meta property="og:image:secure_url" content="https://hafhass.netlify.app/images/og-admin.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Administration Portal | HAFHASS Events & Delights">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Administration Portal | HAFHASS Events & Delights">
+  <meta name="twitter:description" content="HAFHASS Events & Delights administration portal.">
+  <meta name="twitter:image" content="https://hafhass.netlify.app/images/og-admin.jpg">
+  <meta name="twitter:image:alt" content="Administration Portal | HAFHASS Events & Delights">
+
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+  <span class="admin-brand-logo">
+    <img
+      src=""
+      alt="Business logo"
+      data-store-image="logo_url"
+      hidden
+    >
+    <span data-store-logo-fallback>H</span>
+  </span>
+
+  <span class="admin-brand-copy">
+    <span class="admin-brand-name" data-store="business_name">HAFHASS</span>
+    <span class="admin-brand-subtitle" data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>
+  </span>
+
+  <span class="admin-brand-badge">ADMIN</span>
+
+</a>
+
+
+  <div class="admin-header-actions">
+
+      <span class="admin-header-user" id="adminHeaderName">
+        Administrator
+      </span>
+
+
+      <button
+        type="button"
+        class="admin-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-solid fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-mobile-menu"
+        id="adminMenuToggle"
+        aria-label="Open admin menu"
+        aria-expanded="false"
+        aria-controls="adminSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+
+      <!-- ADMIN PROFILE -->
+
+      <div class="admin-sidebar-profile">
+
+        <div class="admin-avatar" id="adminAvatar">
+          A
+        </div>
+
+        <div class="admin-profile-details">
+
+          <h3 id="adminSidebarName">
+            Administrator
+          </h3>
+
+          <p id="adminSidebarEmail">
+            Loading...
+          </p>
+
+          <span class="admin-role-badge" id="adminRole">
+            ADMIN
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+        <a
+          href="profile.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon"><i class="fa-solid fa-user-gear" aria-hidden="true"></i></span>
+          <span>My Profile</span>
+        </a>
+
+        <a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="admin-main">
+      <section class="admin-page-heading">
+        <div>
+          <p class="admin-eyebrow">ACCOUNT SETTINGS</p>
+          <h1>My Profile</h1>
+          <p>Manage your administrator details and profile photo.</p>
+        </div>
+      </section>
+
+      <section class="admin-profile-card">
+        <div class="admin-profile-card-heading">
+          <div>
+            <h2>Administrator Profile</h2>
+            <p>Your personal details are used across the HAFHASS administration area.</p>
+          </div>
+        </div>
+
+        <form id="adminProfileForm">
+          <div class="admin-profile-identity">
+            <div class="admin-profile-avatar" id="adminProfileAvatar">A</div>
+            <div class="admin-profile-photo-actions">
+              <div class="admin-profile-photo-buttons">
+                <button type="button" class="admin-profile-button" id="adminChooseAvatar">
+                  <i class="fa-solid fa-camera" aria-hidden="true"></i> Change Photo
+                </button>
+                <button type="button" class="admin-profile-button is-danger" id="adminRemoveAvatar" hidden>Remove Photo</button>
+              </div>
+              <input type="file" id="adminAvatarFile" accept="image/jpeg,image/png,image/webp" hidden>
+              <small>JPG, PNG or WebP · Maximum 5 MB</small>
+              <p id="adminAvatarMessage" class="admin-profile-message" role="status" aria-live="polite" hidden></p>
+            </div>
+          </div>
+
+          <div class="admin-profile-grid">
+            <div class="admin-profile-field">
+              <label for="adminProfileName">Full Name</label>
+              <input type="text" id="adminProfileName" name="full_name" autocomplete="name" required maxlength="120">
+            </div>
+            <div class="admin-profile-field">
+              <label for="adminProfileEmail">Email Address</label>
+              <input type="email" id="adminProfileEmail" readonly>
+              <small>Your sign-in email cannot be changed here.</small>
+            </div>
+            <div class="admin-profile-field">
+              <label for="adminProfilePhone">Phone Number</label>
+              <input type="tel" id="adminProfilePhone" name="phone" autocomplete="tel" maxlength="30">
+            </div>
+            <div class="admin-profile-field">
+              <label>Account Role</label>
+              <input type="text" value="Administrator" readonly>
+            </div>
+          </div>
+
+          <div class="admin-profile-actions">
+            <button type="submit" class="admin-profile-button" id="adminProfileSave">
+              <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Save Changes
+            </button>
+          </div>
+          <p id="adminProfileMessage" class="admin-profile-message" role="status" aria-live="polite" hidden></p>
+        </form>
+      </section>
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+
+
+  <!-- SHARED STORE SETTINGS -->
+
+  <script src="../js/store-settings.js"></script>
+    
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/admin-layout.js"></script>
+
+  <script src="../js/media-manager.js"></script>
+
+  <script src="../js/admin-profile.js"></script>
+
+
+</body>
+
+</html>
