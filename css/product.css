@@ -10,7 +10,7 @@
 ========================================================= */
 
 :root {
-  --product-primary: var(--accent);
+  --product-primary: var(--brand-primary, var(--accent));
   --product-card: var(--surface);
   --product-surface: var(--surface-soft);
   --product-text: var(--text);
@@ -101,7 +101,7 @@
   padding: 12px 23px;
   border: none;
   border-radius: 8px;
-  background: var(--burgundy);
+  background: var(--brand-primary, var(--burgundy));
   color: #fff;
   text-decoration: none;
   font-weight: 600;
@@ -113,7 +113,7 @@ html[data-theme="dark"] .product-state button,
 html[data-theme="dark"] .product-state a,
 html[data-theme="dark"] #productNotFound a,
 html[data-theme="dark"] #productError a {
-  background: var(--blush);
+  background: var(--brand-secondary, var(--blush));
   color: #30232A;
 }
 
@@ -195,7 +195,7 @@ html[data-theme="dark"] #productError a {
   z-index: 2;
   padding: 7px 13px;
   border-radius: 30px;
-  background: var(--burgundy);
+  background: var(--brand-primary, var(--burgundy));
   color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
@@ -204,7 +204,7 @@ html[data-theme="dark"] #productError a {
 }
 
 html[data-theme="dark"] .product-badge {
-  background: var(--blush);
+  background: var(--brand-secondary, var(--blush));
   color: #30232A;
 }
 
@@ -659,13 +659,13 @@ html[data-theme="dark"] .product-option-group textarea {
 
 .product-add-to-cart {
   flex: 1;
-  border: 1px solid var(--burgundy);
+  border: 1px solid var(--brand-primary, var(--burgundy));
   background: var(--burgundy);
   color: #fff;
 }
 
 html[data-theme="dark"] .product-add-to-cart {
-  border-color: var(--blush);
+  border-color: var(--brand-secondary, var(--blush));
   background: var(--blush);
   color: #30232A;
 }
