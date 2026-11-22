@@ -8,11 +8,11 @@
 ====================================================== */
 
 :root {
-  --auth-blush: #E8B8C3;
+  --auth-blush: var(--brand-secondary, #E8B8C3);
   --auth-ivory: #FFF9F3;
-  --auth-burgundy: #702D43;
-  --auth-gold: #C6A46A;
-  --auth-rose: #F7E7EA;
+  --auth-burgundy: var(--brand-primary, #702D43);
+  --auth-gold: var(--brand-accent, #C6A46A);
+  --auth-rose: var(--rose, #F7E7EA);
   --auth-charcoal: #393238;
 
   --auth-bg: #FFF9F3;
@@ -21,8 +21,8 @@
   --auth-muted: #81777C;
   --auth-border: #EADDE0;
 
-  --auth-primary: #702D43;
-  --auth-primary-hover: #592235;
+  --auth-primary: var(--brand-primary, #702D43);
+  --auth-primary-hover: var(--accent-hover, #592235);
 
   --auth-success: #27845B;
   --auth-error: #C0394A;
@@ -52,8 +52,8 @@ body[data-theme="dark"],
   --auth-muted: #B9AAB0;
   --auth-border: #44333B;
 
-  --auth-primary: #D58BA0;
-  --auth-primary-hover: #E5A7B7;
+  --auth-primary: var(--brand-primary, #D58BA0);
+  --auth-primary-hover: var(--accent-hover, #E5A7B7);
 
   --auth-success: #70C99C;
   --auth-error: #F18A98;
@@ -145,7 +145,7 @@ body[data-theme="dark"],
   background:
     linear-gradient(
       145deg,
-      #702D43 0%,
+      var(--auth-primary) 0%,
       #8C4058 55%,
       #A45C70 100%
     );
