@@ -81,7 +81,7 @@
 }
 
 .shop-page-hero .hero-content h1 span {
-  color: var(--gold);
+  color: var(--brand-accent, var(--gold));
 }
 
 .shop-page-hero .hero-content p {
@@ -92,7 +92,7 @@
 /* HERO NOTE */
 
 .shop-page-hero .hero-note {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--brand-secondary, var(--blush));
 }
 
 
