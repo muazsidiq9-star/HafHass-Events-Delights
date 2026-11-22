@@ -534,8 +534,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         formatDate(order.created_at);
 
 
+      // Keep the status beside the order number, with the date below.
       orderInfo.append(
         orderNumber,
+        status,
         orderDate
       );
 
@@ -583,7 +585,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         orderInfo,
         orderAmount,
-        status,
         detailsLink
 
       );
