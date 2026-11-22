@@ -275,7 +275,7 @@
 
 .shop-search input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.09);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, #702d43) 9%, transparent);
 }
 
 .shop-search input::placeholder {
@@ -713,7 +713,7 @@
   background:
     radial-gradient(
       circle at bottom left,
-      rgba(232, 184, 195, 0.2),
+      color-mix(in srgb, var(--brand-secondary, #e8b8c3) 20%, transparent),
       transparent 45%
     ),
     var(--rose);
@@ -785,7 +785,7 @@ html[data-theme="dark"] .shop-cta-section {
 }
 
 html[data-theme="dark"] .shop-search input:focus {
-  box-shadow: 0 0 0 3px rgba(232, 184, 195, 0.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-secondary, #e8b8c3) 10%, transparent);
 }
 
 
