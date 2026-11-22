@@ -504,7 +504,7 @@
 
     // OTHER SECTIONS
 
-    renderProgress(order.status, history);
+    renderProgress(order.status, history, order.created_at);
 
     renderItems(items, currency);
 
@@ -519,7 +519,7 @@
   // ORDER PROGRESS
   // ====================================================
 
-  function renderProgress(statusValue, history) {
+  function renderProgress(statusValue, history, orderCreatedAt) {
 
     if (!elements.progress) return;
 
@@ -532,90 +532,80 @@
     );
 
     const currentStatus = getStatus(status);
+    const historyByStatus = new Map();
 
+    (Array.isArray(history) ? history : []).forEach(entry => {
+      const key = String(entry.new_status || "").toLowerCase().trim();
+      if (key && entry.created_at) {
+        historyByStatus.set(key, entry);
+      }
+    });
 
-    // REMOVE OLD CANCELLATION MESSAGE
+    // The initial order record is the reliable fallback for the
+    // first "Order Placed" timestamp if a history row is unavailable.
+    if (!historyByStatus.has("pending") &&
+        !historyByStatus.has("awaiting_payment") &&
+        orderCreatedAt) {
+      historyByStatus.set("pending", { created_at: orderCreatedAt });
+    }
 
     const existingMessage = elements.progress.querySelector(
       ".order-cancelled-message"
     );
+    if (existingMessage) existingMessage.remove();
 
-    if (existingMessage) {
-      existingMessage.remove();
-    }
-
-
-    // UPDATE PROGRESS STEPS
+    const stepStatusMap = [
+      ["pending", "awaiting_payment"],
+      ["payment_confirmed"],
+      ["processing"],
+      ["ready_for_pickup", "out_for_delivery"],
+      ["completed"]
+    ];
 
     steps.forEach((step, index) => {
-
-      step.classList.remove(
-        "completed",
-        "current"
-      );
+      step.classList.remove("completed", "current");
 
       const stepNumber = index + 1;
+      const icon = step.querySelector(".order-progress-icon");
+      const timeElement = step.querySelector("[data-progress-time]");
 
-      const icon = step.querySelector(
-        ".order-progress-icon"
-      );
+      if (icon) icon.textContent = String(stepNumber);
 
-      if (icon) {
-        icon.textContent = String(stepNumber);
+      if (timeElement) {
+        const matchingHistory = stepStatusMap[index]
+          .map(key => historyByStatus.get(key))
+          .filter(Boolean)
+          .sort((first, second) =>
+            new Date(second.created_at) - new Date(first.created_at)
+          )[0];
+
+        if (matchingHistory?.created_at) {
+          timeElement.textContent = formatDate(matchingHistory.created_at);
+          timeElement.hidden = false;
+        } else {
+          timeElement.textContent = "";
+          timeElement.hidden = true;
+        }
       }
 
-
-      if (status === "cancelled") {
-        return;
-      }
-
+      if (status === "cancelled") return;
 
       if (stepNumber < currentStatus.progress) {
-
         step.classList.add("completed");
-
-        if (icon) {
-          icon.textContent = "✓";
-        }
-
+        if (icon) icon.textContent = "✓";
       } else if (stepNumber === currentStatus.progress) {
-
         step.classList.add("current");
-
       }
-
     });
 
-
-    // CANCELLATION MESSAGE
-
     if (status === "cancelled") {
-
       const cancellation = document.createElement("div");
-
       cancellation.className = "order-cancelled-message";
-
-      cancellation.textContent =
-        "This order has been cancelled.";
-
+      cancellation.textContent = "This order has been cancelled.";
       elements.progress.appendChild(cancellation);
-
-    }
-
-
-    // STATUS HISTORY IS AVAILABLE FOR FUTURE TIMELINE DETAILS.
-
-    if (Array.isArray(history)) {
-
-      console.info(
-        "HAFHASS Orders: Status history loaded.",
-        history.length
-      );
-
     }
 
   }
-
 
   // ====================================================
   // ORDER ITEMS
