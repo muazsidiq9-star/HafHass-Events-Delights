@@ -10,10 +10,14 @@
    ========================================================= */
 
 :root {
-  --blush: #E8B8C3;
+  --brand-primary: #702D43;
+  --brand-secondary: #E8B8C3;
+  --brand-accent: #C6A46A;
+
+  --blush: var(--brand-secondary);
   --ivory: #FFF9F3;
-  --burgundy: #702D43;
-  --gold: #C6A46A;
+  --burgundy: var(--brand-primary);
+  --gold: var(--brand-accent);
   --rose: #F7E7EA;
   --charcoal: #393238;
 
@@ -24,8 +28,8 @@
   --text: #393238;
   --text-muted: #756B70;
 
-  --heading: #702D43;
-  --accent: #702D43;
+  --heading: var(--brand-primary);
+  --accent: var(--brand-primary);
   --accent-hover: #552033;
 
   --border: rgba(112, 45, 67, 0.13);
@@ -249,8 +253,8 @@ ul {
 }
 
 .button-primary:hover {
-  background: #552033;
-  border-color: #552033;
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
   box-shadow: 0 8px 20px rgba(112, 45, 67, 0.2);
 }
 
