@@ -672,32 +672,110 @@ function applySocialLinks(settings) {
    10. BRAND COLOURS
 ======================================================= */
 
+function normalizeHexColour(value, fallback) {
+
+  if (typeof value !== "string") return fallback;
+
+  let colour = value.trim();
+
+  if (!/^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(colour)) {
+    return fallback;
+  }
+
+  if (colour.length === 4) {
+    colour = "#" + colour.slice(1).split("").map(char => char + char).join("");
+  }
+
+  return colour.toUpperCase();
+
+}
+
+
+function mixHexColours(first, second, amount) {
+
+  const a = first.match(/[0-9a-f]{2}/gi).map(value => parseInt(value, 16));
+  const b = second.match(/[0-9a-f]{2}/gi).map(value => parseInt(value, 16));
+
+  const mixed = a.map((value, index) =>
+    Math.round(value + (b[index] - value) * amount)
+  );
+
+  return "#" + mixed.map(value => value.toString(16).padStart(2, "0")).join("").toUpperCase();
+
+}
+
+
+function colourToRgba(hex, alpha) {
+
+  const value = hex.slice(1);
+
+  const red = parseInt(value.slice(0, 2), 16);
+  const green = parseInt(value.slice(2, 4), 16);
+  const blue = parseInt(value.slice(4, 6), 16);
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+
+}
+
+
 function applyBrandColours(settings) {
 
   const root = document.documentElement;
+  const isDark = root.dataset.theme === "dark";
 
-  const colours = {
+  const primary = normalizeHexColour(settings.brand_primary_color, "#702D43");
+  const secondary = normalizeHexColour(settings.brand_secondary_color, "#E8B8C3");
+  const accent = normalizeHexColour(settings.brand_accent_color, "#C6A46A");
 
-    "--burgundy": settings.brand_primary_color,
+  // Keep the saved brand colours available as the single source of truth.
+  const primaryOnSurface = isDark
+    ? mixHexColours(primary, "#FFFFFF", 0.62)
+    : primary;
 
-    "--blush": settings.brand_secondary_color,
+  const primaryHover = isDark
+    ? mixHexColours(primary, "#FFFFFF", 0.72)
+    : mixHexColours(primary, "#000000", 0.18);
 
-    "--gold": settings.brand_accent_color
+  const interactiveAccent = isDark
+    ? mixHexColours(primary, "#FFFFFF", 0.48)
+    : primary;
+
+  const softSecondary = isDark
+    ? mixHexColours(secondary, "#241E24", 0.35)
+    : mixHexColours(secondary, "#FFFFFF", 0.72);
+
+  const values = {
+
+    "--brand-primary": primary,
+    "--brand-secondary": secondary,
+    "--brand-accent": accent,
+
+    "--burgundy": primary,
+    "--blush": secondary,
+    "--gold": accent,
+    "--rose": softSecondary,
+
+    "--heading": primaryOnSurface,
+    "--accent": interactiveAccent,
+    "--accent-hover": primaryHover,
+    "--border": colourToRgba(primary, isDark ? 0.24 : 0.13),
+
+    "--account-primary": primaryOnSurface,
+    "--account-primary-hover": primaryHover,
+    "--account-accent": secondary,
+    "--account-gold": accent,
+
+    "--auth-burgundy": primaryOnSurface,
+    "--auth-blush": secondary,
+    "--auth-gold": accent,
+    "--auth-rose": softSecondary,
+    "--auth-primary": primaryOnSurface,
+    "--auth-primary-hover": primaryHover
 
   };
 
-
-  Object.entries(colours).forEach(([variable, value]) => {
-
-    if (
-      typeof value !== "string" ||
-      !/^#[0-9a-f]{3,8}$/i.test(value)
-    ) {
-      return;
-    }
-
+  Object.entries(values).forEach(([variable, value]) => {
     root.style.setProperty(variable, value);
-
   });
 
 }
@@ -972,6 +1050,19 @@ function applyBrandColours(settings) {
     }
 
   }
+
+
+  // Recalculate brand shades whenever the user switches light/dark mode.
+  const brandThemeObserver = new MutationObserver(() => {
+    if (storeSettings) {
+      applyBrandColours(storeSettings);
+    }
+  });
+
+  brandThemeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"]
+  });
 
 
   if (document.readyState === "loading") {
