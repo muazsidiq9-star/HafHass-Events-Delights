@@ -7024,3 +7024,217 @@ body.customer-location-picker-open {
     font-size: 10px;
   }
 }
+
+
+/* =========================================================
+   DASHBOARD — RECENT ORDERS
+   ========================================================= */
+
+.account-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-order-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "info info"
+    "amount status"
+    "action action";
+  align-items: center;
+  gap: 10px 14px;
+  min-width: 0;
+  padding: 17px 18px;
+  border: 1px solid var(--account-border);
+  border-radius: 13px;
+  background: var(--account-surface-soft);
+  transition: border-color var(--account-transition),
+              transform var(--account-transition),
+              box-shadow var(--account-transition);
+}
+
+.account-order-row:hover {
+  border-color: var(--account-accent);
+  box-shadow: 0 5px 16px rgba(70, 35, 48, 0.06);
+  transform: translateY(-1px);
+}
+
+.account-order-info {
+  grid-area: info;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.account-order-info strong {
+  max-width: 100%;
+  color: var(--account-text);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.account-order-info > span {
+  color: var(--account-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.account-order-amount {
+  grid-area: amount;
+  color: var(--account-text);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.account-order-status {
+  grid-area: status;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  white-space: normal;
+}
+
+.account-order-status.pending {
+  border-color: #ead9ad;
+  background: #fbf4e4;
+  color: #8a6725;
+}
+
+.account-order-status.confirmed,
+.account-order-status.processing {
+  border-color: #d9c7e8;
+  background: #f3edf8;
+  color: #76518d;
+}
+
+.account-order-status.ready,
+.account-order-status.delivery {
+  border-color: #c9dce9;
+  background: #edf5fa;
+  color: #426b86;
+}
+
+.account-order-status.completed {
+  border-color: #c8e3d2;
+  background: #eaf5ee;
+  color: #36734e;
+}
+
+.account-order-status.cancelled {
+  border-color: #efcccc;
+  background: #fff0f0;
+  color: #a33d3d;
+}
+
+.account-order-status.default {
+  border-color: var(--account-border);
+  background: var(--account-surface);
+  color: var(--account-muted);
+}
+
+.account-order-details {
+  grid-area: action;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 1px solid var(--account-border);
+  border-radius: 8px;
+  color: var(--account-primary);
+  background: var(--account-surface);
+  font-size: 11px;
+  font-weight: 600;
+  transition: var(--account-transition);
+}
+
+.account-order-details::after {
+  content: "\f061";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 10px;
+}
+
+.account-order-details:hover {
+  border-color: var(--account-primary);
+  background: var(--account-primary);
+  color: #ffffff;
+}
+
+@media (max-width: 480px) {
+  .account-orders-list {
+    gap: 10px;
+  }
+
+  .account-order-row {
+    padding: 14px;
+    gap: 9px 10px;
+    border-radius: 11px;
+  }
+
+  .account-order-info strong {
+    font-size: 12px;
+  }
+
+  .account-order-amount {
+    font-size: 13px;
+  }
+
+  .account-order-status {
+    padding: 5px 8px;
+    font-size: 9px;
+  }
+}
+
+[data-theme="dark"] .account-order-row {
+  background: var(--account-surface-soft);
+}
+
+[data-theme="dark"] .account-order-status.pending {
+  border-color: #66522b;
+  background: #342b19;
+  color: #e7c77e;
+}
+
+[data-theme="dark"] .account-order-status.confirmed,
+[data-theme="dark"] .account-order-status.processing {
+  border-color: #59466c;
+  background: #30263a;
+  color: #d4b9e8;
+}
+
+[data-theme="dark"] .account-order-status.ready,
+[data-theme="dark"] .account-order-status.delivery {
+  border-color: #38586b;
+  background: #223541;
+  color: #a9d0e8;
+}
+
+[data-theme="dark"] .account-order-status.completed {
+  border-color: #315d42;
+  background: #20372a;
+  color: #a8d9b7;
+}
+
+[data-theme="dark"] .account-order-status.cancelled {
+  border-color: #6b3939;
+  background: #3b2424;
+  color: #efb0b0;
+}
