@@ -50,8 +50,8 @@
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(112, 45, 67, 0.25),
-    rgba(198, 164, 106, 0.12)
+    color-mix(in srgb, var(--brand-primary, #702d43) 25%, transparent),
+    color-mix(in srgb, var(--brand-accent, #c6a46a) 12%, transparent)
   );
 }
 
@@ -242,7 +242,7 @@
   height: 48px;
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  background: rgba(112, 45, 67, 0.88);
+  background: var(--brand-primary, #702d43);
   color: #ffffff;
   font-size: 1rem;
   opacity: 0;
