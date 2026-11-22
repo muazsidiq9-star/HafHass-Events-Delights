@@ -534,6 +534,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         formatDate(order.created_at);
 
 
+      // Order status
+
+      const status = document.createElement("span");
+
+      status.className =
+        `account-order-status ${getStatusClass(order.status)}`;
+
+      status.textContent =
+        getStatusLabel(order.status);
+
+
       // Keep the status beside the order number, with the date below.
       orderInfo.append(
         orderNumber,
@@ -557,15 +568,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
 
-      // Order status
 
-      const status = document.createElement("span");
-
-      status.className =
-        `account-order-status ${getStatusClass(order.status)}`;
-
-      status.textContent =
-        getStatusLabel(order.status);
 
 
       // View order details
