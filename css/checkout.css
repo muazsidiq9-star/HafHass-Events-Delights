@@ -329,12 +329,12 @@
 .checkout-field textarea:focus {
   border-color: var(--accent);
   background: var(--surface);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, #702d43) 10%, transparent);
 }
 
 html[data-theme="dark"] .checkout-field input:focus,
 html[data-theme="dark"] .checkout-field textarea:focus {
-  box-shadow: 0 0 0 3px rgba(232, 184, 195, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-secondary, #e8b8c3) 12%, transparent);
 }
 
 .checkout-field input:disabled,
@@ -1449,7 +1449,7 @@ html[data-theme="dark"] .checkout-message.error {
 .checkout-field select:focus {
   border-color: var(--accent);
   background-color: var(--surface);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, #702d43) 10%, transparent);
 }
 
 .checkout-field select:disabled {
@@ -1470,7 +1470,7 @@ html[data-theme="dark"] .checkout-field select {
 }
 
 html[data-theme="dark"] .checkout-field select:focus {
-  box-shadow: 0 0 0 3px rgba(232, 184, 195, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-secondary, #e8b8c3) 12%, transparent);
 }
 
 
@@ -1891,9 +1891,9 @@ html[data-theme="dark"] .checkout-field select:focus {
   margin-top: 2px;
   margin-bottom: 25px;
   padding: 12px 15px;
-  border: 1px solid rgba(198, 164, 106, 0.28);
+  border: 1px solid color-mix(in srgb, var(--brand-accent, #c6a46a) 28%, transparent);
   border-radius: 10px;
-  background: rgba(198, 164, 106, 0.09);
+  background: color-mix(in srgb, var(--brand-accent, #c6a46a) 9%, transparent);
   color: var(--text);
   font-size: 12px;
 }
