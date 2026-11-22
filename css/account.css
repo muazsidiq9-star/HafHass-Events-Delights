@@ -13,10 +13,10 @@
   --account-bg: #fff9f3;  
   --account-surface: #ffffff;  
   --account-surface-soft: #fdf4f5;  
-  --account-primary: #702d43;  
-  --account-primary-hover: #582135;  
-  --account-accent: #e8b8c3;  
-  --account-gold: #c6a46a;  
+  --account-primary: var(--brand-primary, #702d43);  
+  --account-primary-hover: var(--accent-hover, #582135);  
+  --account-accent: var(--brand-secondary, #e8b8c3);  
+  --account-gold: var(--brand-accent, #c6a46a);  
   --account-text: #393238;  
   --account-muted: #8b8085;  
   --account-border: #eee3e5;  
@@ -29,10 +29,10 @@
   --account-bg: #191519;  
   --account-surface: #241e24;  
   --account-surface-soft: #30232c;  
-  --account-primary: #e8b8c3;  
-  --account-primary-hover: #f3cbd4;  
-  --account-accent: #a96b7d;  
-  --account-gold: #d5b77e;  
+  --account-primary: var(--brand-primary, #e8b8c3);  
+  --account-primary-hover: var(--accent-hover, #f3cbd4);  
+  --account-accent: var(--brand-secondary, #a96b7d);  
+  --account-gold: var(--brand-accent, #d5b77e);  
   --account-text: #f6edf0;  
   --account-muted: #b9aab1;  
   --account-border: #40333b;  
@@ -832,7 +832,7 @@ body.account-page {
   position: relative;  
   overflow: hidden;  
   border-radius: var(--account-radius);  
-  background: linear-gradient(115deg, #702d43, #8d435b);  
+  background: linear-gradient(115deg, var(--account-primary), var(--account-primary-hover));  
   color: #fff;  
 }  
   
@@ -868,7 +868,7 @@ body.account-page {
   display: inline-flex;  
   align-items: center;  
   gap: 12px;  
-  border: 1px solid #e8b8c3;  
+  border: 1px solid var(--account-accent);  
   border-radius: 8px;  
   color: #fff;  
   font-size: 10px;  
@@ -878,7 +878,7 @@ body.account-page {
   
 .account-promo-button:hover {  
   background: #fff;  
-  color: #702d43;  
+  color: var(--account-primary);  
 }  
   
 .account-promo-decoration {  
