@@ -7041,8 +7041,7 @@ body.customer-location-picker-open {
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     "info info"
-    "amount status"
-    "action action";
+    "amount action";
   align-items: center;
   gap: 10px 14px;
   min-width: 0;
@@ -7063,14 +7062,18 @@ body.customer-location-picker-open {
 
 .account-order-info {
   grid-area: info;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "number status"
+    "date date";
+  align-items: center;
+  gap: 5px 12px;
   min-width: 0;
 }
 
 .account-order-info strong {
+  grid-area: number;
   max-width: 100%;
   color: var(--account-text);
   font-size: 13px;
@@ -7080,6 +7083,7 @@ body.customer-location-picker-open {
 }
 
 .account-order-info > span {
+  grid-area: date;
   color: var(--account-muted);
   font-size: 11px;
   line-height: 1.4;
@@ -7096,6 +7100,7 @@ body.customer-location-picker-open {
 .account-order-status {
   grid-area: status;
   justify-self: end;
+  align-self: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
