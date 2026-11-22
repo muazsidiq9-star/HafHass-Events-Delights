@@ -1198,7 +1198,7 @@ html[data-theme="dark"] .admin-logout-button:hover {
 .admin-profile-field input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(112,45,67,.08);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, #702d43) 8%, transparent);
 }
 .admin-profile-field input[readonly] {
   opacity: .75;
