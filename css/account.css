@@ -6996,3 +6996,31 @@ body.customer-location-picker-open {
     font-size: 10px;
   }
 }
+
+
+/* =========================================================
+   ORDER TRACKING TIMESTAMPS
+========================================================= */
+.order-progress-time {
+  display: block;
+  margin-top: 7px;
+  color: var(--account-muted);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.order-progress-time[hidden] {
+  display: none !important;
+}
+
+.order-progress-step.completed .order-progress-time,
+.order-progress-step.current .order-progress-time {
+  color: var(--account-primary);
+}
+
+@media (max-width: 480px) {
+  .order-progress-time {
+    font-size: 10px;
+  }
+}
