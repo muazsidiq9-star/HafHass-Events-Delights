@@ -339,31 +339,33 @@
     const uploadedPaths = [];
     const rows = [];
 
-    for (let index = 0; index < files.length; index++) {
-      const file = files[index];
-      const uploaded = await uploadFile(file);
-      uploadedPaths.push(uploaded.path);
+    try {
+      for (let index = 0; index < files.length; index++) {
+        const file = files[index];
+        const uploaded = await uploadFile(file);
+        uploadedPaths.push(uploaded.path);
 
-      const generatedTitle = files.length === 1 && el.title.value.trim()
-        ? el.title.value.trim()
-        : slugFilename(file.name);
+        const generatedTitle = files.length === 1 && el.title.value.trim()
+          ? el.title.value.trim()
+          : slugFilename(file.name);
 
-      rows.push({
-        title: generatedTitle,
-        description: el.description.value.trim() || null,
-        image_url: uploaded.url,
-        alt_text: files.length === 1 && el.alt.value.trim()
-          ? el.alt.value.trim()
-          : generatedTitle,
-        category: el.categoryInput.value.trim() || null,
-        is_featured: el.featured.checked,
-        is_published: el.publishedToggle.checked,
-        display_order: (Number(el.order.value) || 0) + index
-      });
-    }
+        rows.push({
+          title: generatedTitle,
+          description: el.description.value.trim() || null,
+          image_url: uploaded.url,
+          alt_text: files.length === 1 && el.alt.value.trim()
+            ? el.alt.value.trim()
+            : generatedTitle,
+          category: el.categoryInput.value.trim() || null,
+          is_featured: el.featured.checked,
+          is_published: el.publishedToggle.checked,
+          display_order: (Number(el.order.value) || 0) + index
+        });
+      }
 
-    const { error } = await supabase.from("gallery_images").insert(rows);
-    if (error) {
+      const { error } = await supabase.from("gallery_images").insert(rows);
+      if (error) throw error;
+    } catch (error) {
       await removeUploadedPaths(uploadedPaths);
       throw error;
     }
