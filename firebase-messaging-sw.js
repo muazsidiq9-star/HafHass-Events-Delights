@@ -23,5 +23,51 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// Background notification display and click routing will be
-// added after the customer opt-in and secure token flow is ready.
+messaging.onBackgroundMessage(payload => {
+  const notification = payload.notification || {};
+  const data = payload.data || {};
+
+  const title = notification.title || data.title || "HAFHASS Events & Delights";
+
+  const options = {
+    body: notification.body || data.body || "You have a new update from HAFHASS.",
+    icon: "/favicon.ico",
+    badge: "/favicon.ico",
+    data: {
+      url: data.url || data.action_url || "/account/notification.html"
+    }
+  };
+
+  return self.registration.showNotification(title, options);
+});
+
+self.addEventListener("notificationclick", event => {
+  event.notification.close();
+
+  const target = new URL(
+    event.notification.data?.url || "/account/notification.html",
+    self.location.origin
+  );
+
+  if (target.origin !== self.location.origin) {
+    return;
+  }
+
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true })
+      .then(windowClients => {
+        for (const client of windowClients) {
+          if ("focus" in client) {
+            client.navigate(target.href);
+            return client.focus();
+          }
+        }
+
+        if (clients.openWindow) {
+          return clients.openWindow(target.href);
+        }
+
+        return undefined;
+      })
+  );
+});
