@@ -1325,7 +1325,10 @@ body.account-page {
 }  
   
 [data-theme="dark"] .account-promo-card {  
-  background: linear-gradient(115deg, #42212f, #683449);  
+  background: linear-gradient(115deg,
+    color-mix(in srgb, var(--account-primary) 45%, #191519),
+    color-mix(in srgb, var(--account-primary) 65%, #191519)
+  );  
 }  
   
 [data-theme="dark"] .account-primary-button {  
