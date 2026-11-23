@@ -247,12 +247,39 @@ document.addEventListener("DOMContentLoaded", () => {
       const { data, error } = await supabase.rpc(rpcName, params);
       if (error) throw error;
 
+      let pushMessage = "";
+      try {
+        const { data: pushResult, error: pushError } = await supabase.functions.invoke(
+          "send-push-notification",
+          {
+            body: {
+              broadcast: mode === "broadcast",
+              user_id: mode === "individual" ? el.customerSelect.value : null,
+              title,
+              message,
+              action_url: actionUrl || "/account/notification.html"
+            }
+          }
+        );
+
+        if (pushError) throw pushError;
+        const sent = Number(pushResult?.sent || 0);
+        const failed = Number(pushResult?.failed || 0);
+        pushMessage = sent
+          ? " Device push sent to " + sent.toLocaleString("en-NG") + " device" + (sent === 1 ? "." : "s.")
+          : " No device push was delivered (customers can still read the in-app notification).";
+        if (failed) pushMessage += " " + failed.toLocaleString("en-NG") + " device delivery" + (failed === 1 ? " failed." : "s failed.");
+      } catch (pushError) {
+        console.error("Push notification delivery failed:", pushError);
+        pushMessage = " The in-app notification was created, but device push could not be sent.";
+      }
+
       if (mode === "broadcast") {
         const count = Number(data) || 0;
         showFeedback("Broadcast completed successfully. " + count.toLocaleString("en-NG") +
-          " customer notification" + (count === 1 ? " was" : "s were") + " created.", "success");
+          " customer notification" + (count === 1 ? " was" : "s were") + " created." + pushMessage, "success");
       } else {
-        showFeedback("Notification sent successfully to the selected customer.", "success");
+        showFeedback("Notification created successfully for the selected customer." + pushMessage, "success");
       }
 
       el.form.reset();
