@@ -1,0 +1,93 @@
+/* ======================================================
+   HAFHASS CUSTOMER PUSH NOTIFICATION PREFERENCES
+====================================================== */
+
+.push-preferences-card {
+  margin: 0 0 24px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid var(--account-border);
+  border-radius: 14px;
+  background: var(--account-surface);
+}
+
+.push-preferences-copy {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.push-preferences-icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--account-surface-soft);
+  color: var(--account-primary);
+  font-size: 18px;
+}
+
+.push-preferences-copy h2 {
+  margin: 0 0 5px;
+  color: var(--account-text);
+  font-family: "Playfair Display", serif;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.push-preferences-copy p {
+  margin: 0;
+  color: var(--account-muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.push-preferences-copy p[data-state="success"] { color: #27835b; }
+.push-preferences-copy p[data-state="error"] { color: #b54d5d; }
+
+.push-preferences-button {
+  min-height: 42px;
+  flex: 0 0 auto;
+  padding: 10px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid var(--account-primary);
+  border-radius: 9px;
+  background: var(--account-primary);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--account-transition);
+}
+
+.push-preferences-button:hover:not(:disabled) {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+
+.push-preferences-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 650px) {
+  .push-preferences-card {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 17px;
+  }
+
+  .push-preferences-button {
+    width: 100%;
+  }
+}
