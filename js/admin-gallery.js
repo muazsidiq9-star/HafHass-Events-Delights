@@ -14,6 +14,7 @@
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
   let images = [];
+  let shopCategories = [];
   let filteredImages = [];
   let currentPage = 1;
   let selectedFiles = [];
@@ -96,8 +97,10 @@
   }
 
   function populateCategories() {
-    const values = [...new Set(images.map(item => (item.category || "").trim()).filter(Boolean))]
-      .sort((a, b) => a.localeCompare(b));
+    const values = [...new Set([
+      ...shopCategories,
+      ...images.map(item => (item.category || "").trim()).filter(Boolean)
+    ])].sort((a, b) => a.localeCompare(b));
 
     const current = el.category.value;
     el.category.innerHTML = '<option value="all">All Categories</option>' +
@@ -125,6 +128,24 @@
       if (error) throw error;
 
       images = data || [];
+
+      // Existing shop categories are offered as suggestions,
+      // while administrators can still type custom gallery categories.
+      const { data: categoryData, error: categoryError } = await supabase
+        .from("categories")
+        .select("name")
+        .eq("is_active", true)
+        .order("name", { ascending: true });
+
+      if (categoryError) {
+        console.warn("Could not load shop category suggestions:", categoryError);
+        shopCategories = [];
+      } else {
+        shopCategories = (categoryData || [])
+          .map(category => (category.name || "").trim())
+          .filter(Boolean);
+      }
+
       updateStats();
       populateCategories();
       applyFilters();
