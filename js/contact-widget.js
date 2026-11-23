@@ -14,7 +14,15 @@
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
   stylesheet.href = new URL("../css/contact-widget.css", scriptURL).href;
-  document.head.appendChild(stylesheet);
+  const stylesheetReady = new Promise(resolve => {
+    stylesheet.addEventListener("load", resolve, { once: true });
+    stylesheet.addEventListener("error", resolve, { once: true });
+    document.head.appendChild(stylesheet);
+  });
+
+  const domReady = document.readyState === "loading"
+    ? new Promise(resolve => document.addEventListener("DOMContentLoaded", resolve, { once: true }))
+    : Promise.resolve();
 
   const POSITION_KEY = "hafhass-contact-position-v1";
   const BUTTON_SIZE = 58;
@@ -280,9 +288,5 @@
     window.addEventListener("pageshow", () => renderLinks(options));
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialise, { once: true });
-  } else {
-    initialise();
-  }
+  Promise.all([stylesheetReady, domReady]).then(initialise);
 })();
