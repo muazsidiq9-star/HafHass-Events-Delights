@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Manage HAFHASS EVENTS & DELIGHTS gallery images."
+  >
+
+  <title>Manage Gallery | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <link rel="stylesheet" href="../css/admin-gallery.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+  <!-- =====================================================
+       ADMIN HEADER
+  ====================================================== -->
+
+  <header class="admin-header">
+
+    <a href="dashboard.html" class="admin-brand">
+
+      <span class="admin-brand-logo">
+        <img
+          src=""
+          alt="Business logo"
+          data-store-image="logo_url"
+          hidden
+        >
+        <span data-store-logo-fallback>H</span>
+      </span>
+
+      <span class="admin-brand-copy">
+        <span
+          class="admin-brand-name"
+          data-store="business_name"
+        >HAFHASS</span>
+
+        <span
+          class="admin-brand-subtitle"
+          data-store="business_subtitle"
+        >EVENTS &amp; DELIGHTS</span>
+      </span>
+
+      <span class="admin-brand-badge">ADMIN</span>
+
+    </a>
+
+
+    <div class="admin-header-actions">
+
+      <span class="admin-header-user" id="adminHeaderName">
+        Administrator
+      </span>
+
+
+      <button
+        type="button"
+        class="admin-theme-toggle"
+        id="themeToggle"
+        aria-label="Switch theme"
+      >
+        <i class="fa-solid fa-moon theme-icon" aria-hidden="true"></i>
+      </button>
+
+
+      <button
+        type="button"
+        class="admin-mobile-menu"
+        id="adminMenuToggle"
+        aria-label="Open admin menu"
+        aria-expanded="false"
+        aria-controls="adminSidebar"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       ADMIN LAYOUT
+  ====================================================== -->
+
+  <div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+
+      <!-- ADMIN PROFILE -->
+
+      <div class="admin-sidebar-profile">
+
+        <div class="admin-avatar" id="adminAvatar">
+          <img class="avatar-photo" alt="" aria-hidden="true" hidden>
+          <span class="avatar-initials">A</span>
+        </div>
+
+        <div class="admin-profile-details">
+
+          <h3 id="adminSidebarName">
+            Administrator
+          </h3>
+
+          <p id="adminSidebarEmail">
+            Loading...
+          </p>
+
+          <span class="admin-role-badge" id="adminRole">
+            ADMIN
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+
+        <a
+          href="gallery.html"
+          class="admin-nav-link active"
+          aria-current="page"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-images" aria-hidden="true"></i>
+          </span>
+
+          <span>Gallery</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link" 
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+                <a href="profile.html" class="admin-nav-link" data-admin-profile-link>
+          <span class="admin-nav-icon"><i class="fa-solid fa-user-gear" aria-hidden="true"></i></span>
+          <span>My Profile</span>
+        </a>
+
+<a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html" class="admin-back-link">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="admin-main">
+
+      <section class="admin-page-heading">
+        <div>
+          <p class="admin-eyebrow">HAFHASS MANAGEMENT</p>
+          <h1>Gallery</h1>
+          <p>Showcase beautiful creations and inspiration independently of your shop products.</p>
+        </div>
+        <button type="button" class="admin-primary-button" id="addGalleryImageButton">
+          <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+          Upload Images
+        </button>
+      </section>
+
+      <section class="admin-gallery-stats" aria-label="Gallery statistics">
+        <article class="admin-gallery-stat-card">
+          <span class="admin-gallery-stat-icon"><i class="fa-solid fa-images" aria-hidden="true"></i></span>
+          <div><p>Total Images</p><h3 id="galleryTotalCount">—</h3></div>
+        </article>
+        <article class="admin-gallery-stat-card">
+          <span class="admin-gallery-stat-icon"><i class="fa-solid fa-eye" aria-hidden="true"></i></span>
+          <div><p>Published</p><h3 id="galleryPublishedCount">—</h3></div>
+        </article>
+        <article class="admin-gallery-stat-card">
+          <span class="admin-gallery-stat-icon"><i class="fa-solid fa-eye-slash" aria-hidden="true"></i></span>
+          <div><p>Drafts</p><h3 id="galleryDraftCount">—</h3></div>
+        </article>
+        <article class="admin-gallery-stat-card">
+          <span class="admin-gallery-stat-icon"><i class="fa-solid fa-star" aria-hidden="true"></i></span>
+          <div><p>Featured</p><h3 id="galleryFeaturedCount">—</h3></div>
+        </article>
+      </section>
+
+      <section class="admin-gallery-panel">
+        <div class="admin-gallery-toolbar">
+          <div>
+            <h2>Gallery Images</h2>
+            <p>Manage inspiration images, captions, categories and visibility.</p>
+          </div>
+          <div class="admin-gallery-controls">
+            <label class="admin-gallery-search">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input type="search" id="gallerySearch" placeholder="Search gallery..." autocomplete="off">
+            </label>
+            <select id="galleryStatusFilter" aria-label="Filter by publication status">
+              <option value="all">All Images</option>
+              <option value="published">Published</option>
+              <option value="draft">Drafts</option>
+              <option value="featured">Featured</option>
+            </select>
+            <select id="galleryCategoryFilter" aria-label="Filter by gallery category">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-gallery-result-bar">
+          <span id="galleryResultCount">Showing 0 images</span>
+          <button type="button" class="admin-gallery-reset" id="resetGalleryFilters">Reset filters</button>
+        </div>
+
+        <div class="admin-gallery-state" id="galleryAdminLoading" hidden>
+          <span class="admin-gallery-spinner"></span><p>Loading gallery images...</p>
+        </div>
+
+        <div class="admin-gallery-state admin-gallery-error" id="galleryAdminError" hidden>
+          <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+          <h3>Unable to load gallery</h3>
+          <p id="galleryAdminErrorMessage">Something went wrong.</p>
+          <button type="button" class="admin-secondary-button" id="retryGalleryLoad">Try Again</button>
+        </div>
+
+        <div class="admin-gallery-state" id="galleryAdminEmpty" hidden>
+          <span class="admin-gallery-empty-icon"><i class="fa-regular fa-images" aria-hidden="true"></i></span>
+          <h3>Your inspiration gallery starts here</h3>
+          <p>Upload images of your creations, styles and ideas. They don't need to be listed as shop products.</p>
+          <button type="button" class="admin-primary-button" id="emptyUploadGalleryButton">
+            <i class="fa-solid fa-plus" aria-hidden="true"></i> Upload First Images
+          </button>
+        </div>
+
+        <div class="admin-gallery-state" id="galleryAdminNoResults" hidden>
+          <span class="admin-gallery-empty-icon"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></span>
+          <h3>No matching images</h3>
+          <p>Try another search term or change the filters.</p>
+        </div>
+
+        <div class="admin-gallery-grid" id="adminGalleryGrid" hidden></div>
+
+        <div class="admin-gallery-pagination" id="galleryAdminPagination" hidden>
+          <span id="galleryPaginationInfo">Showing 0 of 0 images</span>
+          <div>
+            <button type="button" id="galleryPreviousPage" aria-label="Previous page" disabled><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+            <span id="galleryPageNumber">1</span>
+            <button type="button" id="galleryNextPage" aria-label="Next page" disabled><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </section>
+
+      <div class="admin-gallery-modal-overlay" id="galleryModalOverlay" hidden>
+        <section class="admin-gallery-modal" role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle">
+          <header class="admin-gallery-modal-header">
+            <div>
+              <p class="admin-eyebrow">GALLERY CONTENT</p>
+              <h2 id="galleryModalTitle">Upload Gallery Images</h2>
+            </div>
+            <button type="button" id="closeGalleryModal" class="admin-gallery-modal-close" aria-label="Close dialog">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </header>
+
+          <form id="galleryImageForm">
+            <input type="hidden" id="editingGalleryImageId">
+
+            <div class="admin-gallery-form-grid">
+              <div class="admin-gallery-form-group admin-gallery-form-full" id="galleryFilesGroup">
+                <label for="galleryImageFiles">Choose image(s) <span>*</span></label>
+                <input type="file" id="galleryImageFiles" accept="image/jpeg,image/png,image/webp" multiple>
+                <small>JPEG, PNG or WebP. Maximum 10MB per image. You can select multiple images.</small>
+                <div class="admin-gallery-file-list" id="gallerySelectedFiles"></div>
+              </div>
+
+              <div class="admin-gallery-form-group admin-gallery-form-full" id="galleryTitleGroup">
+                <label for="galleryImageTitle">Image title <span>*</span></label>
+                <input type="text" id="galleryImageTitle" maxlength="150" placeholder="e.g. Elegant floral birthday cake">
+                <small>For multiple uploads, titles are generated from each filename and can be edited individually later.</small>
+              </div>
+
+              <div class="admin-gallery-form-group">
+                <label for="galleryImageCategory">Category</label>
+                <input type="text" id="galleryImageCategory" list="galleryCategorySuggestions" maxlength="100" placeholder="e.g. Cakes &amp; Cupcakes">
+                <datalist id="galleryCategorySuggestions"></datalist>
+                <small>You can create a new inspiration category by typing it here.</small>
+              </div>
+
+              <div class="admin-gallery-form-group">
+                <label for="galleryImageOrder">Display order</label>
+                <input type="number" id="galleryImageOrder" min="0" step="1" value="0">
+                <small>Lower numbers appear first.</small>
+              </div>
+
+              <div class="admin-gallery-form-group admin-gallery-form-full">
+                <label for="galleryImageDescription">Description / caption</label>
+                <textarea id="galleryImageDescription" rows="3" maxlength="1000" placeholder="Add a short description or inspiration note..."></textarea>
+              </div>
+
+              <div class="admin-gallery-form-group admin-gallery-form-full" id="galleryAltGroup">
+                <label for="galleryImageAlt">Image alt text</label>
+                <input type="text" id="galleryImageAlt" maxlength="250" placeholder="Describe the image for accessibility">
+              </div>
+            </div>
+
+            <div class="admin-gallery-switches">
+              <label class="admin-gallery-switch">
+                <input type="checkbox" id="galleryImageFeatured">
+                <span class="admin-gallery-switch-track"></span>
+                <span><strong>Featured image</strong><small>Highlight this image as a featured gallery creation.</small></span>
+              </label>
+              <label class="admin-gallery-switch">
+                <input type="checkbox" id="galleryImagePublished" checked>
+                <span class="admin-gallery-switch-track"></span>
+                <span><strong>Publish image</strong><small>Published images can appear on the public gallery.</small></span>
+              </label>
+            </div>
+
+            <div class="admin-gallery-form-message" id="galleryFormMessage" hidden></div>
+            <div class="admin-gallery-form-actions">
+              <button type="button" class="admin-secondary-button" id="cancelGalleryForm">Cancel</button>
+              <button type="submit" class="admin-primary-button" id="saveGalleryImageButton">
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Save Images
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADD / EDIT CATEGORY MODAL
+  ====================================================== -->
+
+  <div
+    class="admin-category-modal-overlay"
+    id="categoryModalOverlay"
+    hidden
+  >
+
+    <div
+      class="admin-category-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="categoryModalTitle"
+    >
+
+
+      <!-- MODAL HEADER -->
+
+      <div class="admin-category-modal-header">
+
+        <div>
+
+          <p class="admin-eyebrow">
+            CATEGORY MANAGEMENT
+          </p>
+
+          <h2 id="categoryModalTitle">
+            Add New Category
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="admin-category-modal-close"
+          id="closeCategoryModal"
+          aria-label="Close modal"
+        >
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+
+      </div>
+
+
+
+      <!-- CATEGORY FORM -->
+
+      <form id="categoryForm">
+
+
+        <input
+          type="hidden"
+          id="editingCategoryId"
+        >
+
+
+        <!-- BASIC INFORMATION -->
+
+        <div class="admin-category-form-section">
+
+          <div class="admin-category-form-section-heading">
+
+            <h3>Basic Information</h3>
+
+            <p>
+              Enter the category details below.
+            </p>
+
+          </div>
+
+
+          <div class="admin-form-grid">
+
+
+            <div class="admin-form-group">
+
+              <label for="categoryName">
+                Category Name <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                id="categoryName"
+                placeholder="e.g. Cakes & Desserts"
+                required
+                maxlength="100"
+              >
+
+            </div>
+
+
+
+            <div class="admin-form-group">
+
+              <label for="categorySlug">
+                Category Slug
+              </label>
+
+              <input
+                type="text"
+                id="categorySlug"
+                placeholder="e.g. cakes-desserts"
+                maxlength="120"
+              >
+
+              <small>
+                Automatically generated from the category name.
+              </small>
+
+            </div>
+
+
+
+            <div class="admin-form-group">
+
+              <label for="categoryParent">
+                Parent Category
+              </label>
+
+              <select id="categoryParent">
+
+                <option value="">
+                  None — Main Category
+                </option>
+
+              </select>
+
+              <small>
+                Leave empty to create a main category.
+              </small>
+
+            </div>
+
+
+
+            <div class="admin-form-group">
+
+              <label for="categoryDisplayOrder">
+                Display Order
+              </label>
+
+              <input
+                type="number"
+                id="categoryDisplayOrder"
+                value="0"
+                min="0"
+                step="1"
+              >
+
+              <small>
+                Lower numbers appear first.
+              </small>
+
+            </div>
+
+
+
+            <div class="admin-form-group admin-form-group-full">
+
+              <label for="categoryDescription">
+                Description
+              </label>
+
+              <textarea
+                id="categoryDescription"
+                rows="4"
+                placeholder="Describe this category..."
+                maxlength="500"
+              ></textarea>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CATEGORY IMAGE -->
+
+        <div class="admin-category-form-section">
+
+          <div class="admin-category-form-section-heading">
+
+            <h3>Category Image</h3>
+
+            <p>
+              Add an image to represent this category.
+            </p>
+
+          </div>
+
+
+          <div class="admin-category-image-upload-area">
+
+            <input
+              type="file"
+              id="categoryImage"
+              accept="image/jpeg,image/png,image/webp"
+              hidden
+            >
+
+
+            <label
+              for="categoryImage"
+              class="admin-category-image-upload-label"
+            >
+
+              <span class="admin-upload-icon">
+                <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+              </span>
+
+              <strong>Choose Category Image</strong>
+
+              <span>
+                JPEG, PNG or WebP. Maximum 10MB.
+              </span>
+
+            </label>
+
+
+            <div
+              class="admin-category-image-preview"
+              id="categoryImagePreview"
+              hidden
+            ></div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CATEGORY SETTINGS -->
+
+        <div class="admin-category-form-section">
+
+          <div class="admin-category-form-section-heading">
+
+            <h3>Category Settings</h3>
+
+            <p>
+              Control the visibility of this category.
+            </p>
+
+          </div>
+
+
+          <div class="admin-category-switches">
+
+            <label class="admin-category-switch">
+
+              <input
+                type="checkbox"
+                id="categoryActive"
+                checked
+              >
+
+              <span class="admin-switch-indicator"></span>
+
+              <span class="admin-category-switch-text">
+
+                <strong>Active Category</strong>
+
+                <small>
+                  Make this category available in your store.
+                </small>
+
+              </span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- FORM MESSAGE -->
+
+        <div
+          class="admin-category-form-message"
+          id="categoryFormMessage"
+          hidden
+        ></div>
+
+
+
+        <!-- FORM ACTIONS -->
+
+        <div class="admin-category-form-actions">
+
+          <button
+            type="button"
+            class="admin-secondary-button"
+            id="cancelCategoryForm"
+          >
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            Cancel
+          </button>
+
+
+          <button
+            type="submit"
+            class="admin-primary-button"
+            id="saveCategoryButton"
+          >
+            <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+            Save Category
+          </button>
+
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ADMIN FOOTER
+  ====================================================== -->
+
+  <footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="../js/supabase-config.js"></script>
+  
+  <!-- SHARED STORE SETTINGS -->
+  <script src="../js/store-settings.js"></script>
+
+  <script src="../js/auth.js"></script>
+
+  <script src="../js/guards.js"></script>
+
+  <script src="../js/admin-layout.js"></script>
+
+  <script src="../js/admin-gallery.js"></script>
+
+
+</body>
+
+</html>
