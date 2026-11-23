@@ -270,8 +270,23 @@ document.addEventListener("DOMContentLoaded", () => {
           : " No device push was delivered (customers can still read the in-app notification).";
         if (failed) pushMessage += " " + failed.toLocaleString("en-NG") + " device delivery" + (failed === 1 ? " failed." : "s failed.");
       } catch (pushError) {
-        console.error("Push notification delivery failed:", pushError);
-        pushMessage = " The in-app notification was created, but device push could not be sent.";
+        let pushDetails = pushError?.message || "Unknown push delivery error.";
+
+        // Supabase FunctionsHttpError stores the server response in context.
+        // Read it so the admin sees the actual reason instead of only
+        // "Edge Function returned a non-2xx status code".
+        try {
+          const response = pushError?.context;
+          if (response && typeof response.clone === "function") {
+            const payload = await response.clone().json();
+            if (payload?.error) pushDetails = payload.error;
+          }
+        } catch (_) {
+          // Keep the original error message if the response is not JSON.
+        }
+
+        console.error("Push notification delivery failed:", pushError, pushDetails);
+        pushMessage = " The in-app notification was created, but device push could not be sent. Reason: " + pushDetails;
       }
 
       if (mode === "broadcast") {
