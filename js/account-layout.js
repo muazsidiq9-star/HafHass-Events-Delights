@@ -327,7 +327,18 @@
             table: "notifications",
             filter: `user_id=eq.${userId}`
           },
-          scheduleRefresh
+          () => {
+
+            // Keep the header badge and the open notification
+            // centre in sync from the same Realtime event.
+
+            scheduleRefresh();
+
+            window.dispatchEvent(
+              new CustomEvent("hafhass:notifications-updated")
+            );
+
+          }
         )
         .subscribe();
 
