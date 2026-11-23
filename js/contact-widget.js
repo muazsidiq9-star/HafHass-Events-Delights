@@ -17,9 +17,9 @@
   document.head.appendChild(stylesheet);
 
   const POSITION_KEY = "hafhass-contact-position-v1";
-  const EDGE_GAP = 0;
-  const PEEK_DISTANCE = 34;
   const BUTTON_SIZE = 58;
+  const EDGE_SNAP_DISTANCE = 88;
+  const RETURN_DELAY = 3500;
 
   const icons = {
     whatsapp: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.2 1.6 6L0 24l6.4-1.7a11.8 11.8 0 0 0 5.7 1.4h.1C18.7 23.7 24 18.4 24 11.9c0-3.2-1.2-6.2-3.5-8.4ZM12.1 21.7a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 8.4 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.4-.7-.4h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4Z"/></svg>',
@@ -117,26 +117,61 @@
     const options = widget.querySelector("#hafhassContactOptions");
     let side = "right";
     let currentY = Math.round(window.innerHeight * 0.72);
+    let currentX = window.innerWidth - BUTTON_SIZE;
     let pointerStart = null;
     let dragged = false;
     let suppressClick = false;
+    let returnTimer = null;
+    let floating = false;
 
     function clampY(y) {
       const half = BUTTON_SIZE / 2;
       return Math.max(half + 8, Math.min(window.innerHeight - half - 8, y));
     }
 
+    function clampX(x) {
+      return Math.max(8, Math.min(window.innerWidth - BUTTON_SIZE - 8, x));
+    }
+
     function applyPosition() {
       currentY = clampY(currentY);
       widget.style.top = currentY + "px";
-      widget.classList.toggle("is-docked-left", side === "left");
-      widget.classList.toggle("is-docked-right", side === "right");
+      widget.classList.toggle("is-floating", floating);
+      widget.classList.toggle("is-docked-left", !floating && side === "left");
+      widget.classList.toggle("is-docked-right", !floating && side === "right");
       widget.classList.toggle("panel-below", currentY < 310);
+      if (floating) {
+        currentX = clampX(currentX);
+        widget.style.left = currentX + "px";
+        widget.style.right = "auto";
+      } else {
+        widget.style.left = "";
+        widget.style.right = "";
+      }
+    }
+
+    function cancelReturnTimer() {
+      if (returnTimer) window.clearTimeout(returnTimer);
+      returnTimer = null;
+    }
+
+    function dockToNearestEdge() {
+      cancelReturnTimer();
+      side = currentX + BUTTON_SIZE / 2 < window.innerWidth / 2 ? "left" : "right";
+      floating = false;
+      applyPosition();
+      savePosition(side, currentY);
+      widget.classList.toggle("is-peeking", !widget.classList.contains("is-open"));
+    }
+
+    function scheduleAutoDock() {
+      cancelReturnTimer();
+      returnTimer = window.setTimeout(dockToNearestEdge, RETURN_DELAY);
     }
 
     function setOpen(open) {
       widget.classList.toggle("is-open", open);
-      widget.classList.toggle("is-peeking", !open);
+      widget.classList.toggle("is-peeking", !open && !floating);
       trigger.setAttribute("aria-expanded", String(open));
       trigger.setAttribute("aria-label", open ? "Close contact options" : "Open contact options");
       panel.setAttribute("aria-hidden", String(!open));
@@ -145,12 +180,20 @@
     const saved = readPosition();
     side = saved.side;
     currentY = clampY(saved.yRatio * window.innerHeight);
+    floating = false;
     applyPosition();
     setOpen(false);
 
     trigger.addEventListener("pointerdown", event => {
       if (event.button !== undefined && event.button !== 0) return;
-      pointerStart = { x: event.clientX, y: event.clientY, startY: currentY };
+      cancelReturnTimer();
+      const rect = widget.getBoundingClientRect();
+      pointerStart = {
+        x: event.clientX,
+        y: event.clientY,
+        startX: rect.left,
+        startY: rect.top + rect.height / 2
+      };
       dragged = false;
       trigger.setPointerCapture?.(event.pointerId);
       widget.classList.add("is-interacting");
@@ -162,20 +205,34 @@
       const dy = event.clientY - pointerStart.y;
       if (!dragged && Math.hypot(dx, dy) > 7) dragged = true;
       if (!dragged) return;
+
+      floating = true;
+      currentX = clampX(pointerStart.startX + dx);
       currentY = clampY(pointerStart.startY + dy);
-      widget.style.top = currentY + "px";
+      applyPosition();
       widget.classList.add("is-dragging");
+      widget.classList.remove("is-peeking");
     });
 
     function finishDrag(event) {
       if (!pointerStart) return;
       if (dragged) {
-        side = event.clientX < window.innerWidth / 2 ? "left" : "right";
+        currentX = clampX(currentX);
         currentY = clampY(currentY);
-        savePosition(side, currentY);
+        floating = true;
         applyPosition();
+
+        const distanceToLeft = currentX;
+        const distanceToRight = window.innerWidth - (currentX + BUTTON_SIZE);
+        if (Math.min(distanceToLeft, distanceToRight) <= EDGE_SNAP_DISTANCE) {
+          dockToNearestEdge();
+        } else {
+          widget.classList.remove("is-peeking");
+          scheduleAutoDock();
+        }
+
         suppressClick = true;
-        window.setTimeout(() => { suppressClick = false; }, 0);
+        window.setTimeout(() => { suppressClick = false; }, 80);
       }
       pointerStart = null;
       dragged = false;
@@ -204,9 +261,15 @@
     });
 
     window.addEventListener("resize", () => {
-      currentY = clampY(currentY);
-      applyPosition();
-      savePosition(side, currentY);
+      if (floating) {
+        currentX = clampX(currentX);
+        currentY = clampY(currentY);
+        dockToNearestEdge();
+      } else {
+        currentY = clampY(currentY);
+        applyPosition();
+        savePosition(side, currentY);
+      }
     });
 
     renderLinks(options);
