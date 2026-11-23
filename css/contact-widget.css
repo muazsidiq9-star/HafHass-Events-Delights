@@ -90,8 +90,8 @@
   transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
 }
 
-.is-docked-right .hafhass-contact-panel { right: 13px; transform-origin: bottom right; }
-.is-docked-left .hafhass-contact-panel { left: 13px; transform-origin: bottom left; }
+.is-docked-right .hafhass-contact-panel { right: 0; transform-origin: bottom right; }
+.is-docked-left .hafhass-contact-panel { left: 0; transform-origin: bottom left; }
 .hafhass-contact-widget.panel-below .hafhass-contact-panel {
   top: calc(100% + 13px);
   bottom: auto;
