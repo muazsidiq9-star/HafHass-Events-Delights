@@ -219,7 +219,7 @@
 .settings-form-group select:focus,
 .settings-form-group textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(167, 122, 62, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, var(--accent)) 12%, transparent);
 }
 
 .settings-form-group input:disabled,
@@ -425,7 +425,7 @@
 
 .settings-color-input input[type="text"]:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(167, 122, 62, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, var(--accent)) 12%, transparent);
 }
 
 
@@ -450,7 +450,7 @@
 
 .settings-money-input:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(167, 122, 62, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, var(--accent)) 12%, transparent);
 }
 
 .settings-money-input > span {
@@ -578,7 +578,7 @@
 }
 
 .settings-switch input:focus-visible + .settings-switch-slider {
-  outline: 3px solid rgba(167, 122, 62, 0.25);
+  outline: 3px solid color-mix(in srgb, var(--brand-primary, var(--accent)) 25%, transparent);
   outline-offset: 3px;
 }
 

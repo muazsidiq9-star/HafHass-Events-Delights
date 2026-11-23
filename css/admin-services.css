@@ -119,7 +119,7 @@
 .admin-services-search input:focus,
 .admin-services-toolbar select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(180, 130, 75, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, var(--accent)) 12%, transparent);
 }
 
 
@@ -597,7 +597,7 @@
 .admin-services-form-group select:focus,
 .admin-services-image-controls input[type="url"]:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(180, 130, 75, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, var(--accent)) 12%, transparent);
 }
 
 .admin-services-form-group small,
