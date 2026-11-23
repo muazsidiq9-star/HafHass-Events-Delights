@@ -46,7 +46,9 @@
   justify-content: center;
   gap: 8px;
   border-radius: 9px;
-  font: 600 .85rem var(--font-body, inherit);
+  font-family: inherit;
+  font-size: .85rem;
+  font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
 }
@@ -351,7 +353,9 @@
   border-radius: 6px;
   background: var(--surface);
   color: var(--text);
-  font: 600 .68rem var(--font-body, inherit);
+  font-family: inherit;
+  font-size: .68rem;
+  font-weight: 600;
   cursor: pointer;
 }
 .admin-gallery-card-actions button:hover { border-color: var(--accent); color: var(--accent); }
