@@ -16,9 +16,9 @@
 ========================================================= */
 
 :root {
-  --legal-primary: #702d43;
-  --legal-primary-soft: #f8edf0;
-  --legal-accent: #c6a46a;
+  --legal-primary: var(--brand-primary, #702d43);
+  --legal-primary-soft: color-mix(in srgb, var(--brand-secondary, #e8b8c3) 22%, #ffffff);
+  --legal-accent: var(--brand-accent, #c6a46a);
   --legal-text: #5f5558;
   --legal-heading: var(--heading-font, "Playfair Display", serif);
   --legal-body: var(--body-font, "Poppins", sans-serif);
@@ -70,7 +70,7 @@
     var(--store-background-image, linear-gradient(transparent, transparent)),
     radial-gradient(
       circle at 85% 15%,
-      rgba(198, 164, 106, 0.25),
+      color-mix(in srgb, var(--legal-accent) 25%, transparent),
       transparent 35%
     ),
     linear-gradient(
@@ -102,7 +102,7 @@
 .legal-hero .eyebrow {
   display: inline-block;
   margin-bottom: 16px;
-  color: #e8cda2;
+  color: var(--legal-accent);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 2px;
@@ -288,7 +288,7 @@
   color: var(--legal-primary);
   font-weight: 500;
   text-decoration: underline;
-  text-decoration-color: rgba(112, 45, 67, 0.35);
+  text-decoration-color: color-mix(in srgb, var(--legal-primary) 35%, transparent);
   text-underline-offset: 4px;
   transition: color 0.25s ease;
 }
@@ -496,7 +496,7 @@
   background:
     radial-gradient(
       circle at 85% 15%,
-      rgba(198, 164, 106, 0.2),
+      color-mix(in srgb, var(--legal-accent) 20%, transparent),
       transparent 35%
     ),
     linear-gradient(
@@ -550,7 +550,7 @@ html[data-theme="dark"] .legal-cta {
   background:
     radial-gradient(
       circle at 85% 15%,
-      rgba(198, 164, 106, 0.13),
+      color-mix(in srgb, var(--legal-accent) 13%, transparent),
       transparent 35%
     ),
     linear-gradient(
@@ -563,7 +563,7 @@ html[data-theme="dark"] .legal-cta {
 html[data-theme="dark"] .legal-intro .eyebrow,
 html[data-theme="dark"] .legal-section h3,
 html[data-theme="dark"] .legal-inline-link {
-  color: #e3b7c4;
+  color: var(--brand-secondary, #e3b7c4);
 }
 
 html[data-theme="dark"] .legal-intro h2 span {
@@ -584,7 +584,7 @@ html[data-theme="dark"] .legal-section {
 html[data-theme="dark"] .legal-section-number,
 html[data-theme="dark"] .legal-contact-details a i,
 html[data-theme="dark"] .policy-link-icon {
-  background: rgba(227, 183, 196, 0.12);
+  background: color-mix(in srgb, var(--brand-secondary, #e3b7c4) 12%, transparent);
   color: #e3b7c4;
 }
 
@@ -606,7 +606,7 @@ html[data-theme="dark"] .policy-link-card {
 }
 
 html[data-theme="dark"] .policy-link-card:hover {
-  border-color: #a76a7f;
+  border-color: var(--brand-secondary, #a76a7f);
 }
 
 html[data-theme="dark"] .policy-link-content strong {
