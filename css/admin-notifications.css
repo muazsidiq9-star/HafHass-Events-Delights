@@ -87,3 +87,80 @@
 .admin-customer-picker-footer button { padding:9px 16px;border:1px solid var(--border);border-radius:9px;background:var(--surface-soft);color:var(--text);font:500 .78rem "Poppins",sans-serif;cursor:pointer; }
 body.admin-customer-picker-open { overflow:hidden; }
 @media(max-width:520px){.admin-customer-picker-overlay{align-items:flex-end;padding:0}.admin-customer-picker-modal{width:100%;max-height:88dvh;border-radius:20px 20px 0 0}.admin-customer-picker-header{padding:20px 17px 14px}.admin-customer-picker-search{margin:14px 15px 8px}.admin-customer-picker-list{max-height:52dvh;padding-right:8px;padding-left:8px}.admin-customer-picker-footer{padding:12px 15px calc(12px + env(safe-area-inset-bottom))}}
+
+
+/* =========================================================
+   MOBILE RECIPIENT PICKER — WIDTH & VIEWPORT FIX
+   Keep the trigger inside its card and keep modal actions
+   visible above mobile browser/system UI.
+========================================================= */
+.admin-notification-recipient {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+  box-sizing: border-box;
+}
+
+.admin-notification-recipient > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-customer-picker-trigger {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.admin-customer-picker-copy {
+  min-width: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 520px) {
+  .admin-customer-picker-overlay {
+    align-items: flex-end;
+    padding: 0 0 max(8px, env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+  }
+
+  .admin-customer-picker-modal {
+    width: 100%;
+    height: auto;
+    max-height: min(84dvh, calc(100dvh - 16px), calc(100vh - 16px));
+    min-height: 0;
+    box-sizing: border-box;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .admin-customer-picker-header,
+  .admin-customer-picker-search,
+  .admin-customer-picker-results-bar,
+  .admin-customer-picker-footer {
+    flex-shrink: 0;
+  }
+
+  .admin-customer-picker-list {
+    flex: 1 1 auto;
+    min-height: 72px;
+    max-height: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-customer-picker-footer {
+    position: relative;
+    z-index: 1;
+    padding: 12px 15px max(14px, env(safe-area-inset-bottom, 0px));
+    background: var(--surface);
+  }
+
+  .admin-customer-picker-footer button {
+    flex: 0 0 auto;
+    min-height: 42px;
+  }
+}
