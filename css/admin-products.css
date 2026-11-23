@@ -818,7 +818,7 @@
 .admin-form-group select:focus,
 .admin-form-group textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(150, 100, 60, 0.09);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, var(--accent)) 9%, transparent);
 }
 
 .admin-form-group input::placeholder,
