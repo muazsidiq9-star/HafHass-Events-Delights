@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
     form: document.getElementById("notificationForm"),
     customerSearch: document.getElementById("customerSearch"),
     customerSelect: document.getElementById("customerSelect"),
+    pickerModal: document.getElementById("customerPickerModal"),
+    pickerList: document.getElementById("customerPickerList"),
+    pickerResultCount: document.getElementById("customerPickerResultCount"),
+    openCustomerPicker: document.getElementById("openCustomerPicker"),
+    closeCustomerPicker: document.getElementById("closeCustomerPicker"),
+    cancelCustomerPicker: document.getElementById("cancelCustomerPicker"),
+    selectedCustomerName: document.getElementById("selectedCustomerName"),
+    selectedCustomerDetails: document.getElementById("selectedCustomerDetails"),
     customerCountHint: document.getElementById("customerCountHint"),
     individual: document.getElementById("individualRecipient"),
     broadcast: document.getElementById("broadcastRecipient"),
@@ -59,18 +67,47 @@ document.addEventListener("DOMContentLoaded", () => {
       [customer.full_name, customer.email, customer.phone]
         .some(value => String(value || "").toLowerCase().includes(term))
     );
-    const selected = el.customerSelect.value;
+    const selectedId = el.customerSelect.value;
     el.customerSelect.innerHTML = '<option value="">Choose a customer…</option>' +
-      matches.map(customer => {
+      customers.map(customer => '<option value="' + escapeHtml(customer.id) + '">' +
+        escapeHtml(customer.full_name || "Customer") + '</option>').join("");
+    el.customerSelect.value = selectedId;
+    el.pickerResultCount.textContent = matches.length.toLocaleString("en-NG") + " customers found";
+    if (!matches.length) {
+      el.pickerList.innerHTML = '<div class="admin-customer-picker-empty">No customers match that search.</div>';
+    } else {
+      el.pickerList.innerHTML = matches.map(customer => {
         const name = customer.full_name || "Customer";
-        const details = [customer.email, customer.phone].filter(Boolean).join(" · ");
-        return '<option value="' + escapeHtml(customer.id) + '">' +
-          escapeHtml(name + (details ? " — " + details : "")) + '</option>';
+        const details = [customer.email, customer.phone].filter(Boolean).join(" · ") || "No contact details";
+        const initials = name.split(" ").slice(0, 2).map(part => part.charAt(0)).join("").toUpperCase();
+        const selected = customer.id === selectedId;
+        return '<button type="button" class="admin-customer-picker-item' + (selected ? ' is-selected' : '') +
+          '" role="option" aria-selected="' + selected + '" data-customer-id="' + escapeHtml(customer.id) + '">' +
+          '<span class="admin-customer-picker-item-avatar">' + escapeHtml(initials || "C") + '</span>' +
+          '<span class="admin-customer-picker-item-copy"><strong>' + escapeHtml(name) + '</strong><small>' + escapeHtml(details) + '</small></span>' +
+          (selected ? '<i class="fa-solid fa-circle-check admin-customer-picker-item-check" aria-hidden="true"></i>' : '') + '</button>';
       }).join("");
-    if (matches.some(customer => customer.id === selected)) el.customerSelect.value = selected;
-    el.customerCountHint.textContent = matches.length + " of " + customers.length + " active customer accounts shown.";
+    }
+    const selectedCustomer = customers.find(customer => customer.id === selectedId);
+    el.selectedCustomerName.textContent = selectedCustomer ? (selectedCustomer.full_name || "Customer") : "Select a customer";
+    el.selectedCustomerDetails.textContent = selectedCustomer ? ([selectedCustomer.email, selectedCustomer.phone].filter(Boolean).join(" · ") || "Customer account selected") : "Search and choose a customer account";
+    el.customerCountHint.textContent = customers.length.toLocaleString("en-NG") + " active customer accounts available.";
   }
 
+  function openCustomerPicker() {
+    if (!customers.length) { showFeedback("No active customer accounts are available to select.", "error"); return; }
+    el.pickerModal.hidden = false;
+    document.body.classList.add("admin-customer-picker-open");
+    el.customerSearch.value = "";
+    renderCustomerOptions();
+    window.setTimeout(() => el.customerSearch.focus(), 50);
+  }
+
+  function closeCustomerPicker() {
+    el.pickerModal.hidden = true;
+    document.body.classList.remove("admin-customer-picker-open");
+    el.openCustomerPicker.focus();
+  }
   async function loadCustomers() {
     el.customerSelect.innerHTML = '<option value="">Loading customer accounts…</option>';
     const { data, error, count } = await supabase
@@ -125,7 +162,19 @@ document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("change", updateRecipientMode)
   );
 
+  el.openCustomerPicker.addEventListener("click", openCustomerPicker);
+  el.closeCustomerPicker.addEventListener("click", closeCustomerPicker);
+  el.cancelCustomerPicker.addEventListener("click", closeCustomerPicker);
+  el.pickerModal.addEventListener("click", event => { if (event.target === el.pickerModal) closeCustomerPicker(); });
+  el.pickerList.addEventListener("click", event => {
+    const option = event.target.closest("[data-customer-id]");
+    if (!option) return;
+    el.customerSelect.value = option.dataset.customerId;
+    renderCustomerOptions(el.customerSearch.value);
+    closeCustomerPicker();
+  });
   el.customerSearch.addEventListener("input", () => renderCustomerOptions(el.customerSearch.value));
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && !el.pickerModal.hidden) closeCustomerPicker(); });
   el.message.addEventListener("input", () => {
     el.chars.textContent = el.message.value.length;
   });
@@ -133,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
   el.form.addEventListener("reset", () => {
     setTimeout(() => {
       el.customerSearch.value = "";
+      el.customerSelect.value = "";
       renderCustomerOptions();
       el.chars.textContent = "0";
       el.feedback.hidden = true;
@@ -165,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mode === "individual" && !el.customerSelect.value) {
       showFeedback("Please select a customer to receive this notification.", "error");
-      el.customerSelect.focus();
+      el.openCustomerPicker.focus();
       return;
     }
 
