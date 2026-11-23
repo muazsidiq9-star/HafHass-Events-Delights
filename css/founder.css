@@ -65,9 +65,9 @@
   background:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--brand-primary, #702d43) 82%, transparent) 0%,
-      color-mix(in srgb, var(--brand-primary, #702d43) 63%, transparent) 48%,
-      color-mix(in srgb, var(--brand-primary, #702d43) 25%, transparent) 100%
+      rgba(37, 15, 25, 0.82) 0%,
+      rgba(37, 15, 25, 0.63) 48%,
+      rgba(37, 15, 25, 0.25) 100%
     );
 }
 
@@ -918,8 +918,8 @@
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--brand-primary, #702d43) 90%, transparent),
-      color-mix(in srgb, var(--brand-primary, #702d43) 76%, transparent)
+      rgba(62, 21, 39, 0.9),
+      rgba(65, 27, 43, 0.76)
     );
 }
 
