@@ -731,38 +731,29 @@
 
   function subscribeToNewNotifications() {
 
-    try {
+    // account-layout.js owns the single Realtime subscription.
+    // It updates the header badge and broadcasts this event so
+    // the open notification page can refresh its list and count.
 
-      state.channel = supabase
-        .channel(`notifications-page-${state.user.id}`)
-        .on(
-          "postgres_changes",
-          {
-            event: "INSERT",
-            schema: "public",
-            table: "notifications",
-            filter: `user_id=eq.${state.user.id}`
-          },
-          () => {
+    window.addEventListener("hafhass:notifications-updated", () => {
 
-            clearTimeout(state.reloadTimer);
+      clearTimeout(state.reloadTimer);
 
-            state.reloadTimer = setTimeout(() => {
-              loadNotifications({ reset: true, silent: true });
-            }, 200);
+      state.reloadTimer = setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          loadNotifications({ reset: true, silent: true });
+        }
+      }, 180);
 
-          }
-        )
-        .subscribe();
+    });
 
-    } catch (error) {
+    // Also catch up when the customer returns to this page.
 
-      console.warn(
-        "HAFHASS Notifications: Live updates are unavailable.",
-        getErrorMessage(error)
-      );
-
-    }
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        loadNotifications({ reset: true, silent: true });
+      }
+    });
 
   }
 
