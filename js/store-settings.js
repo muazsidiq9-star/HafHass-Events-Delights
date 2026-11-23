@@ -1084,8 +1084,8 @@ function applyBrandColours(settings) {
      Loaded on public and customer pages only.
   ======================================================= */
 
-  if (!/(^|\\/)admin(\\/|$)/i.test(window.location.pathname)) {
-    const accountPage = /(^|\\/)account(\\/|$)/i.test(window.location.pathname);
+  if (!/(^|\/)admin(\/|$)/i.test(window.location.pathname)) {
+    const accountPage = /(^|\/)account(\/|$)/i.test(window.location.pathname);
     const contactWidgetScript = document.createElement("script");
     contactWidgetScript.src = (accountPage ? "../" : "") + "js/contact-widget.js";
     contactWidgetScript.defer = true;
