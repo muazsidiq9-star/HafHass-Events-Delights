@@ -20,7 +20,7 @@
   --account-text: #393238;  
   --account-muted: #8b8085;  
   --account-border: #eee3e5;  
-  --account-shadow: 0 8px 30px rgba(75, 37, 51, 0.06);  
+  --account-shadow: 0 8px 30px color-mix(in srgb, var(--account-primary) 6%, transparent);  
   --account-radius: 16px;  
   --account-transition: 0.25s ease;  
 }  
@@ -3285,7 +3285,7 @@ body.account-page {
 .address-form-group input:focus,
 .address-form-group textarea:focus {
   border-color: var(--account-primary, #702d43);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.08);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--account-primary) 8%, transparent);
 }
 
 
@@ -3865,7 +3865,7 @@ body.account-page {
 
 .profile-form-group input:focus {
   border-color: var(--account-primary, #702d43);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.09);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--account-primary) 9%, transparent);
 }
 
 .profile-form-group input[readonly] {
@@ -5034,7 +5034,7 @@ body.account-page > .account-footer {
 .checkout-field input:focus,
 .checkout-field textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.09);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--account-primary) 9%, transparent);
 }
 
 .checkout-field input[readonly] {
@@ -5105,7 +5105,7 @@ body.account-page > .account-footer {
 + .checkout-option-content {
   border-color: var(--accent);
   background: var(--surface-soft);
-  box-shadow: 0 0 0 2px rgba(112, 45, 67, 0.08);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 .checkout-option-icon {
@@ -5540,7 +5540,7 @@ body.account-page > .account-footer {
 .address-form-group select:focus,
 .address-form-group select:focus-visible {
   border-color: var(--account-primary, #702d43);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.08);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--account-primary) 8%, transparent);
   outline: none;
 }
 
@@ -5626,7 +5626,7 @@ body.account-page > .account-footer {
 
 .customer-custom-location-toggle:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--account-primary) 12%, transparent);
 }
 
 .customer-custom-location-notice {
@@ -5800,7 +5800,7 @@ body.customer-location-picker-open {
 .customer-location-picker-search input:focus,
 .customer-location-picker-search input:focus-visible {
   border-color: var(--account-primary, #702d43);
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.08);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--account-primary) 8%, transparent);
   outline: none;
 }
 
@@ -6203,7 +6203,7 @@ body.customer-location-picker-open {
 
 .account-dialog-actions button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(112, 45, 67, 0.18);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--account-primary) 18%, transparent);
 }
 
 .account-dialog-confirm {
