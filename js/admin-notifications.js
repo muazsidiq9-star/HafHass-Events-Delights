@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   let customers = [];
+  let activeCustomerTotal = 0;
   let sending = false;
 
   const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -72,9 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadCustomers() {
     el.customerSelect.innerHTML = '<option value="">Loading customer accounts…</option>';
-    const { data, error } = await supabase
+    const { data, error, count } = await supabase
       .from("profiles")
-      .select("id, full_name, email, phone")
+      .select("id, full_name, email, phone", { count: "exact" })
       .eq("role", "customer")
       .eq("is_active", true)
       .order("full_name", { ascending: true })
@@ -88,15 +89,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     customers = data || [];
+    activeCustomerTotal = Number(count ?? customers.length);
     renderCustomerOptions();
-    el.broadcastCount.textContent = customers.length.toLocaleString("en-NG");
-    if (!customers.length) el.customerCountHint.textContent = "No active customer accounts are currently available.";
+    el.broadcastCount.textContent = activeCustomerTotal.toLocaleString("en-NG");
+    if (!activeCustomerTotal) el.customerCountHint.textContent = "No active customer accounts are currently available.";
+    else if (activeCustomerTotal > customers.length) {
+      el.customerCountHint.textContent = "Showing the first " + customers.length.toLocaleString("en-NG") +
+        " of " + activeCustomerTotal.toLocaleString("en-NG") + " active customer accounts. Search within the loaded list to select an individual.";
+    }
   }
 
   function safeRelativeUrl(value) {
     const url = String(value || "").trim();
     if (!url) return null;
     if (/^[a-z][a-z0-9+.-]*:/i.test(url) || url.startsWith("//") ||
+        url.includes(String.fromCharCode(92)) ||
         !/^(\.\.\/|\.\/|\/|[a-zA-Z0-9_-])/.test(url) ||
         /[\s<>"]/g.test(url)) {
       throw new Error("Enter a valid relative website path, or leave the action link empty.");
@@ -163,12 +170,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (mode === "broadcast") {
-      if (!customers.length) {
+      if (!activeCustomerTotal) {
         showFeedback("There are no active customer accounts available for this broadcast.", "error");
         return;
       }
       const confirmed = window.confirm(
-        "You are about to send this notification to " + customers.length +
+        "You are about to send this notification to " + activeCustomerTotal.toLocaleString("en-NG") +
         " active customer accounts. Admin and staff accounts will not receive it.\n\n" +
         "Title: " + title + "\n\nMessage: " + message +
         "\n\nThis action cannot be undone. Continue?"
