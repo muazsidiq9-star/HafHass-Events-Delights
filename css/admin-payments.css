@@ -123,7 +123,7 @@
 
 .admin-payments-search input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(167, 122, 62, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary, var(--accent)) 12%, transparent);
 }
 
 .admin-payments-search input::placeholder {
