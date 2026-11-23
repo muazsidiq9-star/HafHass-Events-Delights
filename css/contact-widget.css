@@ -9,61 +9,95 @@
   --contact-text: var(--text, #342d31);
   --contact-muted: var(--text-muted, #82777c);
   position: fixed;
-  right: max(22px, env(safe-area-inset-right));
-  bottom: max(22px, env(safe-area-inset-bottom));
+  top: 72%;
   z-index: 999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 14px;
+  width: 58px;
+  height: 58px;
   font-family: var(--body-font, "Poppins", sans-serif);
+  transform: translateY(-50%);
+  overflow: visible;
 }
+
+.hafhass-contact-widget.is-docked-right { right: 0; left: auto; }
+.hafhass-contact-widget.is-docked-left { left: 0; right: auto; }
 
 .hafhass-contact-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 58px;
-  padding: 0 21px;
-  border: 0;
-  border-radius: 999px;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  place-items: center;
+  border: 2px solid rgba(255,255,255,.92);
+  border-radius: 50%;
   background: var(--contact-primary);
   color: #fff;
-  box-shadow: 0 9px 28px rgba(40, 20, 28, 0.23);
-  cursor: pointer;
-  font: 600 0.88rem/1 var(--body-font, "Poppins", sans-serif);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  box-shadow: 0 8px 26px rgba(40,20,28,.28);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform .28s ease, box-shadow .25s ease;
 }
 
-.hafhass-contact-trigger:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 13px 32px rgba(40, 20, 28, 0.28);
+.hafhass-contact-trigger:active { cursor: grabbing; }
+.hafhass-contact-trigger:hover,
+.hafhass-contact-trigger:focus-visible {
+  box-shadow: 0 10px 30px rgba(40,20,28,.34);
+  outline: 2px solid var(--contact-accent);
+  outline-offset: 3px;
 }
 
 .hafhass-contact-trigger-icon,
 .hafhass-contact-trigger-icon svg {
   display: block;
-  width: 23px;
-  height: 23px;
+  width: 24px;
+  height: 24px;
   fill: currentColor;
 }
 
+.hafhass-contact-widget.is-peeking.is-docked-right .hafhass-contact-trigger {
+  transform: translateX(34px);
+}
+.hafhass-contact-widget.is-peeking.is-docked-left .hafhass-contact-trigger {
+  transform: translateX(-34px);
+}
+.hafhass-contact-widget.is-open .hafhass-contact-trigger,
+.hafhass-contact-widget.is-interacting .hafhass-contact-trigger,
+.hafhass-contact-widget.is-dragging .hafhass-contact-trigger,
+.hafhass-contact-trigger:focus-visible {
+  transform: translateX(0);
+}
+.hafhass-contact-widget.is-dragging .hafhass-contact-trigger { transition: none; }
+
 .hafhass-contact-panel {
-  width: min(340px, calc(100vw - 36px));
+  position: absolute;
+  bottom: calc(100% + 13px);
+  width: min(340px, calc(100vw - 28px));
+  max-height: min(440px, calc(100vh - 32px));
+  overflow-y: auto;
   padding: 22px;
-  border: 1px solid var(--border, rgba(112, 45, 67, 0.14));
+  border: 1px solid var(--border, rgba(112,45,67,.14));
   border-radius: 19px;
   background: var(--contact-surface);
   color: var(--contact-text);
-  box-shadow: 0 18px 55px rgba(35, 22, 28, 0.2);
+  box-shadow: 0 18px 55px rgba(35,22,28,.2);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(12px) scale(0.97);
-  transform-origin: bottom right;
-  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+  transform: translateY(10px) scale(.97);
+  transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
 }
+
+.is-docked-right .hafhass-contact-panel { right: 13px; transform-origin: bottom right; }
+.is-docked-left .hafhass-contact-panel { left: 13px; transform-origin: bottom left; }
+.hafhass-contact-widget.panel-below .hafhass-contact-panel {
+  top: calc(100% + 13px);
+  bottom: auto;
+  transform-origin: top right;
+}
+.hafhass-contact-widget.panel-below.is-docked-left .hafhass-contact-panel { transform-origin: top left; }
 
 .hafhass-contact-widget.is-open .hafhass-contact-panel {
   opacity: 1;
@@ -78,115 +112,69 @@
   justify-content: space-between;
   gap: 12px;
 }
-
 .hafhass-contact-eyebrow {
   display: block;
   margin-bottom: 6px;
   color: var(--contact-accent);
-  font-size: 0.61rem;
+  font-size: .61rem;
   font-weight: 700;
-  letter-spacing: 0.13em;
+  letter-spacing: .13em;
 }
-
 .hafhass-contact-panel-heading h2 {
   margin: 0;
   color: var(--contact-primary);
   font: 600 1.55rem/1.2 var(--heading-font, "Playfair Display", serif);
 }
-
 .hafhass-contact-close {
   display: grid;
   width: 34px;
   height: 34px;
   flex: 0 0 34px;
   place-items: center;
-  border: 1px solid var(--border, rgba(112, 45, 67, 0.15));
+  border: 1px solid var(--border, rgba(112,45,67,.15));
   border-radius: 50%;
   background: transparent;
   color: var(--contact-text);
   cursor: pointer;
 }
-
-.hafhass-contact-close svg {
-  width: 19px;
-  height: 19px;
-  fill: currentColor;
-}
-
+.hafhass-contact-close svg { width: 19px; height: 19px; fill: currentColor; }
 .hafhass-contact-intro {
   margin: 11px 0 17px;
   color: var(--contact-muted);
-  font-size: 0.78rem;
+  font-size: .78rem;
   line-height: 1.65;
 }
-
-.hafhass-contact-options {
-  display: grid;
-  gap: 9px;
-}
-
+.hafhass-contact-options { display: grid; gap: 9px; }
 .hafhass-contact-link {
   display: flex;
   align-items: center;
   gap: 12px;
   min-height: 50px;
   padding: 10px 13px;
-  border: 1px solid var(--border, rgba(112, 45, 67, 0.12));
+  border: 1px solid var(--border, rgba(112,45,67,.12));
   border-radius: 11px;
-  background: var(--surface-soft, rgba(112, 45, 67, 0.045));
+  background: var(--surface-soft, rgba(112,45,67,.045));
   color: var(--contact-primary);
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: .8rem;
   font-weight: 600;
-  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  transition: background .2s ease, transform .2s ease, border-color .2s ease;
 }
-
 .hafhass-contact-link:hover {
   transform: translateX(-3px);
   border-color: var(--contact-accent);
-  background: var(--rose, rgba(232, 184, 195, 0.2));
+  background: var(--rose, rgba(232,184,195,.2));
 }
-
-.hafhass-contact-link svg {
-  width: 21px;
-  height: 21px;
-  flex: 0 0 21px;
-  fill: currentColor;
-}
-
-.hafhass-contact-link-whatsapp svg {
-  color: #239b62;
-}
-
-.hafhass-contact-empty {
-  margin: 0;
-  color: var(--contact-muted);
-  font-size: 0.76rem;
-  line-height: 1.6;
-}
+.hafhass-contact-link svg { width: 21px; height: 21px; flex: 0 0 21px; fill: currentColor; }
+.hafhass-contact-link-whatsapp svg { color: #239b62; }
+.hafhass-contact-empty { margin: 0; color: var(--contact-muted); font-size: .76rem; line-height: 1.6; }
 
 @media (max-width: 600px) {
-  .hafhass-contact-widget {
-    right: max(15px, env(safe-area-inset-right));
-    bottom: max(16px, env(safe-area-inset-bottom));
-    gap: 11px;
-  }
-
-  .hafhass-contact-trigger {
-    min-height: 54px;
-    padding: 0 17px;
-    font-size: 0.82rem;
-  }
-
-  .hafhass-contact-panel {
-    padding: 19px;
-  }
+  .hafhass-contact-panel { padding: 19px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hafhass-contact-trigger,
   .hafhass-contact-panel,
-  .hafhass-contact-link {
-    transition: none;
-  }
+  .hafhass-contact-link { transition: none; }
 }
