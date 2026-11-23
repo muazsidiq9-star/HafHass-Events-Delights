@@ -742,6 +742,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // 15. LOAD GALLERY
   // =====================================================
 
+  async function fetchIndependentGalleryImages() {
+
+    const { data, error } = await supabase
+      .from("gallery_images")
+      .select("id,title,description,image_url,alt_text,category,is_featured,display_order")
+      .eq("is_published", true)
+      .order("is_featured", {
+        ascending: false
+      })
+      .order("display_order", {
+        ascending: true,
+        nullsFirst: false
+      })
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    return data || [];
+
+  }
+
+
   async function loadGallery() {
 
     if (isLoading) {
@@ -768,39 +794,75 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
 
-      // FETCH ACTIVE PRODUCTS
+      // FETCH INDEPENDENTLY UPLOADED GALLERY IMAGES
+
+      const independentImages = await fetchIndependentGalleryImages();
+
+
+      // FETCH ACTIVE SHOP PRODUCTS AND THEIR IMAGES
 
       const products = await fetchActiveProducts();
 
+      let productGalleryItems = [];
 
-      if (!products.length) {
+      if (products.length) {
 
-        galleryItems = [];
+        const productIds = products.map(
+          product => product.id
+        );
 
-        showEmpty();
+        const productImages = await fetchProductImages(
+          productIds
+        );
 
-        return;
+        productGalleryItems = prepareGalleryItems(
+          products,
+          productImages
+        );
 
       }
 
 
-      // FETCH THEIR IMAGES
+      // COMBINE BOTH SOURCES WITHOUT DUPLICATING IMAGE URLS
 
-      const productIds = products.map(
-        product => product.id
-      );
+      const usedImageUrls = new Set();
 
-      const images = await fetchProductImages(
-        productIds
-      );
+      const independentItems = independentImages
+        .filter(item => item.image_url)
+        .filter(item => {
+          if (usedImageUrls.has(item.image_url)) {
+            return false;
+          }
+
+          usedImageUrls.add(item.image_url);
+          return true;
+        })
+        .map(item => ({
+          imageId: item.id,
+          productId: null,
+          imageUrl: item.image_url,
+          imageAlt: item.alt_text || item.title || "HAFHASS creation",
+          title: item.title || "HAFHASS creation",
+          description: item.description || item.category || ""
+        }));
 
 
-      // PREPARE GALLERY DATA
+      const productItems = productGalleryItems.filter(item => {
 
-      galleryItems = prepareGalleryItems(
-        products,
-        images
-      );
+        if (usedImageUrls.has(item.imageUrl)) {
+          return false;
+        }
+
+        usedImageUrls.add(item.imageUrl);
+        return true;
+
+      });
+
+
+      galleryItems = [
+        ...independentItems,
+        ...productItems
+      ];
 
 
       // DISPLAY GALLERY
