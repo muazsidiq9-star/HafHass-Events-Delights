@@ -18,6 +18,7 @@
   let filteredImages = [];
   let currentPage = 1;
   let selectedFiles = [];
+  let previewUrls = [];
   let editingImage = null;
   let saving = false;
 
@@ -251,11 +252,20 @@
   }
 
   function renderSelectedFiles() {
-    el.selectedFiles.innerHTML = selectedFiles.map((file, index) =>
-      '<div class="admin-gallery-selected-file"><i class="fa-regular fa-image"></i><span>' +
-      escapeHTML(file.name) + '</span><small>' + (file.size / 1024 / 1024).toFixed(2) +
-      ' MB</small><button type="button" data-remove-file="' + index + '" aria-label="Remove file"><i class="fa-solid fa-xmark"></i></button></div>'
-    ).join("");
+    previewUrls.forEach(url => URL.revokeObjectURL(url));
+    previewUrls = [];
+
+    el.selectedFiles.innerHTML = selectedFiles.map((file, index) => {
+      const previewUrl = URL.createObjectURL(file);
+      previewUrls.push(previewUrl);
+
+      return '<div class="admin-gallery-selected-file">' +
+        '<img class="admin-gallery-file-preview" src="' + previewUrl + '" alt="Preview of ' + escapeHTML(file.name) + '">' +
+        '<span>' + escapeHTML(file.name) + '</span>' +
+        '<small>' + (file.size / 1024 / 1024).toFixed(2) + ' MB</small>' +
+        '<button type="button" data-remove-file="' + index + '" aria-label="Remove file"><i class="fa-solid fa-xmark"></i></button>' +
+      '</div>';
+    }).join("");
   }
 
   function resetForm() {
@@ -265,6 +275,8 @@
     editingImage = null;
     el.files.value = "";
     el.selectedFiles.replaceChildren();
+    previewUrls.forEach(url => URL.revokeObjectURL(url));
+    previewUrls = [];
     el.files.multiple = true;
     el.filesGroup.hidden = false;
     el.titleGroup.hidden = false;
@@ -309,9 +321,17 @@
   }
 
   function validateFiles(files) {
+    const allowedExtensions = ["jpg", "jpeg", "png", "webp"];
+
     for (const file of files) {
-      if (!ALLOWED_TYPES.includes(file.type)) {
-        throw new Error("Only JPEG, PNG and WebP images are supported.");
+      const extension = (file.name.split(".").pop() || "").toLowerCase();
+      const typeIsAllowed = !file.type || ALLOWED_TYPES.includes(file.type);
+      const extensionIsAllowed = allowedExtensions.includes(extension);
+
+      // Some Android file pickers return an empty MIME type.
+      // In that case, validate using the filename extension instead.
+      if (!typeIsAllowed || !extensionIsAllowed) {
+        throw new Error(file.name + ": choose a JPEG, PNG or WebP image.");
       }
       if (file.size > MAX_FILE_SIZE) {
         throw new Error(file.name + " exceeds the 10MB image limit.");
