@@ -20,6 +20,7 @@
 
 .hafhass-contact-widget.is-docked-right { right: 0; left: auto; }
 .hafhass-contact-widget.is-docked-left { left: 0; right: auto; }
+.hafhass-contact-widget.is-floating { right: auto; left: 0; }
 
 .hafhass-contact-trigger {
   position: absolute;
@@ -63,6 +64,9 @@
 .hafhass-contact-widget.is-peeking.is-docked-left .hafhass-contact-trigger {
   transform: translateX(-34px);
 }
+.hafhass-contact-widget.is-floating .hafhass-contact-trigger {
+  transform: translateX(0);
+}
 .hafhass-contact-widget.is-open .hafhass-contact-trigger,
 .hafhass-contact-widget.is-interacting .hafhass-contact-trigger,
 .hafhass-contact-widget.is-dragging .hafhass-contact-trigger,
@@ -92,6 +96,16 @@
 
 .is-docked-right .hafhass-contact-panel { right: 0; transform-origin: bottom right; }
 .is-docked-left .hafhass-contact-panel { left: 0; transform-origin: bottom left; }
+.is-floating .hafhass-contact-panel {
+  left: auto;
+  right: 0;
+  transform-origin: bottom right;
+}
+.is-floating.panel-below .hafhass-contact-panel {
+  top: calc(100% + 13px);
+  bottom: auto;
+  transform-origin: top right;
+}
 .hafhass-contact-widget.panel-below .hafhass-contact-panel {
   top: calc(100% + 13px);
   bottom: auto;
