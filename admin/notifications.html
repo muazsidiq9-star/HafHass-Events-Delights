@@ -384,10 +384,13 @@
       </fieldset>
 
       <div class="admin-notification-recipient" id="individualRecipient">
-        <label for="customerSearch">Find customer</label>
-        <input type="search" id="customerSearch" placeholder="Search name, email or phone..." autocomplete="off">
-        <label for="customerSelect">Select recipient</label>
-        <select id="customerSelect" required>
+        <label>Choose recipient</label>
+        <button type="button" class="admin-customer-picker-trigger" id="openCustomerPicker" aria-haspopup="dialog" aria-controls="customerPickerModal">
+          <span class="admin-customer-picker-avatar"><i class="fa-solid fa-user" aria-hidden="true"></i></span>
+          <span class="admin-customer-picker-copy"><strong id="selectedCustomerName">Select a customer</strong><small id="selectedCustomerDetails">Search and choose a customer account</small></span>
+          <i class="fa-solid fa-chevron-down admin-customer-picker-chevron" aria-hidden="true"></i>
+        </button>
+        <select id="customerSelect" required tabindex="-1" aria-hidden="true" class="admin-customer-native-select">
           <option value="">Loading customer accounts…</option>
         </select>
         <p class="admin-field-hint" id="customerCountHint">Only active customer accounts are listed.</p>
@@ -477,6 +480,19 @@
 <!-- =====================================================
      JAVASCRIPT
 ====================================================== -->
+
+<div class="admin-customer-picker-overlay" id="customerPickerModal" hidden>
+  <section class="admin-customer-picker-modal" role="dialog" aria-modal="true" aria-labelledby="customerPickerTitle">
+    <header class="admin-customer-picker-header">
+      <div><p class="admin-eyebrow">RECIPIENT</p><h2 id="customerPickerTitle">Choose a customer</h2><p>Search your active customer accounts and select who should receive this notification.</p></div>
+      <button type="button" class="admin-customer-picker-close" id="closeCustomerPicker" aria-label="Close customer picker"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    </header>
+    <div class="admin-customer-picker-search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" id="customerSearch" placeholder="Search by name, email or phone..." autocomplete="off"></div>
+    <div class="admin-customer-picker-results-bar"><span id="customerPickerResultCount">Loading customers…</span><span>Active accounts</span></div>
+    <div class="admin-customer-picker-list" id="customerPickerList" role="listbox" aria-label="Customer accounts"><div class="admin-customer-picker-empty">Loading customer accounts…</div></div>
+    <footer class="admin-customer-picker-footer"><span>Only active customer accounts are shown.</span><button type="button" id="cancelCustomerPicker">Cancel</button></footer>
+  </section>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
