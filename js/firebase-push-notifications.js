@@ -3,7 +3,7 @@
 // CUSTOMER FIREBASE PUSH NOTIFICATIONS
 // ======================================================
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
 import {
   getMessaging,
   getToken,
@@ -30,6 +30,11 @@ import {
   if (!button || !status) return;
 
   const buttonLabel = button.querySelector("span");
+
+  if (!buttonLabel) {
+    console.error("HAFHASS Push Notifications: button label element is missing.");
+    return;
+  }
 
   function setStatus(message, stateName = "info") {
     status.textContent = message;
@@ -90,7 +95,9 @@ import {
 
       await navigator.serviceWorker.ready;
 
-      const messaging = getMessaging(initializeApp(firebaseConfig));
+      // Reuse an existing Firebase app if another page script has already initialized it.
+      const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+      const messaging = getMessaging(firebaseApp);
 
       const token = await getToken(messaging, {
         vapidKey: VAPID_PUBLIC_KEY,
