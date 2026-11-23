@@ -247,47 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const { data, error } = await supabase.rpc(rpcName, params);
       if (error) throw error;
 
-      let pushMessage = "";
-      try {
-        const { data: pushResult, error: pushError } = await supabase.functions.invoke(
-          "send-push-notification",
-          {
-            body: {
-              broadcast: mode === "broadcast",
-              user_id: mode === "individual" ? el.customerSelect.value : null,
-              title,
-              message,
-              action_url: actionUrl || "/account/notification.html"
-            }
-          }
-        );
-
-        if (pushError) throw pushError;
-        const sent = Number(pushResult?.sent || 0);
-        const failed = Number(pushResult?.failed || 0);
-        pushMessage = sent
-          ? " Device push sent to " + sent.toLocaleString("en-NG") + " device" + (sent === 1 ? "." : "s.")
-          : " No device push was delivered (customers can still read the in-app notification).";
-        if (failed) pushMessage += " " + failed.toLocaleString("en-NG") + " device delivery" + (failed === 1 ? " failed." : "s failed.");
-      } catch (pushError) {
-        let pushDetails = pushError?.message || "Unknown push delivery error.";
-
-        // Supabase FunctionsHttpError stores the server response in context.
-        // Read it so the admin sees the actual reason instead of only
-        // "Edge Function returned a non-2xx status code".
-        try {
-          const response = pushError?.context;
-          if (response && typeof response.clone === "function") {
-            const payload = await response.clone().json();
-            if (payload?.error) pushDetails = payload.error;
-          }
-        } catch (_) {
-          // Keep the original error message if the response is not JSON.
-        }
-
-        console.error("Push notification delivery failed:", pushError, pushDetails);
-        pushMessage = " The in-app notification was created, but device push could not be sent. Reason: " + pushDetails;
-      }
+      // Firebase push is dispatched automatically by the database trigger
+      // after the notification row is inserted. Do not invoke the sender here,
+      // otherwise every admin notification would generate duplicate pushes.
+      const pushMessage = " Device push is queued automatically for customers who have enabled browser notifications.";
 
       if (mode === "broadcast") {
         const count = Number(data) || 0;
