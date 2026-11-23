@@ -98,6 +98,7 @@
     widget.id = "hafhassContactWidget";
     widget.className = "hafhass-contact-widget";
     widget.innerHTML =
+      '<div class="hafhass-contact-backdrop" aria-hidden="true"></div>' +
       '<section class="hafhass-contact-panel" id="hafhassContactPanel" aria-label="Contact HAFHASS" aria-hidden="true">' +
         '<div class="hafhass-contact-panel-heading">' +
           '<div><span class="hafhass-contact-eyebrow">WE WOULD LOVE TO HEAR FROM YOU</span><h2>Let’s talk!</h2></div>' +
@@ -113,6 +114,7 @@
 
     const trigger = widget.querySelector(".hafhass-contact-trigger");
     const panel = widget.querySelector(".hafhass-contact-panel");
+    const backdrop = widget.querySelector(".hafhass-contact-backdrop");
     const close = widget.querySelector(".hafhass-contact-close");
     const options = widget.querySelector("#hafhassContactOptions");
     let side = "right";
@@ -253,6 +255,7 @@
     });
 
     close.addEventListener("click", () => setOpen(false));
+    backdrop.addEventListener("click", () => setOpen(false));
     document.addEventListener("click", event => {
       if (!widget.contains(event.target)) setOpen(false);
     });
