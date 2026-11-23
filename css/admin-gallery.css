@@ -572,3 +572,14 @@ body.admin-gallery-modal-open { overflow: hidden; }
   .admin-gallery-spinner { animation: none; }
   .admin-gallery-card-image img { transition: none; }
 }
+
+/* Selected image thumbnails in the upload modal */
+.admin-gallery-file-preview {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--surface-soft);
+}
+.admin-gallery-selected-file { min-height: 70px; }
