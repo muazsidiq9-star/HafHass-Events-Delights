@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+  <!-- BASIC PAGE INFORMATION -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta name="description" content="Send individual and broadcast notifications to HAFHASS customers.">
+
+  <title>Notifications | HAFHASS EVENTS & DELIGHTS</title>
+
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- FONT AWESOME -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+
+
+  <!-- STYLESHEETS -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <link rel="stylesheet" href="../css/admin-notifications.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+<!-- =====================================================
+     ADMIN HEADER
+====================================================== -->
+
+<header class="admin-header">
+
+  <a href="dashboard.html" class="admin-brand">
+
+  <span class="admin-brand-logo">
+    <img
+      src=""
+      alt="Business logo"
+      data-store-image="logo_url"
+      hidden
+    >
+    <span data-store-logo-fallback>H</span>
+  </span>
+
+  <span class="admin-brand-copy">
+    <span class="admin-brand-name" data-store="business_name">HAFHASS</span>
+    <span class="admin-brand-subtitle" data-store="business_subtitle">EVENTS &amp; DELIGHTS</span>
+  </span>
+
+  <span class="admin-brand-badge">ADMIN</span>
+
+</a>
+
+
+  <div class="admin-header-actions">
+
+    <span class="admin-header-user" id="adminHeaderName">
+      Administrator
+    </span>
+
+
+    <button
+      type="button"
+      class="admin-theme-toggle"
+      id="themeToggle"
+      aria-label="Switch theme"
+    >
+
+      <i
+        class="fa-solid fa-moon theme-icon"
+        aria-hidden="true"
+      ></i>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="admin-mobile-menu"
+      id="adminMenuToggle"
+      aria-label="Open admin menu"
+      aria-expanded="false"
+      aria-controls="adminSidebar"
+    >
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     ADMIN LAYOUT
+====================================================== -->
+
+<div class="admin-layout">
+
+
+  <!-- ===================================================
+       SIDEBAR
+  ==================================================== -->
+
+  <aside class="admin-sidebar" id="adminSidebar">
+
+
+    <!-- ADMIN PROFILE -->
+
+    <div class="admin-sidebar-profile">
+
+      <div class="admin-avatar" id="adminAvatar">
+          <img class="avatar-photo" alt="" aria-hidden="true" hidden>
+          <span class="avatar-initials">A</span>
+        </div>
+
+
+      <div class="admin-profile-details">
+
+        <h3 id="adminSidebarName">
+          Administrator
+        </h3>
+
+        <p id="adminSidebarEmail">
+          Loading...
+        </p>
+
+        <span class="admin-role-badge" id="adminRole">
+          ADMIN
+        </span>
+
+      </div>
+
+    </div>
+
+
+
+    
+      <!-- SIDEBAR NAVIGATION -->
+
+      <nav class="admin-navigation">
+
+        <p class="admin-nav-heading">
+          MAIN MENU
+        </p>
+
+
+        <a
+          href="dashboard.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+          </span>
+
+          <span>Dashboard</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          STORE MANAGEMENT
+        </p>
+
+
+        <a
+          href="products.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+          </span>
+
+          <span>Products</span>
+        </a>
+
+
+        <a
+          href="categories.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </span>
+
+          <span>Categories</span>
+        </a>
+
+        <a href="gallery.html" class="admin-nav-link">
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-images" aria-hidden="true"></i>
+          </span>
+          <span>Gallery</span>
+        </a>
+
+
+        <a
+          href="orders.html"
+          class="admin-nav-link" 
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          </span>
+
+          <span>Orders</span>
+        </a>
+
+
+        <a
+          href="customers.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+          </span>
+
+          <span>Customers</span>
+        </a>
+
+
+        <a href="notifications.html" class="admin-nav-link active" aria-current="page">
+          <span class="admin-nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>
+          <span>Notifications</span>
+        </a>
+
+        <p class="admin-nav-heading">
+          PAYMENTS & DELIVERY
+        </p>
+
+
+        <a
+          href="payments.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          </span>
+
+          <span>Payments</span>
+        </a>
+
+
+        <a
+          href="delivery-zones.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+          </span>
+
+          <span>Delivery Zones</span>
+        </a>
+
+
+        <p class="admin-nav-heading">
+          CONFIGURATION
+        </p>
+
+
+                <a href="profile.html" class="admin-nav-link" data-admin-profile-link>
+          <span class="admin-nav-icon"><i class="fa-solid fa-user-gear" aria-hidden="true"></i></span>
+          <span>My Profile</span>
+        </a>
+
+<a
+          href="settings.html"
+          class="admin-nav-link"
+        >
+          <span class="admin-nav-icon">
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          </span>
+
+          <span>Store Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="admin-sidebar-bottom">
+
+        <a href="../index.html" class="admin-back-link">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to Website
+        </a>
+
+
+        <button
+          type="button"
+          class="admin-logout-button"
+          id="adminLogoutButton"
+        >
+          <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+          Sign Out
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+      class="admin-sidebar-overlay"
+      id="adminSidebarOverlay"
+    ></div>
+
+
+
+  <!-- ===================================================
+       MAIN CONTENT
+  ==================================================== -->
+
+  <main class="admin-main admin-notifications-main">
+  <section class="admin-page-heading">
+    <div>
+      <p class="admin-eyebrow">CUSTOMER COMMUNICATION</p>
+      <h1>Notifications</h1>
+      <p>Send updates, announcements and offers directly to customer accounts.</p>
+    </div>
+  </section>
+
+  <section class="admin-notification-intro">
+    <div class="admin-notification-intro-icon"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></div>
+    <div>
+      <h2>Reach your customers</h2>
+      <p>Send a personal message to one customer or share an announcement with every active customer account.</p>
+    </div>
+  </section>
+
+  <section class="admin-notification-composer">
+    <div class="admin-section-heading">
+      <div><h2>Compose Notification</h2><p>New notifications appear in customers’ account notification centre.</p></div>
+    </div>
+
+    <form id="notificationForm" novalidate>
+      <fieldset class="admin-notification-fieldset">
+        <legend>Who should receive this?</legend>
+        <div class="admin-recipient-options">
+          <label class="admin-recipient-option">
+            <input type="radio" name="recipientMode" value="individual" checked>
+            <span class="admin-recipient-option-card"><i class="fa-solid fa-user" aria-hidden="true"></i><strong>One customer</strong><small>Choose a specific customer account.</small></span>
+          </label>
+          <label class="admin-recipient-option">
+            <input type="radio" name="recipientMode" value="broadcast">
+            <span class="admin-recipient-option-card"><i class="fa-solid fa-users" aria-hidden="true"></i><strong>All customers</strong><small>Send to every active customer account.</small></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="admin-notification-recipient" id="individualRecipient">
+        <label for="customerSearch">Find customer</label>
+        <input type="search" id="customerSearch" placeholder="Search name, email or phone..." autocomplete="off">
+        <label for="customerSelect">Select recipient</label>
+        <select id="customerSelect" required>
+          <option value="">Loading customer accounts…</option>
+        </select>
+        <p class="admin-field-hint" id="customerCountHint">Only active customer accounts are listed.</p>
+      </div>
+
+      <div class="admin-notification-broadcast" id="broadcastRecipient" hidden>
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+        <p>This message will be sent to <strong id="broadcastCustomerCount">—</strong> active customer accounts. Administrator and staff accounts are excluded. You’ll be asked to confirm before sending.</p>
+      </div>
+
+      <div class="admin-notification-form-grid">
+        <div class="admin-notification-field">
+          <label for="notificationType">Notification category</label>
+          <select id="notificationType" required>
+            <option value="general">General announcement</option>
+            <option value="promotion">Promotion / Special offer</option>
+            <option value="service_update">Service update</option>
+          </select>
+        </div>
+        <div class="admin-notification-field">
+          <label for="notificationTitle">Notification title</label>
+          <input type="text" id="notificationTitle" maxlength="120" placeholder="e.g. A special update for you" required>
+        </div>
+      </div>
+
+      <div class="admin-notification-field">
+        <label for="notificationMessage">Message</label>
+        <textarea id="notificationMessage" rows="6" maxlength="2000" placeholder="Write your notification message..." required></textarea>
+        <div class="admin-notification-character-count"><span id="messageCharacterCount">0</span>/2000</div>
+      </div>
+
+      <div class="admin-notification-field">
+        <label for="notificationActionUrl">Action link <span>(optional)</span></label>
+        <input type="text" id="notificationActionUrl" placeholder="e.g. ../shop.html or ../account/orders.html" maxlength="500">
+        <p class="admin-field-hint">Use a relative page path within the website. External links and unsafe URL schemes are not accepted.</p>
+      </div>
+
+      <div class="admin-notification-form-actions">
+        <button type="reset" class="admin-notification-reset" id="resetNotificationForm">Clear Form</button>
+        <button type="submit" class="admin-notification-send" id="sendNotificationButton">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span>Send Notification</span>
+        </button>
+      </div>
+    </form>
+
+    <div class="admin-notification-feedback" id="notificationFeedback" role="status" aria-live="polite" hidden></div>
+  </section>
+
+  <section class="admin-notification-safety">
+    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+    <p><strong>Sending responsibly:</strong> Broadcasts cannot be recalled after sending. Review the title and message carefully before confirming.</p>
+  </section>
+</main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CUSTOMER DETAILS MODAL
+====================================================== -->
+
+<div
+  class="admin-customer-modal-overlay"
+  id="customerModalOverlay"
+  hidden
+>
+
+  <div
+    class="admin-customer-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="customerModalTitle"
+  >
+
+
+    <!-- MODAL HEADER -->
+
+    <div class="admin-customer-modal-header">
+
+      <div>
+
+        <p class="admin-eyebrow">
+          CUSTOMER INFORMATION
+        </p>
+
+        <h2 id="customerModalTitle">
+          Customer Details
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="admin-customer-modal-close"
+        id="closeCustomerModal"
+        aria-label="Close customer details"
+      >
+
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
+      </button>
+
+    </div>
+
+
+
+    <!-- MODAL CONTENT -->
+
+    <div
+      class="admin-customer-modal-content"
+      id="customerModalContent"
+    >
+
+      <!-- CUSTOMER DETAILS GENERATED BY JAVASCRIPT -->
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ADMIN FOOTER
+====================================================== -->
+
+<footer class="admin-footer">
+
+  <p>
+    © <span id="adminYear"></span>
+
+    <span data-store="business_name">
+      HAFHASS
+    </span>
+
+    <span data-store="business_subtitle">
+      EVENTS & DELIGHTS
+    </span>.
+
+    All rights reserved.
+  </p>
+
+  <p data-store="tagline">
+    Where Taste Meets Creativity.
+  </p>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase-config.js"></script>
+<!-- SHARED STORE SETTINGS -->
+<script src="../js/store-settings.js"></script>
+
+<script src="../js/auth.js"></script>
+
+<script src="../js/guards.js"></script>
+
+<script src="../js/admin-layout.js"></script>
+
+<script src="../js/admin-notifications.js"></script>
+
+
+</body>
+
+</html>
