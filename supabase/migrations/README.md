@@ -49,4 +49,28 @@ This README is an inventory only. It is not executable SQL and must not be treat
 4. For a reproducible new environment, first produce and review a schema-only baseline from the live project using the Supabase CLI/database dump workflow. Review required schemas, extensions, grants, RLS policies, triggers, functions, and storage configuration before treating that snapshot as a baseline.
 5. Keep future changes as timestamped SQL files in this directory and apply them through the normal migration workflow.
 
+## Recovery investigation (24 November 2026)
+
+The recovery check was extended beyond the current folder:
+
+- The complete GitHub main tree and the commit history for supabase/migrations were checked.
+- The available prior HAFHASS project conversation records were searched for the original SQL bodies.
+- The live Supabase migration ledger was queried again and its 21 versions were matched against the repository files.
+
+No original SQL bodies for the first 20 versions were found in those sources. The only recoverable migration SQL currently available is the Phase 3 file listed above. This is a confirmed source-availability gap, not evidence that those database changes were never applied.
+
+### Recommended baseline capture
+
+Because the live database contains the accumulated result of those changes, a schema-only dump can be captured as a new starting baseline for future environment setup. It must not be labelled as any of the missing historical migrations, and it must not be replayed against this already-migrated production database.
+
+After linking the Supabase CLI to this project and supplying the database password when prompted, an operator can capture the application-owned schemas with:
+
+```bash
+supabase db dump --linked --schema public,private --file supabase/baseline/20261124_live_application_schema.sql
+```
+
+Review that dump before committing it. It is a snapshot of the current application schema, not a reconstruction of the original migration sequence. Supabase-managed Auth/Storage internals, project settings, secrets, Edge Function deployment configuration, and bucket contents require separate handling and should not be assumed to be included.
+
+The existing 21-entry migration ledger remains authoritative for production history. Continue creating one timestamped migration file for every future database change.
+
 The live database's migration history is the record of what was applied. This repository archive documents the gap transparently rather than claiming to contain SQL that is unavailable.
