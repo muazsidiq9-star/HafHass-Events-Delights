@@ -1,3 +1,8 @@
+// Foreground push messages must be handled on every public page that loads main.js.
+import("./firebase-push-notifications.js").catch(error => {
+  console.warn("HAFHASS foreground notifications could not initialize:", error);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==========================================
