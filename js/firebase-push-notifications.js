@@ -119,6 +119,8 @@ import {
         : "Notifications are allowed by your browser. Activate this device to receive HAFHASS updates.");
     } catch (error) {
       console.warn("HAFHASS Push Notifications: Could not check this device's status.", error);
+      if (buttonLabel) buttonLabel.textContent = "Activate this device";
+      setStatus("We couldn't check this device's registration. You can still activate it here.", "error");
     }
   }
 
