@@ -112,19 +112,16 @@
   // scheme (https:, javascript:) or starting with // is ignored.
 
   function getSafeActionUrl(value) {
-
-    const url = String(value || "").trim();
-
-    if (!url) {
-      return null;
-    }
-
-    if (/^[a-z][a-z0-9+.-]*:/i.test(url) || url.startsWith("//")) {
-      return null;
-    }
-
-    return url;
-
+    const raw = String(value || "").trim();
+    if (!raw || /^[a-z][a-z0-9+.-]*:/i.test(raw) || raw.startsWith("//") || raw.includes(String.fromCharCode(92))) return null;
+    try {
+      const target = new URL(raw, window.location.href);
+      if (target.origin !== window.location.origin || target.username || target.password) return null;
+      if (target.pathname === "/order-details.html") target.pathname = "/account/order-details.html";
+      if (target.pathname === "/orders.html") target.pathname = "/account/orders.html";
+      if (target.pathname === "/notification.html") target.pathname = "/account/notification.html";
+      return target.pathname + target.search + target.hash;
+    } catch (_) { return null; }
   }
 
 
