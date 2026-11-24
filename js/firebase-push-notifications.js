@@ -7,7 +7,8 @@ import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebase
 import {
   getMessaging,
   getToken,
-  isSupported
+  isSupported,
+  onMessage
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-messaging.js";
 
 (() => {
@@ -26,25 +27,65 @@ import {
 
   const button = document.getElementById("enablePushNotifications");
   const status = document.getElementById("pushPreferencesStatus");
+  const buttonLabel = button?.querySelector("span") || null;
 
-  if (!button || !status) return;
-
-  const buttonLabel = button.querySelector("span");
-
-  if (!buttonLabel) {
-    console.error("HAFHASS Push Notifications: button label element is missing.");
-    return;
-  }
+  // Foreground message handling must also run on account pages
+  // that do not contain the notification-preferences controls.
 
   function setStatus(message, stateName = "info") {
+    if (!status) return;
     status.textContent = message;
     status.dataset.state = stateName;
   }
 
   function setBusy(busy, label) {
+    if (!button || !buttonLabel) return;
     button.disabled = busy;
     buttonLabel.textContent = label;
   }
+
+  // Firebase sends foreground messages to the page instead of
+  // automatically displaying them. Use the service worker to show
+  // them consistently, including on Android Chrome.
+  async function initializeForegroundMessageHandling() {
+    try {
+      if (!(await isSupported())) return;
+
+      const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+      const messaging = getMessaging(firebaseApp);
+
+      onMessage(messaging, async payload => {
+        if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+        const title = String(
+          payload?.notification?.title || payload?.data?.title || "HAFHASS"
+        ).slice(0, 120);
+        const body = String(
+          payload?.notification?.body || payload?.data?.body || ""
+        ).slice(0, 1000);
+        const targetUrl = payload?.data?.url || payload?.data?.action_url ||
+          "/account/notification.html";
+
+        try {
+          const registration = await navigator.serviceWorker.ready;
+          await registration.showNotification(title, {
+            body,
+            icon: "/favicon.ico",
+            badge: "/favicon.ico",
+            data: { url: targetUrl },
+            tag: payload?.data?.notification_id || ("hafhass-" + Date.now()),
+            renotify: false
+          });
+        } catch (error) {
+          console.error("HAFHASS Push Notifications: Could not display foreground message.", error);
+        }
+      });
+    } catch (error) {
+      console.warn("HAFHASS Push Notifications: Foreground message handling is unavailable.", error);
+    }
+  }
+
+  initializeForegroundMessageHandling();
 
   async function enablePushNotifications() {
     if (!window.hafhassSupabase) {
@@ -140,7 +181,11 @@ import {
     }
   }
 
-  button.addEventListener("click", enablePushNotifications);
+  if (button && buttonLabel) {
+    button.addEventListener("click", enablePushNotifications);
+  }
+
+  if (!button || !buttonLabel) return;
 
   if (!("Notification" in window)) {
     button.disabled = true;
