@@ -284,27 +284,34 @@ document.addEventListener("DOMContentLoaded", () => {
         actionUrl
       };
       const requestFingerprint = JSON.stringify(requestPayload);
-      const requestStorageKey = "hafhass-admin-notification-request";
-      let requestState = null;
+      const requestStorageKey = "hafhass-admin-notification-requests";
+      let pendingRequests = {};
 
       try {
-        requestState = JSON.parse(sessionStorage.getItem(requestStorageKey) || "null");
+        pendingRequests = JSON.parse(sessionStorage.getItem(requestStorageKey) || "{}");
+        if (!pendingRequests || typeof pendingRequests !== "object" || Array.isArray(pendingRequests)) {
+          pendingRequests = {};
+        }
       } catch (_) {
-        requestState = null;
+        pendingRequests = {};
       }
 
-      if (!requestState ||
-          requestState.fingerprint !== requestFingerprint ||
-          !requestState.requestId) {
-        requestState = {
-          fingerprint: requestFingerprint,
-          requestId: crypto.randomUUID()
-        };
-        sessionStorage.setItem(requestStorageKey, JSON.stringify(requestState));
+      // Keep a separate idempotency key for each unfinished payload. If an
+      // admin edits the form after a network timeout, the original request
+      // key remains available if they later retry that exact payload.
+      let requestId = pendingRequests[requestFingerprint];
+      if (!requestId) {
+        requestId = crypto.randomUUID
+          ? crypto.randomUUID()
+          : ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+              (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        pendingRequests[requestFingerprint] = requestId;
+        sessionStorage.setItem(requestStorageKey, JSON.stringify(pendingRequests));
       }
 
       const { data, error } = await supabase.rpc("admin_send_notification_idempotent", {
-        p_request_id: requestState.requestId,
+        p_request_id: requestId,
         p_user_id: recipientUserId,
         p_title: title,
         p_message: message,
@@ -320,7 +327,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Remove the retry key only after the database confirms success.
       // If the response is lost, the same form payload reuses the same key.
-      sessionStorage.removeItem(requestStorageKey);
+      delete pendingRequests[requestFingerprint];
+      if (Object.keys(pendingRequests).length) {
+        sessionStorage.setItem(requestStorageKey, JSON.stringify(pendingRequests));
+      } else {
+        sessionStorage.removeItem(requestStorageKey);
+      }
 
       // Firebase push is dispatched automatically by the database trigger
       // after notification rows are inserted. Never invoke another sender here.
