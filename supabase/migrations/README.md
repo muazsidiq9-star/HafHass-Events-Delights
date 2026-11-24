@@ -74,3 +74,37 @@ Review that dump before committing it. It is a snapshot of the current applicati
 The existing 21-entry migration ledger remains authoritative for production history. Continue creating one timestamped migration file for every future database change.
 
 The live database's migration history is the record of what was applied. This repository archive documents the gap transparently rather than claiming to contain SQL that is unavailable.
+
+## Verified live schema baseline (24 November 2026)
+
+A schema-only PostgreSQL dump has now been captured directly from the live HAFHASS Supabase project and committed to:
+
+- `supabase/baseline/hafhass-live-schema.sql`
+
+Capture details:
+
+- Project ref: `gbsvwizlplzoantvkese`
+- Source database version: PostgreSQL `17.11`
+- Dump client: PostgreSQL `pg_dump 18.2`, run from Termux on Android
+- Connection: Supabase Session Pooler over SSL
+- Included schemas: `public`, `private`
+- Export mode: schema only; no table data was exported
+- File size at capture: approximately 247 KB
+- Dump completion marker was verified, along with both schema declarations and 36 table definitions.
+
+The committed snapshot was inspected and contains the definitions for the application schemas, including tables, functions, triggers, indexes, policies, grants, and default privileges. The inspection found 36 tables, 40 functions, 37 triggers, 88 policies, and 109 indexes. All 36 tables have Row Level Security enabled.
+
+### How to use this baseline safely
+
+- Treat this file as a **reference snapshot of the live application schema as of 24 November 2026**.
+- It is not one of the missing historical migrations and does not reconstruct their original SQL or order.
+- Do not apply it to the existing production project: those objects already exist there, and replaying the snapshot can cause conflicts or unintended changes.
+- Do not rename it to a historical migration version or mark it as applied in the Supabase migration ledger.
+- Use it as a reviewed starting reference when preparing a separate environment or planning future schema changes. Before any restore, review dependencies, extensions, roles, grants, and Supabase-specific objects in the target environment.
+
+### Scope limitations
+
+This is not a full Supabase project backup. It covers only the `public` and `private` database schemas. It does not include table data, Auth or Storage internal schemas, Auth users, Storage bucket objects/files, Vault secret values, Edge Function source/deployments, project configuration, environment variables, or other project-level settings. Functions that read secrets from Supabase Vault still require those secrets to be configured separately in the destination project.
+
+The live Supabase migration ledger remains the authoritative record of the 21 migrations applied to production. Continue adding each future database change as a new timestamped SQL migration; keep this baseline unchanged as the dated snapshot unless a new, separately dated baseline is intentionally captured.
+
