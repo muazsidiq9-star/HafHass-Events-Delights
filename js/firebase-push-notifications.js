@@ -28,6 +28,8 @@ import {
   const button = document.getElementById("enablePushNotifications");
   const status = document.getElementById("pushPreferencesStatus");
   const buttonLabel = button?.querySelector("span") || null;
+  let currentDeviceToken = null;
+  let currentDeviceActive = false;
 
   // Foreground message handling must also run on account pages
   // that do not contain the notification-preferences controls.
@@ -72,7 +74,7 @@ import {
             body,
             icon: "/favicon.ico",
             badge: "/favicon.ico",
-            data: { url: targetUrl },
+            data: { url: targetUrl, notification_id: payload?.data?.notification_id || "" },
             tag: payload?.data?.notification_id || ("hafhass-" + Date.now()),
             renotify: false
           });
@@ -87,7 +89,66 @@ import {
 
   initializeForegroundMessageHandling();
 
+  async function getCurrentDeviceToken(messaging) {
+    const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js", { scope: "/" });
+    await navigator.serviceWorker.ready;
+    return getToken(messaging, { vapidKey: VAPID_PUBLIC_KEY, serviceWorkerRegistration: registration });
+  }
+
+  async function getSignedInUser() {
+    const { data: { user }, error } = await window.hafhassSupabase.auth.getUser();
+    if (error || !user) throw new Error("Please sign in again before managing notifications.");
+    return user;
+  }
+
+  async function refreshCurrentDeviceStatus() {
+    if (!button || !buttonLabel || !window.hafhassSupabase || !("Notification" in window) || Notification.permission !== "granted") return;
+    try {
+      const user = await getSignedInUser();
+      const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+      const messaging = getMessaging(app);
+      currentDeviceToken = await getCurrentDeviceToken(messaging);
+      if (!currentDeviceToken) return;
+      const { data, error } = await window.hafhassSupabase.from("push_subscriptions").select("id")
+        .eq("user_id", user.id).eq("token", currentDeviceToken).eq("is_active", true).maybeSingle();
+      if (error) throw error;
+      currentDeviceActive = Boolean(data);
+      buttonLabel.textContent = currentDeviceActive ? "Disable on this device" : "Activate this device";
+      setStatus(currentDeviceActive
+        ? "Push notifications are active on this device. You can turn them off here at any time."
+        : "Notifications are allowed by your browser. Activate this device to receive HAFHASS updates.");
+    } catch (error) {
+      console.warn("HAFHASS Push Notifications: Could not check this device's status.", error);
+    }
+  }
+
+  async function disablePushNotifications() {
+    if (!window.hafhassSupabase || !currentDeviceToken) {
+      setStatus("This device could not be identified. Please refresh and try again.", "error");
+      return;
+    }
+    setBusy(true, "Disabling...");
+    try {
+      const user = await getSignedInUser();
+      const { error } = await window.hafhassSupabase.from("push_subscriptions")
+        .update({ is_active: false, updated_at: new Date().toISOString() })
+        .eq("user_id", user.id).eq("token", currentDeviceToken);
+      if (error) throw error;
+      currentDeviceActive = false;
+      setStatus("Push notifications have been disabled for this device. Other registered devices are unchanged.", "success");
+      setBusy(false, "Activate this device");
+    } catch (error) {
+      console.error("HAFHASS Push Notifications: Could not disable this device.", error);
+      setStatus(error?.message || "This device could not be disabled. Please try again.", "error");
+      setBusy(false, "Disable on this device");
+    }
+  }
+
   async function enablePushNotifications() {
+    if (currentDeviceActive) {
+      await disablePushNotifications();
+      return;
+    }
     if (!window.hafhassSupabase) {
       setStatus("The account connection is not ready. Please refresh and try again.", "error");
       return;
@@ -129,21 +190,10 @@ import {
         );
       }
 
-      const registration = await navigator.serviceWorker.register(
-        "/firebase-messaging-sw.js",
-        { scope: "/" }
-      );
-
-      await navigator.serviceWorker.ready;
-
       // Reuse an existing Firebase app if another page script has already initialized it.
       const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
       const messaging = getMessaging(firebaseApp);
-
-      const token = await getToken(messaging, {
-        vapidKey: VAPID_PUBLIC_KEY,
-        serviceWorkerRegistration: registration
-      });
+      const token = await getCurrentDeviceToken(messaging);
 
       if (!token) {
         throw new Error("Firebase could not create a device token. Please try again.");
@@ -167,12 +217,10 @@ import {
 
       if (saveError) throw saveError;
 
-      setStatus(
-        "Push notifications are enabled on this device. You'll receive HAFHASS updates here.",
-        "success"
-      );
-      setBusy(false, "Notifications enabled");
-      button.disabled = true;
+      currentDeviceToken = token;
+      currentDeviceActive = true;
+      setStatus("Push notifications are enabled on this device. You can disable this device at any time.", "success");
+      setBusy(false, "Disable on this device");
 
     } catch (error) {
       console.error("HAFHASS Push Notifications:", error);
@@ -191,8 +239,9 @@ import {
     button.disabled = true;
     setStatus("This browser does not support push notifications.", "error");
   } else if (Notification.permission === "granted") {
-    setStatus("Notifications are already allowed by your browser. Tap the button to register this device.");
-    buttonLabel.textContent = "Activate this device";
+    setStatus("Checking whether this device is registered...");
+    buttonLabel.textContent = "Checking...";
+    refreshCurrentDeviceStatus();
   } else if (Notification.permission === "denied") {
     setStatus("Notifications are blocked in your browser settings. Allow them there before continuing.", "error");
   }
