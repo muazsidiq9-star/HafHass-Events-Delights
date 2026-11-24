@@ -244,27 +244,71 @@ document.addEventListener("DOMContentLoaded", () => {
     el.feedback.hidden = true;
 
     try {
-      const rpcName = mode === "broadcast"
-        ? "admin_send_broadcast_notification"
-        : "admin_send_notification";
-      const params = mode === "broadcast"
-        ? { p_title: title, p_message: message, p_type: type, p_action_url: actionUrl }
-        : { p_user_id: el.customerSelect.value, p_title: title, p_message: message, p_type: type, p_action_url: actionUrl };
+      const recipientUserId = mode === "broadcast" ? null : el.customerSelect.value;
+      const requestPayload = {
+        mode,
+        recipientUserId,
+        title,
+        message,
+        type,
+        actionUrl
+      };
+      const requestFingerprint = JSON.stringify(requestPayload);
+      const requestStorageKey = "hafhass-admin-notification-request";
+      let requestState = null;
 
-      const { data, error } = await supabase.rpc(rpcName, params);
+      try {
+        requestState = JSON.parse(sessionStorage.getItem(requestStorageKey) || "null");
+      } catch (_) {
+        requestState = null;
+      }
+
+      if (!requestState ||
+          requestState.fingerprint !== requestFingerprint ||
+          !requestState.requestId) {
+        requestState = {
+          fingerprint: requestFingerprint,
+          requestId: crypto.randomUUID()
+        };
+        sessionStorage.setItem(requestStorageKey, JSON.stringify(requestState));
+      }
+
+      const { data, error } = await supabase.rpc("admin_send_notification_idempotent", {
+        p_request_id: requestState.requestId,
+        p_user_id: recipientUserId,
+        p_title: title,
+        p_message: message,
+        p_type: type,
+        p_action_url: actionUrl
+      });
+
       if (error) throw error;
 
+      const result = typeof data === "string" ? JSON.parse(data) : data;
+      const createdCount = Number(result?.created_count) || 0;
+      const replayed = result?.replayed === true;
+
+      // Remove the retry key only after the database confirms success.
+      // If the response is lost, the same form payload reuses the same key.
+      sessionStorage.removeItem(requestStorageKey);
+
       // Firebase push is dispatched automatically by the database trigger
-      // after the notification row is inserted. Do not invoke the sender here,
-      // otherwise every admin notification would generate duplicate pushes.
+      // after notification rows are inserted. Never invoke another sender here.
       const pushMessage = " Device push is queued automatically for customers who have enabled browser notifications.";
 
       if (mode === "broadcast") {
-        const count = Number(data) || 0;
-        showFeedback("Broadcast completed successfully. " + count.toLocaleString("en-NG") +
-          " customer notification" + (count === 1 ? " was" : "s were") + " created." + pushMessage, "success");
+        const action = replayed
+          ? "This broadcast had already been processed; no additional notifications were created."
+          : createdCount.toLocaleString("en-NG") + " customer notification" +
+            (createdCount === 1 ? " was" : "s were") + " created.";
+        showFeedback("Broadcast completed successfully. " + action + pushMessage, "success");
       } else {
-        showFeedback("Notification created successfully for the selected customer." + pushMessage, "success");
+        showFeedback(
+          replayed
+            ? "This notification had already been processed; no duplicate was created." + pushMessage
+            : "Notification created successfully for the selected customer." + pushMessage,
+          "success"
+        );
       }
 
       preserveFeedbackAfterReset = true;
