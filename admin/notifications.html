@@ -439,6 +439,36 @@
     <div class="admin-notification-feedback" id="notificationFeedback" role="status" aria-live="polite" hidden></div>
   </section>
 
+  <section class="admin-push-monitor" aria-labelledby="pushMonitorTitle">
+    <div class="admin-push-monitor-heading">
+      <div>
+        <p class="admin-eyebrow">DELIVERY HEALTH</p>
+        <h2 id="pushMonitorTitle">Browser Push Delivery</h2>
+        <p>Track queued deliveries, retries and dispatch outcomes. This monitor does not send test notifications.</p>
+      </div>
+      <button type="button" class="admin-push-monitor-refresh" id="refreshPushMonitor">
+        <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+        <span>Refresh</span>
+      </button>
+    </div>
+    <div class="admin-push-monitor-summary" id="pushMonitorSummary" aria-live="polite">
+      <div class="admin-push-monitor-loading">Loading delivery status…</div>
+    </div>
+    <div class="admin-push-monitor-note">
+      <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+      <p><strong>Partial delivery:</strong> when at least one device has accepted a notification but another fails, automatic retries are withheld to avoid sending duplicates to devices that already received it. Review these entries before taking action.</p>
+    </div>
+    <div class="admin-push-monitor-table-wrap">
+      <div class="admin-push-monitor-table-heading">
+        <h3>Recent dispatches</h3>
+        <span id="pushMonitorUpdated">Not yet refreshed</span>
+      </div>
+      <div id="pushMonitorRecent" class="admin-push-monitor-recent">
+        <div class="admin-push-monitor-loading">Loading recent dispatches…</div>
+      </div>
+    </div>
+  </section>
+
   <section class="admin-notification-safety">
     <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
     <p><strong>Sending responsibly:</strong> Broadcasts cannot be recalled after sending. Review the title and message carefully before confirming.</p>
