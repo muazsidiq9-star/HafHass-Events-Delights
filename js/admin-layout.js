@@ -46,6 +46,12 @@
     initializeLogout();
 
     await verifyAdminAccess();
+
+    if (window.HafhassAdmin?.user) {
+      import("./firebase-push-notifications.js").catch(error => {
+        console.warn("HAFHASS admin foreground notifications could not initialize:", error);
+      });
+    }
   }
 
 
