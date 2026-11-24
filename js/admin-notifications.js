@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let customers = [];
   let activeCustomerTotal = 0;
   let sending = false;
+  let preserveFeedbackAfterReset = false;
 
   const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
@@ -185,7 +186,13 @@ document.addEventListener("DOMContentLoaded", () => {
       el.customerSelect.value = "";
       renderCustomerOptions();
       el.chars.textContent = "0";
-      el.feedback.hidden = true;
+
+      if (preserveFeedbackAfterReset) {
+        preserveFeedbackAfterReset = false;
+      } else {
+        el.feedback.hidden = true;
+      }
+
       updateRecipientMode();
     }, 0);
   });
@@ -260,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showFeedback("Notification created successfully for the selected customer." + pushMessage, "success");
       }
 
+      preserveFeedbackAfterReset = true;
       el.form.reset();
     } catch (error) {
       console.error("Notification sending failed:", error);
