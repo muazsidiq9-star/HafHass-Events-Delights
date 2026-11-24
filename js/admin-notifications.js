@@ -32,7 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
     actionUrl: document.getElementById("notificationActionUrl"),
     chars: document.getElementById("messageCharacterCount"),
     send: document.getElementById("sendNotificationButton"),
-    feedback: document.getElementById("notificationFeedback")
+    feedback: document.getElementById("notificationFeedback"),
+    pushMonitorSummary: document.getElementById("pushMonitorSummary"),
+    pushMonitorRecent: document.getElementById("pushMonitorRecent"),
+    pushMonitorUpdated: document.getElementById("pushMonitorUpdated"),
+    refreshPushMonitor: document.getElementById("refreshPushMonitor")
   };
 
   let customers = [];
@@ -347,6 +351,99 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+
+  const monitorStatuses = [
+    ["retrying", "Queued"],
+    ["processing", "Processing"],
+    ["completed", "Completed"],
+    ["partial", "Partial"],
+    ["failed", "Failed"]
+  ];
+
+  function formatMonitorDate(value) {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "—";
+    return date.toLocaleString("en-NG", {
+      day: "2-digit", month: "short", year: "numeric",
+      hour: "2-digit", minute: "2-digit"
+    });
+  }
+
+  async function loadPushMonitor() {
+    if (!el.pushMonitorSummary || !el.pushMonitorRecent) return;
+
+    if (el.refreshPushMonitor) el.refreshPushMonitor.disabled = true;
+    try {
+      const { data, error } = await supabase.rpc("admin_get_push_dispatch_monitor");
+      if (error) throw error;
+      const result = typeof data === "string" ? JSON.parse(data) : (data || {});
+      const summary = result.summary || {};
+
+      el.pushMonitorSummary.innerHTML = monitorStatuses.map(([key, label]) =>
+        '<article class="admin-push-monitor-stat is-' + key + '">' +
+          '<span>' + label + '</span><strong>' +
+          (Number(summary[key]) || 0).toLocaleString("en-NG") +
+          '</strong></article>'
+      ).join("") +
+      '<article class="admin-push-monitor-stat is-total"><span>Total tracked</span><strong>' +
+        (Number(summary.total) || 0).toLocaleString("en-NG") +
+      '</strong></article>';
+
+      const rows = Array.isArray(result.recent) ? result.recent : [];
+      if (!rows.length) {
+        el.pushMonitorRecent.innerHTML =
+          '<div class="admin-push-monitor-empty"><i class="fa-regular fa-bell-slash" aria-hidden="true"></i><p>No push dispatches have been recorded yet. New notifications will appear here.</p></div>';
+      } else {
+        el.pushMonitorRecent.innerHTML = rows.map(row => {
+          const status = monitorStatuses.find(item => item[0] === row.status);
+          const retryText = row.next_attempt_at
+            ? '<small>Next retry: ' + escapeHtml(formatMonitorDate(row.next_attempt_at)) + '</small>'
+            : '';
+          const errorText = row.last_error
+            ? '<p class="admin-push-monitor-error">' + escapeHtml(row.last_error) + '</p>'
+            : '';
+          return '<article class="admin-push-monitor-item">' +
+            '<div class="admin-push-monitor-item-top"><strong>' + escapeHtml(row.title || "Notification") +
+            '</strong><span class="admin-push-status is-' + escapeHtml(row.status) + '">' +
+            escapeHtml(status ? status[1] : row.status || "Unknown") + '</span></div>' +
+            '<div class="admin-push-monitor-item-meta">' +
+              '<span>Devices: ' + (Number(row.device_count) || 0) + '</span>' +
+              '<span>Accepted: ' + (Number(row.sent_count) || 0) + '</span>' +
+              '<span>Failed: ' + (Number(row.failed_count) || 0) + '</span>' +
+              '<span>Attempts: ' + (Number(row.attempt_count) || 0) + '</span>' +
+            '</div>' +
+            '<div class="admin-push-monitor-item-date">Last attempt: ' +
+              escapeHtml(formatMonitorDate(row.last_attempt_at || row.completed_at)) + '</div>' +
+            retryText + errorText +
+          '</article>';
+        }).join("");
+      }
+
+      if (el.pushMonitorUpdated) {
+        el.pushMonitorUpdated.textContent = "Updated " + formatMonitorDate(new Date().toISOString());
+      }
+    } catch (error) {
+      console.error("Unable to load push delivery monitor:", error);
+      el.pushMonitorSummary.innerHTML =
+        '<div class="admin-push-monitor-error-state">Delivery monitoring is temporarily unavailable. Please refresh to try again.</div>';
+      el.pushMonitorRecent.innerHTML = "";
+    } finally {
+      if (el.refreshPushMonitor) el.refreshPushMonitor.disabled = false;
+    }
+  }
+
+  el.refreshPushMonitor?.addEventListener("click", loadPushMonitor);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") loadPushMonitor();
+  });
+
+  window.setInterval(() => {
+    if (document.visibilityState === "visible") loadPushMonitor();
+  }, 60000);
+
   updateRecipientMode();
   loadCustomers();
+  loadPushMonitor();
 });
