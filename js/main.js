@@ -1,3 +1,8 @@
+// Keep foreground push handling active across public pages too.
+import("./firebase-push-notifications.js").catch(error => {
+  console.warn("HAFHASS foreground notifications could not initialize:", error);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==========================================
