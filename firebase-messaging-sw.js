@@ -44,23 +44,53 @@ self.addEventListener("notificationclick", event => {
     return;
   }
 
-  event.waitUntil(
-    clients.matchAll({ type: "window", includeUncontrolled: true })
-      .then(windowClients => {
-        for (const client of windowClients) {
-          if ("focus" in client) {
-            client.navigate(target.href);
-            return client.focus();
+  event.waitUntil((async () => {
+    try {
+      const windowClients = await clients.matchAll({
+        type: "window",
+        includeUncontrolled: true
+      });
+
+      const sameOriginClients = windowClients.filter(client => {
+        try {
+          return new URL(client.url).origin === self.location.origin;
+        } catch {
+          return false;
+        }
+      });
+
+      // Prefer an existing account tab; otherwise use another HAFHASS tab.
+      const targetClient =
+        sameOriginClients.find(client => client.url === target.href) ||
+        sameOriginClients.find(client => {
+          try {
+            return new URL(client.url).pathname.startsWith("/account/");
+          } catch {
+            return false;
           }
-        }
+        }) ||
+        sameOriginClients[0];
 
-        if (clients.openWindow) {
-          return clients.openWindow(target.href);
+      if (targetClient) {
+        try {
+          const navigatedClient = await targetClient.navigate(target.href);
+          return await (navigatedClient || targetClient).focus();
+        } catch (navigationError) {
+          console.warn("HAFHASS notification tab navigation failed:", navigationError);
         }
+      }
 
-        return undefined;
-      })
-  );
+      // A failed tab navigation must not silently discard the click.
+      if (clients.openWindow) {
+        return await clients.openWindow(target.href);
+      }
+    } catch (error) {
+      console.error("HAFHASS notification click handling failed:", error);
+      if (clients.openWindow) {
+        return await clients.openWindow(target.href);
+      }
+    }
+  })());
 });
 
 
