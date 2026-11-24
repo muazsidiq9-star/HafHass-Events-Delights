@@ -35,6 +35,11 @@ self.addEventListener("notificationclick", event => {
     target = new URL("/account/notification.html", self.location.origin);
   }
 
+  // Repair legacy root-level account routes from notifications already on a device.
+  if (target.pathname === "/order-details.html") target.pathname = "/account/order-details.html";
+  if (target.pathname === "/orders.html") target.pathname = "/account/orders.html";
+  if (target.pathname === "/notification.html") target.pathname = "/account/notification.html";
+
   // Prevent Firebase's later click handler from overriding our routing.
   event.stopImmediatePropagation();
   event.notification.close();
