@@ -156,15 +156,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function safeRelativeUrl(value) {
-    const url = String(value || "").trim();
-    if (!url) return null;
-    if (/^[a-z][a-z0-9+.-]*:/i.test(url) || url.startsWith("//") ||
-        url.includes(String.fromCharCode(92)) ||
-        !/^(\.\.\/|\.\/|\/|[a-zA-Z0-9_-])/.test(url) ||
-        /[\s<>"]/g.test(url)) {
-      throw new Error("Enter a valid relative website path, or leave the action link empty.");
+    const raw = String(value || "").trim();
+    if (!raw) return null;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(raw) || raw.startsWith("//") || raw.includes(String.fromCharCode(92)) || /[\s<>"]/g.test(raw)) {
+      throw new Error("Enter a valid same-site page path, or leave the action link empty.");
     }
-    return url;
+    let target;
+    try { target = new URL(raw, window.location.origin + "/"); }
+    catch (_) { throw new Error("Enter a valid same-site page path, or leave the action link empty."); }
+    if (target.origin !== window.location.origin || target.username || target.password) {
+      throw new Error("External action links are not accepted.");
+    }
+    if (target.pathname === "/order-details.html") target.pathname = "/account/order-details.html";
+    if (target.pathname === "/orders.html") target.pathname = "/account/orders.html";
+    if (target.pathname === "/notification.html") target.pathname = "/account/notification.html";
+    return target.pathname + target.search + target.hash;
   }
 
   function setBusy(busy) {
