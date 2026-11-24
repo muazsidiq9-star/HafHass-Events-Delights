@@ -23,23 +23,27 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(payload => {
-  const notification = payload.notification || {};
-  const data = payload.data || {};
+/*
+======================================================
+BACKGROUND NOTIFICATION DISPLAY
 
-  const title = notification.title || data.title || "HAFHASS Events & Delights";
+Firebase automatically displays background messages
+that contain a notification payload.
 
-  const options = {
-    body: notification.body || data.body || "You have a new update from HAFHASS.",
-    icon: "/favicon.ico",
-    badge: "/favicon.ico",
-    data: {
-      url: data.url || data.action_url || "/account/notification.html"
-    }
-  };
+Do not call showNotification() here. Doing so would
+display the same message a second time.
+======================================================
+*/
 
-  return self.registration.showNotification(title, options);
-});
+/*
+======================================================
+NOTIFICATION CLICK HANDLING
+
+Preserved for the next investigation task. We will
+review its interaction with Firebase's own click
+handler separately.
+======================================================
+*/
 
 self.addEventListener("notificationclick", event => {
   event.notification.close();
