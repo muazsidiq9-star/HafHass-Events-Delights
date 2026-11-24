@@ -46,6 +46,14 @@
     initializeLogout();
 
     await verifyAdminAccess();
+
+    // Admin pages can remain open while customer order/payment events arrive.
+    // Load the shared foreground listener only after admin access is verified.
+    if (window.HafhassAdmin?.user) {
+      import("./firebase-push-notifications.js").catch(error => {
+        console.warn("HAFHASS admin foreground notifications could not initialize:", error);
+      });
+    }
   }
 
 
