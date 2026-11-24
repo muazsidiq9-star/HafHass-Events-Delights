@@ -109,6 +109,20 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("admin-customer-picker-open");
     el.openCustomerPicker.focus();
   }
+  async function refreshActiveCustomerCount() {
+    const { count, error } = await supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("role", "customer")
+      .eq("is_active", true);
+
+    if (error) throw error;
+
+    activeCustomerTotal = Number(count || 0);
+    el.broadcastCount.textContent = activeCustomerTotal.toLocaleString("en-NG");
+    return activeCustomerTotal;
+  }
+
   async function loadCustomers() {
     el.customerSelect.innerHTML = '<option value="">Loading customer accounts…</option>';
     const { data, error, count } = await supabase
@@ -227,13 +241,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (mode === "broadcast") {
+      try {
+        // Refresh the count immediately before confirmation so a long-open
+        // admin page does not rely on an outdated customer total.
+        await refreshActiveCustomerCount();
+      } catch (error) {
+        console.error("Unable to refresh broadcast recipient count:", error);
+        showFeedback("The active customer count could not be verified. Please try again.", "error");
+        return;
+      }
+
       if (!activeCustomerTotal) {
         showFeedback("There are no active customer accounts available for this broadcast.", "error");
         return;
       }
+
       const confirmed = window.confirm(
         "You are about to send this notification to " + activeCustomerTotal.toLocaleString("en-NG") +
-        " active customer accounts. Admin and staff accounts will not receive it.\n\n" +
+        " currently active customer accounts. Admin and staff accounts will not receive it.\n\n" +
+        "The database will confirm the actual number of recipients when the broadcast is processed.\n\n" +
         "Title: " + title + "\n\nMessage: " + message +
         "\n\nThis action cannot be undone. Continue?"
       );
