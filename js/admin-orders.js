@@ -436,6 +436,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  function consumeDeepLinkParameter(name) {
+    const url = new URL(window.location.href);
+    const value = url.searchParams.get(name);
+    if (value) {
+      url.searchParams.delete(name);
+      window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+    }
+    return value;
+  }
+
   /* =====================================================
      6. DATABASE PAGINATION
   ====================================================== */
@@ -678,6 +688,16 @@ document.addEventListener("DOMContentLoaded", () => {
       populateStatusFilters();
 
       applyFilters();
+
+      const requestedOrderId = consumeDeepLinkParameter("order_id");
+      if (requestedOrderId) {
+        const requestedOrder = allOrders.find(order => order.id === requestedOrderId);
+        if (requestedOrder) {
+          openOrderDetails(requestedOrder);
+        } else {
+          showError("The order linked in this email could not be found or is no longer available.");
+        }
+      }
 
     } catch (error) {
 
