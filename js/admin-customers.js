@@ -273,6 +273,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  function consumeDeepLinkParameter(name) {
+    const url = new URL(window.location.href);
+    const value = url.searchParams.get(name);
+    if (value) {
+      url.searchParams.delete(name);
+      window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+    }
+    return value;
+  }
+
   /* =====================================================
      9. LOAD CUSTOMERS
   ====================================================== */
@@ -478,6 +488,19 @@ document.addEventListener("DOMContentLoaded", () => {
       updateStatistics();
 
       applyFilters();
+
+      const requestedCustomerId = consumeDeepLinkParameter("customer_id");
+      if (requestedCustomerId) {
+        const requestedCustomer = customers.find(customer => customer.id === requestedCustomerId);
+        if (requestedCustomer) {
+          openCustomerModal(requestedCustomerId);
+        } else {
+          showState("error");
+          if (elements.errorMessage) {
+            elements.errorMessage.textContent = "The customer linked in this email could not be found or is no longer available.";
+          }
+        }
+      }
 
 
       console.log(
