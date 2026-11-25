@@ -418,6 +418,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  function consumeDeepLinkParameter(name) {
+    const url = new URL(window.location.href);
+    const value = url.searchParams.get(name);
+    if (value) {
+      url.searchParams.delete(name);
+      window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+    }
+    return value;
+  }
+
   /* =====================================================
      8. FETCH PAYMENTS
   ====================================================== */
@@ -1778,6 +1788,15 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
 
       await fetchPayments();
+
+      const requestedPaymentId = consumeDeepLinkParameter("payment_id");
+      if (requestedPaymentId) {
+        if (allPayments.some(payment => payment.id === requestedPaymentId)) {
+          void openPaymentDetails(requestedPaymentId);
+        } else {
+          showToast("The payment linked in this email could not be found or is no longer available.");
+        }
+      }
 
       updateStatistics();
 
